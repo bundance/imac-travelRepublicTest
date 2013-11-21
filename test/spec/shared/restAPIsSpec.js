@@ -33,7 +33,7 @@ describe('Service: gitHubAPI', function () {
         $controller = $injector.get('$controller');
 
         mockedTotalCountJsonData = $injector.get('gitHubTotalCountJson');
-        $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond(mockedTotalCountJsonData.fakeData);
+        //$httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond(mockedTotalCountJsonData.fakeData);
     }));
 
 
@@ -45,15 +45,61 @@ describe('Service: gitHubAPI', function () {
         expect(gitHubService).toBeDefined();
     }));
 
-    var paginator;
-    it("should have more data", inject(function(momPaginator, gitHubService) {
-        $httpBackend.expectGET('https://api.github.com/search/users?q=followers:%3E%3D1');
 
-        paginator = momPaginator(gitHubService);
-        $httpBackend.flush();
 
-        expect(paginator.hasMoreData()).toBeTruthy();
-    }));
+
+
+     /***
+     * Test the Paginator.hasMoreData function
+     */
+    describe("Paginator hasMoreData function", function(){
+
+        var paginator;
+
+        it("should have more data when first called", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond(mockedTotalCountJsonData.fakeData);
+            $httpBackend.expectGET('https://api.github.com/search/users?q=followers:%3E%3D1');
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+
+            expect(paginator.hasMoreData()).toBeTruthy();
+        }));
+
+
+        it("should not have more data with total_count set to 0", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond({"total_count": 0});
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+
+            expect(paginator.hasMoreData()).toBeFalsy();
+        }));
+
+        it("should have more data with total_count set to 100, pageOffset = 3, currentPageItems.length = 10", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond({"total_count": 100});
+
+            paginator = momPaginator(gitHubService);
+            paginator.pageOffset = 3;
+            paginator.currentPageItems = [1,1,1,1,1,1,1,1,1,1];
+            $httpBackend.flush();
+
+            expect(paginator.hasMoreData()).toBeTruthy();
+        }));
+
+        it("should NOT have more data with total_count set to 100, pageOffset = 9, currentPageItems.length = 10", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond({"total_count": 100});
+
+            paginator = momPaginator(gitHubService);
+            paginator.pageOffset = 9;
+            paginator.currentPageItems = [1,1,1,1,1,1,1,1,1,1];
+            $httpBackend.flush();
+
+            expect(paginator.hasMoreData()).toBeFalsy();
+        }));
+
+
+    });
 
 
 
