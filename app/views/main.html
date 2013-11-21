@@ -1,0 +1,50 @@
+<div class="header">
+	<ul class="nav nav-pills pull-right">
+		<li class="active"><a href="#">Home</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+	<h3 class="text-muted">angular mom paginator</h3>
+</div>
+nobbernobbernobber
+<div class="row marketing">
+    <h1>momPaginator Example</h1>
+    <h4>by Mike Evans</h4>
+    <p>The momPaginator turns your ordinary HTML table into an advanced datatable capable of retrieving data from
+        an external ReST-based API, paginating the data, moving through the pages of data, and even sorting the
+        data on individual columns.
+    </p>
+    <p>This example shows a simple query of all GitHub users using the GitHub ReST API.</p>
+
+    <div>
+
+        <table class="table table-striped table-hover table-bordered" >
+            <thead>
+            <tr>
+                <th class="sdr-th"><a ng-click="model.momPaginator.toggleSort('username')">Login Name<i class="icon-arrow-{{model.momPaginator.getOrderBy('username')}}"></i></a></th>
+                <th class="sdr-th"><a ng-click="model.momPaginator.toggleSort('organization')">Avatar<i class="icon-arrow-{{model.momPaginator.getOrderBy('organization')}}"></i></a></th>
+                <th class="sdr-th"><a ng-click="model.momPaginator.toggleSort('email')">Github URL<i class="icon-arrow-{{model.momPaginator.getOrderBy('email')}}"></i></a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in model.momPaginator.currentPageItems">
+                <td>{{user.login}}</td>
+                <td><img src="{{user.avatar_url}}" /></td>
+                <td><a href="{{user.html_url}}">{{user.html_url}}</a></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <!--Buttons -->
+        <div class="m-pagination-btns">
+            <button class="btn btn-mini sdr-pagination-prev-btn" ng-click="model.momPaginator.previous()"><< Prev</button>
+            <button class="btn btn-mini sdr-pagination-next-btn" ng-click="model.momPaginator.next()">Next >></button>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="footer">
+	<p>♥ from the Yeoman team</p>
+</div>
