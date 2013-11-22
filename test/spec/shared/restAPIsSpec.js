@@ -47,9 +47,50 @@ describe('Service: gitHubAPI', function () {
 
 
 
+    /***
+     * Test the Paginator.getTotalItemsCount() function
+     */
+    describe("Paginator.getTotalItemsCount() function", function(){
+        var paginator;
+
+        it("should have a totalItemsCount mock value of 576097 (from fakeData) when first intialised", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond(mockedTotalCountJsonData.fakeData);
+            $httpBackend.expectGET('https://api.github.com/search/users?q=followers:%3E%3D1');
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+            expect(paginator.totalItemsCount).toEqual(576097);
+
+        }));
+
+        it("should have a totalItemsCount of zero when an error occurs in getTotalItemsCount", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond(400, "bad data");
+            $httpBackend.expectGET('https://api.github.com/search/users?q=followers:%3E%3D1');
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+
+            expect(paginator.totalItemsCount).toEqual(0);
+        }));
+
+        it("should return a count of 0 when an error occurs in getTotalItemsCount", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?q=followers:%3E%3D1').respond(400, "bad data");
+            $httpBackend.expectGET('https://api.github.com/search/users?q=followers:%3E%3D1');
+
+            paginator = momPaginator(gitHubService);
+            paginator.getTotalItemsCount().then(function(count){
+                expect(count).toEqual(0);
+            });
+            $httpBackend.flush();
+
+            expect(paginator.totalItemsCount).toEqual(0);
+        }));
+
+    });
 
 
-     /***
+
+    /***
      * Test the Paginator.hasMoreData function
      */
     describe("Paginator hasMoreData function", function(){

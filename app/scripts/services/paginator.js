@@ -35,33 +35,32 @@ angular.module('momUI.momPaginator', [])
                     }
 
                 },
+                /**
+                 * @name: getTotalItemsCount()
+                 * @returns {Promise|*}
+                 * @description When returned promise resolves, promise.then(count) returns the total number of items,
+                 * or zero on error
+                 */
                 getTotalItemsCount: function(){
-                    console.log("In gettotalitmes counts");
                     var self = this;
 
-                    self.promise = restSvc.getTotalItemsCount().$promise;
+                    self.promise = restSvc.getTotalItemsCount();
                     return self.promise.then(
-                        function(item){
-                            self.totalItemsCount = item.total_count;
-                            console.log("in p.then, success. total count = " + self.totalItemsCount);
-                            console.dir(item);
-                            return item;
-                        },
-                        function(responseVal){
-                            console.log("in p.then Error retrieving totalItemsCount");
-                            console.dir(responseVal);
-                            return responseVal;
+                        function(count){
+                            self.totalItemsCount = count;
+                            return count;
                         });
-
-
-                    //https://api.github.com/search/users?q=followers:%3E=1
                 },
+                /**
+                 * @name hasMoreData
+                 * @returns {boolean}
+                 * @description Returns true if more data is available from the server, false if not.
+                 * Internally, paginator.getTotalItemsCount() must be called first before this function can bw used.
+                 * Externally, code using momPaginator won't need to worry about this, as it's taken care of below
+                 * as part of this paginator object's initialisation.
+                 */
                 hasMoreData: function(){
                     var self = this;
-                    console.log("has more data called");
-                    console.log("self.pageOffset = " + self.pageOffset + ", self.itemsPerPage=" + self.itemsPerPage +
-                        ", self.currentPageItems.length=" + self.currentPageItems.length + ", self.totalItemsCount = " + self.totalItemsCount);
-
 
                     return (self.pageOffset * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
                 }

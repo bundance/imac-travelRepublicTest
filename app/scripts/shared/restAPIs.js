@@ -14,7 +14,7 @@ angular.module('rest.gitHubAPI', ['ngResource'])
                         entity: 'users'
                     }
                 },
-                getTotalItemsCount: {
+                _getTotalItemsCount: {
                     method: 'GET',
                     isArray: false,
                     params: {
@@ -27,21 +27,26 @@ angular.module('rest.gitHubAPI', ['ngResource'])
 
         );
     }])
-    .factory('gitHubService', ['gitHubREST', function(gitHubREST){
+    .factory('gitHubService', ['gitHubREST', '$q', function(gitHubREST, $q){
         return {
             getData: function(){
                 return gitHubREST.getData();
             },
             getTotalItemsCount: function(){
-                return gitHubREST.getTotalItemsCount(
+                // Call https://api.github.com/search/users?q=followers:>=1
+                console.log("githubSERVICE getTotalItemsCount called");
+                var promise = gitHubREST._getTotalItemsCount().$promise;
+                return promise.then(
                     //success
                     function(items){
+                        console.log("gitHubService, items.total_count = " + items.total_count);
                         return items.total_count;
                     },
                     //failure
                     function(responseVal){
                         console.log("getTotalItemsCount failed.");
                         console.dir(responseVal);
+                        return 0;
                     }
                 )
 
@@ -51,9 +56,4 @@ angular.module('rest.gitHubAPI', ['ngResource'])
 
 
 
-// Mike - you're here. You need this service to have a getTotalItemsCount function that returns the item_count and nothing more.
-// Change this service into a similar one to paginator (i,.e. "var paginator = {...}; return paginator);
 
-
-
-//https://api.github.com/search/users?q=followers:%3E=1
