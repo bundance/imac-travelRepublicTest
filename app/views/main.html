@@ -27,7 +27,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="user in model.momPaginator.currentPageItems">
+            <tr ng-repeat="user in model.paginator.currentPageItems">
                 <td>{{user.login}}</td>
                 <td><img src="{{user.avatar_url}}" /></td>
                 <td><a href="{{user.html_url}}">{{user.html_url}}</a></td>
@@ -38,8 +38,10 @@
 
         <!--Buttons -->
         <div class="m-pagination-btns">
-            <button class="btn btn-mini sdr-pagination-prev-btn" ng-click="model.momPaginator.previous()"><< Prev</button>
-            <button class="btn btn-mini sdr-pagination-next-btn" ng-click="model.momPaginator.next()">Next >></button>
+            <button class="btn btn-mini sdr-pagination-prev-btn" ng-click="model.paginator.getPage(1)"><< First</button>
+            <button class="btn btn-mini sdr-pagination-prev-btn" ng-click="model.paginator.prev()">< Prev</button>
+            <button class="btn btn-mini sdr-pagination-prev-btn" ng-click="model.paginator.next()">Next ></button>
+            <button class="btn btn-mini sdr-pagination-next-btn" ng-click="model.paginator.getPage(model.paginator.totalPagesCount)">Last >></button>
         </div>
     </div>
 </div>

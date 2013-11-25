@@ -31,10 +31,7 @@ angular.module('momUI.momPaginator', [])
                         pageNum = self.currentPageNum;
                     }
 
-                    console.log("pageNum0 = " + pageNum);
-
                     if(self.pageExists(pageNum)){
-                        console.log("pagExists@!@@@@ pageNum1 = " + pageNum);
                         self.promise = restSvc.getData(self.itemsPerPage, pageNum);
                         self.promise.then(
                             //success
@@ -106,19 +103,6 @@ angular.module('momUI.momPaginator', [])
                  */
                 pageExists: function(pageNum){
                     var self = this;
-
-                    /*
-                    if(self.totalItemsCount < 0){
-                        return true;
-                    }
-                    console.log("pageNum:" + pageNum + ", itemsperpage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
-
-                    var retVal = (pageNum * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
-                    console.log("retVal = " + retVal.toString());
-                    return retVal;
-
-                    */
-
                     return ((self.totalItemsCount < 0 || pageNum <= self.totalPagesCount) && pageNum > 0);
                 },
                 /***

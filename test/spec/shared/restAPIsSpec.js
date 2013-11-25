@@ -204,13 +204,13 @@ describe('Service: gitHubAPI', function () {
     describe("Paginator.getTotalItemsCount() function", function(){
         var paginator;
 
-        it("should have a totalItemsCount mock value of 576097 (from fakeData) when first intialised", inject(function(momPaginator, gitHubService) {
+        it("should have a totalItemsCount mock value of 1000 (from fakeData) when first intialised", inject(function(momPaginator, gitHubService) {
             $httpBackend.when('GET', 'https://api.github.com/search/users?page=1&per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
 
 
             paginator = momPaginator(gitHubService);
             $httpBackend.flush();
-            expect(paginator.totalItemsCount).toEqual(576097);
+            expect(paginator.totalItemsCount).toEqual(1000);
 
         }));
 
