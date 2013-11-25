@@ -27,8 +27,12 @@ angular.module('momUI.momPaginator', [])
                 getPage: function(pageNum){
                     var self = this;
 
-                    pageNum = pageNum || self.currentPageNum;
-console.log("pageNum1 = " + pageNum);
+                    if(typeof pageNum === "undefined"){
+                        pageNum = self.currentPageNum;
+                    }
+
+                    console.log("pageNum0 = " + pageNum);
+
                     if(self.pageExists(pageNum)){
                         console.log("pagExists@!@@@@ pageNum1 = " + pageNum);
                         self.promise = restSvc.getData(self.itemsPerPage, pageNum);
@@ -37,7 +41,6 @@ console.log("pageNum1 = " + pageNum);
                             function(items){
                                 self.currentPageItems = items;
                                 self.currentPageNum = pageNum;
-                                console.log("pageNum1 = " + pageNum);
                                 self.currentPageItems.length = (items.length < self.itemsPerPage)
                                     ? items.length : self.itemsPerPage;
 
@@ -118,9 +121,31 @@ console.log("pageNum1 = " + pageNum);
 
                     return ((self.totalItemsCount < 0 || pageNum <= self.totalPagesCount) && pageNum > 0);
                 },
+                /***
+                 * @name next
+                 * @returns {*} Returns a promise, which, when resolved, returns an array containing the items of
+                 * currentPage + 1. Returns an empty array when there are no more pages left
+                 * @description Next() will iterate through the pages of data, retrieving the next itemsPerPage worth of data
+                 * each time it's called.
+                 * The last page may contain less than itemsPerPage of data.
+                 * For pages beyond the last page, an empty array is returned.
+                 */
                 next: function(){
                     var self = this;
                     return self.getPage(self.currentPageNum + 1);
+                },
+                /***
+                 * @name next
+                 * @returns {*} Returns a promise, which, when resolved, returns an array containing the items of
+                 * currentPage + 1. Returns an empty array when there are no more pages left
+                 * @description The opposite of next(), prev() will iterate through the pages of data, retrieving the
+                 * previous itemsPerPage worth of data each time it's called.
+                 * All pages called using prev() will contain itemsPerPage of data.
+                 * For pages before the first page (i.e. pages before page 1), an empty array is returned.
+                 */
+                prev: function(){
+                    var self = this;
+                    return self.getPage(self.currentPageNum - 1);
                 }
             };
 
