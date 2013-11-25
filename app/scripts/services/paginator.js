@@ -3,7 +3,7 @@ angular.module('momUI.momPaginator', [])
         return function(restSvc, itemsPerPage) {
             var paginator = {
                 currentPageItems: [],
-                pageOffset: 0,
+                currentPageNum: 0,
                 itemsPerPage: itemsPerPage ? itemsPerPage : 10 ,
                 totalItemsCount: -1,
                 promise: $q,
@@ -15,16 +15,18 @@ angular.module('momUI.momPaginator', [])
                  * @description getsData from the server using the restSvc service. If more data is sent than
                  *      itemsPerPage, the length of currentPageItems is adjusted accordingly.
                  */
-                getData: function(){
+                getPage: function(pageNum){
                     var self = this;
 
-                    if(self.hasMoreData()){
+                    pageNum = pageNum || 0;
+
+                    if(self.pageExists(pageNum)){
                         self.promise = restSvc.getData(self.itemsPerPage);
                         self.promise.then(
                             //success
                             function(items){
                                 self.currentPageItems = items;
-
+                                self.currentPageNum = pageNum;
                                 self.currentPageItems.length = (items.length < self.itemsPerPage)
                                     ? items.length : self.itemsPerPage;
 
@@ -38,7 +40,7 @@ angular.module('momUI.momPaginator', [])
                         return self.promise;
                     }
                     else{
-                        console.log("No more data");
+                        console.log("No more pages");
                         return $q.when([]);
                     }
 
@@ -61,6 +63,11 @@ angular.module('momUI.momPaginator', [])
                         });
 
                 },
+                getTotalPagesCount: function(){
+                    var self = this;
+
+                      
+                },
                 /**
                  * @name hasMoreData
                  * @returns {boolean}
@@ -69,15 +76,15 @@ angular.module('momUI.momPaginator', [])
                  * Externally, code using momPaginator won't need to worry about this, as it's taken care of below
                  * as part of this paginator object's initialisation.
                  */
-                hasMoreData: function(){
+                pageExists: function(pageNum){
                     var self = this;
 
                     if(self.totalItemsCount < 0){
                         return true;
                     }
-                    console.log("offset:" + self.pageOffset + ", itemsoeroage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
+                    console.log("pageNum:" + pageNum + ", itemsperpage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
 
-                    var retVal = (self.pageOffset * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
+                    var retVal = (pageNum * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
                     console.log("retVal = " + retVal.toString());
                     return retVal;
                 }

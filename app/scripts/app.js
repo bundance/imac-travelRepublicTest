@@ -34,12 +34,12 @@ angular.module('angularMomPaginatorApp', [
         };
 
         $scope.model.paginator = momPaginator(gitHubService, 3);
-        $scope.model.paginator.getData().then(function(items){
+        $scope.model.paginator.getPage().then(function(items){
             console.log("items");
             console.dir(items);
         });
 /*
-        $scope.model.paginator.getData().then(function(items){
+        $scope.model.paginator.getPage().then(function(items){
             $scope.model.currentPageItems = items;
             console.log("returned page itmes:");
             console.dir(items);

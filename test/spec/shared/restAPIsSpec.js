@@ -51,7 +51,7 @@ describe('Service: gitHubAPI', function () {
 
 
     /***
-     * Test the Paginator.getData() function
+     * Test the paginator.getPage() function
      */
     describe("gitHubService.getData() function", function(){
         var paginator;
@@ -83,8 +83,8 @@ describe('Service: gitHubAPI', function () {
             paginator = momPaginator(gitHubService);
 
             paginator.promise.then(function(){
-                expect(paginator.hasMoreData()).toBeTruthy();
-                paginator.getData().then(function(items){
+                expect(paginator.pageExists(paginator.currentPageNum + 1)).toBeTruthy();
+                paginator.getPage().then(function(items){
                     expect(paginator.currentPageItems.length).toEqual(10);
                 });
             });
@@ -107,7 +107,7 @@ describe('Service: gitHubAPI', function () {
                 paginator.itemsPerPage = 10;
 
                 // Now test the getData() function to see if currentPageItems.length is correctly set to 3.
-                paginator.getData().then(function(responseVal){
+                paginator.getPage().then(function(responseVal){
                     expect(paginator.currentPageItems.length).toEqual(3);
                 });
                 $httpBackend.flush();
@@ -121,7 +121,7 @@ describe('Service: gitHubAPI', function () {
 
             paginator.promise.then(function(){
                 $httpBackend.when('GET', 'https://api.github.com/search/users?per_page=10&q=followers:%3E%3D0').respond(400, 'bad data');
-                paginator.getData().then(function(responseVal){
+                paginator.getPage().then(function(responseVal){
                     expect(responseVal.data).toEqual('bad data');
                 });
             });
@@ -139,7 +139,7 @@ describe('Service: gitHubAPI', function () {
 
             paginator.promise.then(function(){
                 paginator.totalItemsCount = 0;
-                paginator.getData().then(function(responseVal){
+                paginator.getPage().then(function(responseVal){
                     expect(responseVal).toEqual([]);
                 });
             });
@@ -194,9 +194,9 @@ describe('Service: gitHubAPI', function () {
 
 
     /***
-     * Test the Paginator.hasMoreData function
+     * Test the Paginator.pageExists function
      * /
-    describe("Paginator hasMoreData function", function(){
+    describe("Paginator pageExists function", function(){
 
         var paginator;
 
