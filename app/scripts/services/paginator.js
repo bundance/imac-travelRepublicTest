@@ -1,36 +1,44 @@
 angular.module('momUI.momPaginator', [])
     .factory('momPaginator', ['$q', function($q) {
-        return function(restSvc) {
+        return function(restSvc, itemsPerPage) {
             var paginator = {
-                allItems: [],
                 currentPageItems: [],
-                errorMsg: {},
                 pageOffset: 0,
-                itemsPerPage: 10,
-                totalItemsCount: 0,
+                itemsPerPage: itemsPerPage ? itemsPerPage : 10 ,
+                totalItemsCount: -1,
                 promise: $q,
+                /**
+                 * @name getData()
+                 * @returns {*} Returns currentPageItems as an array of data on success;
+                 *              Returns the response object on error
+                 *              Returns an empty array if no data is received.
+                 * @description getsData from the server using the restSvc service. If more data is sent than
+                 *      itemsPerPage, the length of currentPageItems is adjusted accordingly.
+                 */
                 getData: function(){
                     var self = this;
 
                     if(self.hasMoreData()){
-                        console.log("calling getData fromn paginator...");
-                        self.promise = restSvc.getData("",
+                        self.promise = restSvc.getData(self.itemsPerPage);
+                        self.promise.then(
                             //success
                             function(items){
-                                console.dir(items);
                                 self.currentPageItems = items;
-                                self.allItems = items;
-                                return items;
+
+                                self.currentPageItems.length = (items.length < self.itemsPerPage)
+                                    ? items.length : self.itemsPerPage;
+
+                                return self.currentPageItems;
                             },
                             //failure
                             function(responseVal){
-                                console.dir(responseVal);
-                                self.errorMsg = responseVal;
-                            }).$promise;
+                                return responseVal;
+                            });
 
                         return self.promise;
                     }
                     else{
+                        console.log("No more data");
                         return $q.when([]);
                     }
 
@@ -47,9 +55,11 @@ angular.module('momUI.momPaginator', [])
                     self.promise = restSvc.getTotalItemsCount();
                     return self.promise.then(
                         function(count){
+                            console.log("Total items returned:" + count)
                             self.totalItemsCount = count;
                             return count;
                         });
+
                 },
                 /**
                  * @name hasMoreData
@@ -62,7 +72,14 @@ angular.module('momUI.momPaginator', [])
                 hasMoreData: function(){
                     var self = this;
 
-                    return (self.pageOffset * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
+                    if(self.totalItemsCount < 0){
+                        return true;
+                    }
+                    console.log("offset:" + self.pageOffset + ", itemsoeroage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
+
+                    var retVal = (self.pageOffset * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
+                    console.log("retVal = " + retVal.toString());
+                    return retVal;
                 }
             };
 

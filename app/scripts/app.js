@@ -33,7 +33,11 @@ angular.module('angularMomPaginatorApp', [
             totalItemsCount: 0
         };
 
-        $scope.model.paginator = momPaginator(gitHubService);
+        $scope.model.paginator = momPaginator(gitHubService, 3);
+        $scope.model.paginator.getData().then(function(items){
+            console.log("items");
+            console.dir(items);
+        });
 /*
         $scope.model.paginator.getData().then(function(items){
             $scope.model.currentPageItems = items;

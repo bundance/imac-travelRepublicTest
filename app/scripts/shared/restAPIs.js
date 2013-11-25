@@ -4,42 +4,43 @@ angular.module('rest.gitHubAPI', ['ngResource'])
     .factory('gitHubREST', ['$resource', function ($resource) {
         return $resource('https://api.github.com/:action/:entity',
             {
-                //'id':'@id'
+                // @id=1
             },
             {
+                // Call https://api.github.com/search/users?q=followers:>=0
                 getData: {
-                    method: 'GET',
-                    isArray: true,
-                    params: {
-                        entity: 'users'
-                    }
-                },
-                _getTotalItemsCount: {
                     method: 'GET',
                     isArray: false,
                     params: {
                         entity: 'users',
-                        'q': 'followers:>=1',
+                        'q': 'followers:>=0',
                         action: 'search'
                     }
                 }
             }
-
         );
     }])
     .factory('gitHubService', ['gitHubREST', '$q', function(gitHubREST, $q){
         return {
-            getData: function(){
-                return gitHubREST.getData();
-            },
-            getTotalItemsCount: function(){
-                // Call https://api.github.com/search/users?q=followers:>=1
-                console.log("githubSERVICE getTotalItemsCount called");
-                var promise = gitHubREST._getTotalItemsCount().$promise;
+            getData: function(itemsPerPage){
+                itemsPerPage = itemsPerPage ? itemsPerPage : 10;
+                var promise = gitHubREST.getData({per_page: itemsPerPage}).$promise;
                 return promise.then(
                     //success
                     function(items){
-                        console.log("gitHubService, items.total_count = " + items.total_count);
+                        return items.items;
+                    },
+                    function(responseVal){
+                        console.log("getData failed.");
+                        console.dir(responseVal);
+                        return responseVal;
+                    })
+            },
+            getTotalItemsCount: function(){
+                var promise = gitHubREST.getData({per_page: 1}).$promise;
+                return promise.then(
+                    //success
+                    function(items){
                         return items.total_count;
                     },
                     //failure
@@ -47,9 +48,7 @@ angular.module('rest.gitHubAPI', ['ngResource'])
                         console.log("getTotalItemsCount failed.");
                         console.dir(responseVal);
                         return 0;
-                    }
-                )
-
+                    })
             }
         }
     }])
