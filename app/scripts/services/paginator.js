@@ -15,6 +15,12 @@ angular.module('momUI.momPaginator', [])
                  * @description getsData from the server using the restSvc service. If more data is sent than
                  *      itemsPerPage, the length of currentPageItems is adjusted accordingly.
                  */
+                initialise: function(){
+                    var self = this;
+
+                    self.getTotalItemsCount();
+                    self.getTotalPagesCount();
+                },
                 getPage: function(pageNum){
                     var self = this;
 
@@ -57,7 +63,7 @@ angular.module('momUI.momPaginator', [])
                     self.promise = restSvc.getTotalItemsCount();
                     return self.promise.then(
                         function(count){
-                            console.log("Total items returned:" + count)
+                      //      console.log("Total items returned:" + count)
                             self.totalItemsCount = count;
                             return count;
                         });
@@ -66,7 +72,20 @@ angular.module('momUI.momPaginator', [])
                 getTotalPagesCount: function(){
                     var self = this;
 
-                      
+                    if(self.totalItemsCount < 0){
+                        self.getTotalItemsCount();
+                    }
+                    self.totalPagesCount = parseInt(self.totalItemsCount / self.itemsPerPage);
+
+                    console.log("totalItemsCount = " + self.totalItemsCount + ", parseint result = " + self.totalPagesCount);
+
+                    if(self.totalItemsCount % self.itemsPerPage > 0){
+                        self.totalPagesCount++;
+                    }
+
+                    console.log("...and after % " + self.totalPagesCount);
+                    return self.totalPagesCount;
+
                 },
                 /**
                  * @name hasMoreData
@@ -82,16 +101,16 @@ angular.module('momUI.momPaginator', [])
                     if(self.totalItemsCount < 0){
                         return true;
                     }
-                    console.log("pageNum:" + pageNum + ", itemsperpage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
+                    //console.log("pageNum:" + pageNum + ", itemsperpage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
 
                     var retVal = (pageNum * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
-                    console.log("retVal = " + retVal.toString());
+                    //console.log("retVal = " + retVal.toString());
                     return retVal;
                 }
             };
 
             // initialise
-            paginator.getTotalItemsCount();
+            paginator.initialise();
 
             return paginator;
         }

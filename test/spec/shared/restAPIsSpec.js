@@ -73,6 +73,11 @@ describe('Service: gitHubAPI', function () {
             $httpBackend.flush();
         }));
 
+    });
+
+    describe("momPaginator.getPage() function", function(){
+        var paginator;
+
         it("should retrieve 10 items of data from fakeData when first intialised", inject(function(momPaginator, gitHubService) {
             $httpBackend.when('GET', 'https://api.github.com/search/users?per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
             // getTotalItemsCount URL:
@@ -148,9 +153,50 @@ describe('Service: gitHubAPI', function () {
     });
 
 
+    describe("momPaginator.getTotalPageCount() function", function(){
+        var paginator;
+
+        beforeEach(inject(function(momPaginator, gitHubService){
+            $httpBackend.when('GET', 'https://api.github.com/search/users?per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+            paginator = momPaginator(gitHubService);
+        }));
+
+        it("should return 0 pages when there are 0 items", function() {
+            paginator.promise.then(function(){
+                paginator.totalItemsCount = 0;
+                expect(paginator.getTotalPagesCount()).toEqual(0);
+            });
+            $httpBackend.flush();
+        });
+
+        it("should return 20 pages when there are 20 items", function() {
+            paginator.promise.then(function(){
+                paginator.totalItemsCount = 20;
+                expect(paginator.getTotalPagesCount()).toEqual(2);
+            });
+            $httpBackend.flush();
+        });
+
+        it("should return 3 pages when there are 21 items", function() {
+            paginator.promise.then(function(){
+                paginator.totalItemsCount = 21;
+                expect(paginator.getTotalPagesCount()).toEqual(3);
+            });
+            $httpBackend.flush();
+        });
+
+        it("should return 0 pages when there are -1 items", function() {
+            paginator.promise.then(function(){
+                paginator.totalItemsCount = -1;
+                expect(paginator.getTotalPagesCount()).toEqual(0);
+            });
+            $httpBackend.flush();
+        });
+    });
 
 
-    /***
+
+        /***
      * Test the Paginator.getTotalItemsCount() function
      * /
     describe("Paginator.getTotalItemsCount() function", function(){
