@@ -1,38 +1,43 @@
 angular.module('momUI.momPaginator', [])
     .factory('momPaginator', ['$q', function($q) {
-        return function(restSvc, itemsPerPage) {
+        return function(restSvc, itemsPerPage, initialPage) {
             var paginator = {
                 currentPageItems: [],
-                currentPageNum: 0,
+                currentPageNum: initialPage || 1,
                 itemsPerPage: itemsPerPage ? itemsPerPage : 10 ,
                 totalItemsCount: -1,
                 promise: $q,
+                _initialise: function(){
+                    var self = this;
+
+                    self.promise = self.getTotalItemsCount();
+                    self.promise.then(function(){
+                        self.getTotalPagesCount();
+                    });
+
+                },
                 /**
-                 * @name getData()
+                 * @name getPage()
                  * @returns {*} Returns currentPageItems as an array of data on success;
                  *              Returns the response object on error
                  *              Returns an empty array if no data is received.
                  * @description getsData from the server using the restSvc service. If more data is sent than
                  *      itemsPerPage, the length of currentPageItems is adjusted accordingly.
                  */
-                initialise: function(){
-                    var self = this;
-
-                    self.getTotalItemsCount();
-                    self.getTotalPagesCount();
-                },
                 getPage: function(pageNum){
                     var self = this;
 
-                    pageNum = pageNum || 0;
-
+                    pageNum = pageNum || self.currentPageNum;
+console.log("pageNum1 = " + pageNum);
                     if(self.pageExists(pageNum)){
-                        self.promise = restSvc.getData(self.itemsPerPage);
+                        console.log("pagExists@!@@@@ pageNum1 = " + pageNum);
+                        self.promise = restSvc.getData(self.itemsPerPage, pageNum);
                         self.promise.then(
                             //success
                             function(items){
                                 self.currentPageItems = items;
                                 self.currentPageNum = pageNum;
+                                console.log("pageNum1 = " + pageNum);
                                 self.currentPageItems.length = (items.length < self.itemsPerPage)
                                     ? items.length : self.itemsPerPage;
 
@@ -40,6 +45,7 @@ angular.module('momUI.momPaginator', [])
                             },
                             //failure
                             function(responseVal){
+
                                 return responseVal;
                             });
 
@@ -63,12 +69,16 @@ angular.module('momUI.momPaginator', [])
                     self.promise = restSvc.getTotalItemsCount();
                     return self.promise.then(
                         function(count){
-                      //      console.log("Total items returned:" + count)
                             self.totalItemsCount = count;
                             return count;
                         });
 
                 },
+                /**
+                 * @name: getTotalPagesCount()
+                 * @returns {integer}
+                 * @description Calculates and returns the total number of pages that can be traversed by the Paginator.
+                 */
                 getTotalPagesCount: function(){
                     var self = this;
 
@@ -77,18 +87,14 @@ angular.module('momUI.momPaginator', [])
                     }
                     self.totalPagesCount = parseInt(self.totalItemsCount / self.itemsPerPage);
 
-                    console.log("totalItemsCount = " + self.totalItemsCount + ", parseint result = " + self.totalPagesCount);
-
                     if(self.totalItemsCount % self.itemsPerPage > 0){
                         self.totalPagesCount++;
                     }
-
-                    console.log("...and after % " + self.totalPagesCount);
+                    console.log("total pages count = " + self.totalPagesCount)
                     return self.totalPagesCount;
-
                 },
                 /**
-                 * @name hasMoreData
+                 * @name pageExists
                  * @returns {boolean}
                  * @description Returns true if more data is available from the server, false if not.
                  * Internally, paginator.getTotalItemsCount() must be called first before this function can bw used.
@@ -98,19 +104,28 @@ angular.module('momUI.momPaginator', [])
                 pageExists: function(pageNum){
                     var self = this;
 
+                    /*
                     if(self.totalItemsCount < 0){
                         return true;
                     }
-                    //console.log("pageNum:" + pageNum + ", itemsperpage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
+                    console.log("pageNum:" + pageNum + ", itemsperpage:" + self.itemsPerPage + ", pageitemslength:" + self.currentPageItems.length + ", totalitems count: " + self.totalItemsCount);
 
                     var retVal = (pageNum * self.itemsPerPage) + self.currentPageItems.length < self.totalItemsCount;
-                    //console.log("retVal = " + retVal.toString());
+                    console.log("retVal = " + retVal.toString());
                     return retVal;
+
+                    */
+
+                    return ((self.totalItemsCount < 0 || pageNum <= self.totalPagesCount) && pageNum > 0);
+                },
+                next: function(){
+                    var self = this;
+                    return self.getPage(self.currentPageNum + 1);
                 }
             };
 
             // initialise
-            paginator.initialise();
+            paginator._initialise();
 
             return paginator;
         }

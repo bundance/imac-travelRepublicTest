@@ -34,12 +34,38 @@ angular.module('angularMomPaginatorApp', [
         };
 
         $scope.model.paginator = momPaginator(gitHubService, 3);
-        $scope.model.paginator.getPage().then(function(items){
+
+        $scope.model.paginator.promise.then(function(){
+
+            $scope.model.paginator.currentPageNum = 10;
+            $scope.model.paginator.currentPageItems = [1,1,1,1,1,1,1,1,1,1];
+            $scope.model.paginator.totalPagesCount = 10;
+            console.log("pageExists = " + $scope.model.paginator.pageExists(11).toString());
+        });
+/*
+        $scope.model.paginator.promise.then(function(){
+            $scope.model.paginator.totalItemsCount = 0;
+            $scope.model.paginator.getPage().then(function(responseVal){
+                console.log("responseVal = ");
+                console.dir(responseVal);
+            });
+        });
+
+        /*$scope.model.paginator.getPage().then(function(items){
             console.log("items");
             console.dir(items);
         });
+
+        $scope.model.paginator.next().then(function(items){
+            console.log("items");
+            console.dir(items);
+        });
+*/
 /*
-        $scope.model.paginator.getPage().then(function(items){
+
+
+
+ *        $scope.model.paginator.getPage().then(function(items){
             $scope.model.currentPageItems = items;
             console.log("returned page itmes:");
             console.dir(items);

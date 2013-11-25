@@ -22,9 +22,11 @@ angular.module('rest.gitHubAPI', ['ngResource'])
     }])
     .factory('gitHubService', ['gitHubREST', '$q', function(gitHubREST, $q){
         return {
-            getData: function(itemsPerPage){
-                itemsPerPage = itemsPerPage ? itemsPerPage : 10;
-                var promise = gitHubREST.getData({per_page: itemsPerPage}).$promise;
+            getData: function(itemsPerPage, pageNum){
+                itemsPerPage = itemsPerPage || 10;
+                pageNum = pageNum || 1;
+
+                var promise = gitHubREST.getData({per_page: itemsPerPage, page: pageNum}).$promise;
                 return promise.then(
                     //success
                     function(items){
@@ -37,7 +39,7 @@ angular.module('rest.gitHubAPI', ['ngResource'])
                     })
             },
             getTotalItemsCount: function(){
-                var promise = gitHubREST.getData({per_page: 1}).$promise;
+                var promise = gitHubREST.getData({per_page: 1, page: 1}).$promise;
                 return promise.then(
                     //success
                     function(items){
