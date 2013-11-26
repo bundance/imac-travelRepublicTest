@@ -7,6 +7,8 @@ angular.module('momUI.momPaginator', [])
                 itemsPerPage: itemsPerPage ? itemsPerPage : 10 ,
                 totalItemsCount: -1,
                 promise: $q,
+                sortColumn: "",
+                direction: "",
                 _initialise: function(){
                     var self = this;
 
@@ -18,21 +20,28 @@ angular.module('momUI.momPaginator', [])
                 },
                 /**
                  * @name getPage()
-                 * @returns {*} Returns currentPageItems as an array of data on success;
-                 *              Returns the response object on error
-                 *              Returns an empty array if no data is received.
+                 * @params {number, number, string}
+                 * @returns {*} - Returns currentPageItems as an array of data on success;
+                 *              - Returns the response object on error
+                 *              - Returns an empty array if no data is received.
                  * @description getsData from the server using the restSvc service. If more data is sent than
                  *      itemsPerPage, the length of currentPageItems is adjusted accordingly.
+                 *      Parameters:
+                 *      - pageNum (optional) lets you specify what page number you want (defaults to 1)
+                 *      - sortColumn (optional) lets you specify a column to sort on
+                 *      - direction (optional) lets you specify the direction to sort the results in
                  */
-                getPage: function(pageNum){
+                getPage: function(pageNum, sortColumn, direction){
                     var self = this;
 
                     if(typeof pageNum === "undefined"){
                         pageNum = self.currentPageNum;
                     }
+                    self.sortColumn = (typeof sortColumn === "undefined") ? self.sortColumn : sortColumn;
+                    self.direction = (typeof direction === "undefined") ? self.direction : direction;
 
                     if(self.pageExists(pageNum)){
-                        self.promise = restSvc.getData(self.itemsPerPage, pageNum);
+                        self.promise = restSvc.getData(self.itemsPerPage, pageNum, self.sortColumn, self.direction);
                         self.promise.then(
                             //success
                             function(items){
@@ -130,7 +139,13 @@ angular.module('momUI.momPaginator', [])
                 prev: function(){
                     var self = this;
                     return self.getPage(self.currentPageNum - 1);
+                },
+                first: function(){
+                    var self = this;
+                    return self.getPage(1);
                 }
+
+
             };
 
             // initialise

@@ -438,6 +438,41 @@ describe('Service: gitHubAPI', function () {
     });
 
 
+    /***
+     * Test the Paginator.first function
+     */
+    describe("Paginator prev function", function(){
+
+        var paginator;
+
+        it("should call the first page when paginator.first is called", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?page=1&per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+
+            paginator.totalItemsCount = 100;
+            paginator.currentPageNum = 5;
+            paginator.totalPagesCount = 10;
+
+            $httpBackend.when('GET', 'https://api.github.com/search/users?page=4&per_page=10&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+            $httpBackend.expectGET('https://api.github.com/search/users?page=4&per_page=10&q=followers:%3E%3D0');
+            paginator.prev().then(
+                function(){
+                    expect(paginator.currentPageNum).toEqual(4);
+
+                    $httpBackend.when('GET', 'https://api.github.com/search/users?page=1&per_page=10&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+                    $httpBackend.expectGET('https://api.github.com/search/users?page=1&per_page=10&q=followers:%3E%3D0');
+                    paginator.first().then(function(){
+                        expect(paginator.currentPageNum).toEqual(1);
+                    })
+                }
+            );
+            $httpBackend.flush();
+        }));
+    });
+
+
     afterEach(function() {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
