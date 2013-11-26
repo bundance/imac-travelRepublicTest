@@ -51,7 +51,7 @@ describe('Service: gitHubAPI', function () {
 
 
     /***
-     * Test the paginator.getPage() function
+     * Test the gitHubService.getPage() function
      */
     describe("gitHubService.getData() function", function(){
         var paginator;
@@ -76,7 +76,9 @@ describe('Service: gitHubAPI', function () {
     });
 
 
-
+    /***
+     * Test the momPaginator.getPage() function
+     */
     describe("momPaginator.getPage() function", function(){
         var paginator;
 
@@ -494,6 +496,60 @@ describe('Service: gitHubAPI', function () {
                     paginator.last().then(function(){
                         expect(paginator.currentPageNum).toEqual(100);
                     })
+                }
+            );
+            $httpBackend.flush();
+        }));
+    });
+
+    /***
+     * Test the Paginator.toggleSort() function
+     */
+    describe("Paginator.toggleSort() function", function(){
+
+        var paginator;
+
+        it("should set sortColumn = 'joined' and sortAscending =false when toggleSort(joined) is called", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?page=1&per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+            expect(paginator.sortAscending).toEqual(null);
+
+            $httpBackend.when('GET', 'https://api.github.com/search/users?order=desc&page=1&per_page=10&q=followers:%3E%3D0&sort=joined').respond(mockedTotalCountJsonData.fakeData);
+            $httpBackend.expectGET('https://api.github.com/search/users?order=desc&page=1&per_page=10&q=followers:%3E%3D0&sort=joined');
+            paginator.toggleSort("joined").then(
+                function(){
+                    expect(paginator.sortColumn).toEqual("joined");
+                    expect(paginator.sortAscending).toEqual(false);
+                }
+            );
+            $httpBackend.flush();
+        }));
+
+        it("should set sortColumn = 'joined' and sortAscending = true when toggleSort(joined) is called twice", inject(function(momPaginator, gitHubService) {
+            $httpBackend.when('GET', 'https://api.github.com/search/users?page=1&per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+            expect(paginator.sortAscending).toEqual(null);
+
+            $httpBackend.when('GET', 'https://api.github.com/search/users?order=desc&page=1&per_page=10&q=followers:%3E%3D0&sort=joined').respond(mockedTotalCountJsonData.fakeData);
+            $httpBackend.expectGET('https://api.github.com/search/users?order=desc&page=1&per_page=10&q=followers:%3E%3D0&sort=joined');
+            paginator.toggleSort("joined").then(
+                function(){
+                    expect(paginator.sortColumn).toEqual("joined");
+                    expect(paginator.sortAscending).toEqual(false);
+                }
+            );
+            $httpBackend.flush();
+
+            $httpBackend.when('GET', 'https://api.github.com/search/users?order=asc&page=1&per_page=10&q=followers:%3E%3D0&sort=joined').respond(mockedTotalCountJsonData.fakeData);
+            $httpBackend.expectGET('https://api.github.com/search/users?order=asc&page=1&per_page=10&q=followers:%3E%3D0&sort=joined');
+            paginator.toggleSort("joined").then(
+                function(){
+                    expect(paginator.sortColumn).toEqual("joined");
+                    expect(paginator.sortAscending).toEqual(true);
                 }
             );
             $httpBackend.flush();

@@ -18,6 +18,16 @@
 
     <div>
 
+        <div class="m-pagination-btns">
+            <h5>Sort By:</h5>
+
+            <span>
+                <button class="btn mom-toggle" ng-click="model.paginator.toggleSort('followers')">Followers <i ng-class="model.getIcon('followers')"></i></button>
+                <button class="btn mom-toggle" ng-click="model.paginator.toggleSort('joined')">Joined <i ng-class="model.getIcon('joined')"></i> </button>
+                <button class="btn mom-toggle" ng-click="model.paginator.toggleSort('repositories')">Repositories <i ng-class="model.getIcon('repositories')"></i></button>
+            </span>
+        </div>
+
         <table class="table table-striped table-hover table-bordered" >
             <thead>
             <tr>
@@ -43,31 +53,7 @@
             <button class="btn btn-mini sdr-pagination-prev-btn" ng-click="model.paginator.next()">Next ></button>
             <button class="btn btn-mini sdr-pagination-next-btn" ng-click="model.paginator.last()">Last >></button>
         </div>
-        <div class="m-pagination-btns">
-            <h5>Sort By:</h5>
 
-
-            <label class="checkbox-inline">
-                <input type="radio" id="rdo-sortByFollowers" ng-model="model.paginator.sortColumn" value="followers" ng-change="model.paginator.getPage(1)" checked> Followers
-            </label>
-            <label class="checkbox-inline">
-                <input type="radio" id="rdo-sortByJoined" ng-model="model.paginator.sortColumn" value="joined" ng-change="model.paginator.getPage(1)"> Joined
-            </label>
-            <label class="checkbox-inline">
-                <input type="radio" id="rdo-sortByRepo" ng-model="model.paginator.sortColumn" value="repositories" ng-change="model.paginator.getPage(1)"> Repositories
-            </label>
-            <span>
-                <h5>Order</h5>
-                <label class="checkbox-inline">
-                    <input type="radio" id="rdo-orderASC" ng-model="model.paginator.direction" value="asc" ng-change="model.paginator.getPage(1)"> ASC
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" id="rdo-orderDESC" ng-model="model.paginator.direction" value="desc" ng-change="model.paginator.getPage(1)"> DESC
-                </label>
-
-            </span>
-
-        </div>
 </div>
 </div>
 

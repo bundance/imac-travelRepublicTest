@@ -8,19 +8,18 @@ angular.module('momUI.momPaginator', [])
                 totalItemsCount: -1,
                 promise: $q,
                 sortColumn: "",
-                direction: "",
+                sortAscending: null,
                 _initialise: function(){
                     var self = this;
 
-                    self.promise = self.getTotalItemsCount();
-                    self.promise.then(function(){
-                        self.getTotalPagesCount();
-                    });
-
+                    self.promise = self.getTotalItemsCount()
+                        .then(function(){
+                            self.getTotalPagesCount();
+                        });
                 },
                 /**
                  * @name getPage()
-                 * @params {number, number, string}
+                 * @params {number, number, boolean}
                  * @returns {*} - Returns currentPageItems as an array of data on success;
                  *              - Returns the response object on error
                  *              - Returns an empty array if no data is received.
@@ -29,34 +28,35 @@ angular.module('momUI.momPaginator', [])
                  *      Parameters:
                  *      - pageNum (optional) lets you specify what page number you want (defaults to 1)
                  *      - sortColumn (optional) lets you specify a column to sort on
-                 *      - direction (optional) lets you specify the direction to sort the results in
+                 *      - sortAscending (optional) lets you specify the direction to sort the results in.
+                 *          - true = sortAscending, false = sortDescending (default is false).
                  */
-                getPage: function(pageNum, sortColumn, direction){
+                getPage: function(pageNum, sortColumn, sortAscending){
                     var self = this;
 
                     if(typeof pageNum === "undefined"){
                         pageNum = self.currentPageNum;
                     }
                     self.sortColumn = (typeof sortColumn === "undefined") ? self.sortColumn : sortColumn;
-                    self.direction = (typeof direction === "undefined") ? self.direction : direction;
+                    self.sortAscending = (sortAscending === null) ? self.sortAscending : sortAscending;
 
                     if(self.pageExists(pageNum)){
-                        self.promise = restSvc.getData(self.itemsPerPage, pageNum, self.sortColumn, self.direction);
-                        self.promise.then(
-                            //success
-                            function(items){
-                                self.currentPageItems = items;
-                                self.currentPageNum = pageNum;
-                                self.currentPageItems.length = (items.length < self.itemsPerPage)
-                                    ? items.length : self.itemsPerPage;
+                        self.promise = restSvc.getData(self.itemsPerPage, pageNum, self.sortColumn, self.sortAscending)
+                            .then(
+                                //success
+                                function(items){
+                                    self.currentPageItems = items;
+                                    self.currentPageNum = pageNum;
+                                    self.currentPageItems.length = (items.length < self.itemsPerPage)
+                                        ? items.length : self.itemsPerPage;
 
-                                return self.currentPageItems;
-                            },
-                            //failure
-                            function(responseVal){
+                                    return self.currentPageItems;
+                                },
+                                //failure
+                                function(responseVal){
 
-                                return responseVal;
-                            });
+                                    return responseVal;
+                                });
 
                         return self.promise;
                     }
@@ -75,12 +75,13 @@ angular.module('momUI.momPaginator', [])
                 getTotalItemsCount: function(){
                     var self = this;
 
-                    self.promise = restSvc.getTotalItemsCount();
-                    return self.promise.then(
+                    self.promise = restSvc.getTotalItemsCount()
+                        .then(
                         function(count){
                             self.totalItemsCount = count;
                             return count;
                         });
+                    return self.promise;
 
                 },
                 /**
@@ -125,7 +126,7 @@ angular.module('momUI.momPaginator', [])
                  */
                 next: function(){
                     var self = this;
-                    return self.getPage(self.currentPageNum + 1);
+                    return self.getPage(self.currentPageNum + 1, self.sortColumn, self.sortAscending);
                 },
                 /***
                  * @name next
@@ -138,17 +139,25 @@ angular.module('momUI.momPaginator', [])
                  */
                 prev: function(){
                     var self = this;
-                    return self.getPage(self.currentPageNum - 1);
+                    return self.getPage(self.currentPageNum - 1, self.sortColumn, self.sortAscending);
                 },
                 first: function(){
                     var self = this;
-                    return self.getPage(1);
+                    return self.getPage(1, self.sortColumn, self.sortAscending);
                 },
                 last: function(){
                     var self = this;
-                    return self.getPage(self.totalPagesCount);
-                }
+                    return self.getPage(self.totalPagesCount, self.sortColumn, self.sortAscending);
+                },
+                toggleSort: function(sortColumn){
+                    var self = this;
 
+                    self.sortAscending = (self.sortColumn === sortColumn) ? !self.sortAscending : false;
+                    self.sortColumn = sortColumn;
+
+                    console.log("sortASC = " + self.sortAscending.toString())
+;                    return self.getPage(1, self.sortColumn, self.sortAscending);
+                }
 
             };
 

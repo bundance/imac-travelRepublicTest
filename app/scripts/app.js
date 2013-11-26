@@ -26,9 +26,13 @@ angular.module('angularMomPaginatorApp', [
     })
     .controller('PaginatorCtrl', ['$scope', 'momPaginator', 'gitHubService', function($scope, momPaginator, gitHubService){
 
-        $scope.model = {
-            currentPageItems: [],
+        this.icon = {
+            'true': 'glyphicon glyphicon-arrow-down',
+            'false': 'glyphicon glyphicon-arrow-up',
+            'none' : 'glyphicon glyphicon-resize-vertical'
         };
+
+        $scope.model = {};
 
         $scope.model.paginator = momPaginator(gitHubService, 5);
 
@@ -37,6 +41,27 @@ angular.module('angularMomPaginatorApp', [
             $scope.model.paginator.getPage();
 
         });
+
+
+
+/*
+        $scope.model = {
+            getIcon: function(sortColumn){
+                if(typeof $scope.model.paginator === "undefined"){
+                    return;
+                }
+                var retVal = (sortColumn === $scope.model.paginator.sortColumn) ? icon[$scope.model.paginator.sortAscending] : this.icon['none']
+                console.log("sortColumn = " + sortColumn + " , pag.sortCol = " + $scope.model.paginator.sortColumn);
+                if($scope.model.paginator.sortAscending !== null){
+                    console.log(", sortAsc = " + $scope.model.paginator.sortAscending.toString()) ;
+                }
+                console.log (", icon returned = " + retVal);
+                return retVal;
+            }
+
+        };
+
+*/
 
     }]);
 

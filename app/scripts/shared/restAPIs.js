@@ -22,7 +22,7 @@ angular.module('rest.gitHubAPI', ['ngResource'])
     }])
     .factory('gitHubService', ['gitHubREST', '$q', function(gitHubREST, $q){
         return {
-            getData: function(itemsPerPage, pageNum, sortColumn, direction){
+            getData: function(itemsPerPage, pageNum, sortColumn, sortAscending){
 
                 // Setup QueryString params for itemsPerPage and pageNum
                 var params = {
@@ -35,8 +35,8 @@ angular.module('rest.gitHubAPI', ['ngResource'])
                 if(typeof sortColumn !== "undefined" && sortColumn){
                     params.sort = sortColumn;
                 }
-                if(typeof direction !== "undefined" && direction){
-                    params.order = direction;
+                if(typeof sortAscending !== "undefined" && sortAscending !== null){
+                    params.order = sortAscending ? 'asc' : 'desc';
                 }
 
                 // Get the data
