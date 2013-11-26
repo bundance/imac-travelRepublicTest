@@ -26,14 +26,29 @@ angular.module('angularMomPaginatorApp', [
     })
     .controller('PaginatorCtrl', ['$scope', 'momPaginator', 'gitHubService', function($scope, momPaginator, gitHubService){
 
-        $scope.model = {};
+        var getPageNumbers = function(lastPage){
+            var arr = [];
+            var currentPage = 1;
+
+            while(currentPage <= lastPage){
+                arr.push(currentPage++);
+            }
+            console.log("value of first page = " + arr[0]);
+            return arr;
+        };
+        $scope.model = {
+            page: 1
+        };
 
         $scope.model.paginator = momPaginator(gitHubService, 5, 1, {sortIconUp: 'glyphicon glyphicon-arrow-up',
             sortIconDown: 'glyphicon glyphicon-arrow-down', sortIconNone: 'glyphicon glyphicon-resize-vertical'});
 
         $scope.model.paginator.promise
             .then(function(){
-                return $scope.model.paginator.getPage();
+                $scope.model.paginator.getPage()
+                    .then(function(){
+                        $scope.model.pages = getPageNumbers($scope.model.paginator.totalPagesCount);
+                    })
             });
 
 

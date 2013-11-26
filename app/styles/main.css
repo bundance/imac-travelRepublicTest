@@ -81,3 +81,16 @@ body {
 .m-sort-btns{
     margin: 0 0 20px 0;
 }
+
+.m-pagination-btns{
+    float: left;
+}
+
+.m-pagination-pages{
+    float: right;
+}
+
+
+.inline-select-text{
+    margin: 0 10px 0 0;
+}
