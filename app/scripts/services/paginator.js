@@ -148,6 +148,7 @@ angular.module('momUI.momPaginator', [])
                 },
                 first: function(){
                     var self = this;
+                    console.log("first called");
                     return self.getPage(1, self.sortColumn, self.sortAscending);
                 },
                 last: function(){
