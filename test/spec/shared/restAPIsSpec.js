@@ -439,13 +439,13 @@ describe('Service: gitHubAPI', function () {
 
 
     /***
-     * Test the Paginator.first function
+     * Test the Paginator.first() and Paginator.last() functions
      */
-    describe("Paginator prev function", function(){
+    describe("Paginator first and last functions", function(){
 
         var paginator;
 
-        it("should call the first page when paginator.first is called", inject(function(momPaginator, gitHubService) {
+        it("should call the first page when paginator.first() is called", inject(function(momPaginator, gitHubService) {
             $httpBackend.when('GET', 'https://api.github.com/search/users?page=1&per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
 
             paginator = momPaginator(gitHubService);
@@ -465,6 +465,34 @@ describe('Service: gitHubAPI', function () {
                     $httpBackend.expectGET('https://api.github.com/search/users?page=1&per_page=10&q=followers:%3E%3D0');
                     paginator.first().then(function(){
                         expect(paginator.currentPageNum).toEqual(1);
+                    })
+                }
+            );
+            $httpBackend.flush();
+        }));
+
+        it("should call the last page when paginator.last() is called", inject(function(momPaginator, gitHubService){
+            $httpBackend.when('GET', 'https://api.github.com/search/users?page=1&per_page=1&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+
+            paginator = momPaginator(gitHubService);
+            $httpBackend.flush();
+
+            paginator.totalItemsCount = 100;
+            paginator.currentPageNum = 5;
+            paginator.totalPagesCount = 10;
+
+            $httpBackend.when('GET', 'https://api.github.com/search/users?page=4&per_page=10&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+            $httpBackend.expectGET('https://api.github.com/search/users?page=4&per_page=10&q=followers:%3E%3D0');
+            paginator.prev().then(
+                function(){
+                    expect(paginator.currentPageNum).toEqual(4);
+
+                    $httpBackend.when('GET', 'https://api.github.com/search/users?page=100&per_page=10&q=followers:%3E%3D0').respond(mockedTotalCountJsonData.fakeData);
+                    $httpBackend.expectGET('https://api.github.com/search/users?page=100&per_page=10&q=followers:%3E%3D0');
+
+                    paginator.totalPagesCount = 100;
+                    paginator.last().then(function(){
+                        expect(paginator.currentPageNum).toEqual(100);
                     })
                 }
             );

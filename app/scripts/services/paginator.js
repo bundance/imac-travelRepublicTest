@@ -143,6 +143,10 @@ angular.module('momUI.momPaginator', [])
                 first: function(){
                     var self = this;
                     return self.getPage(1);
+                },
+                last: function(){
+                    var self = this;
+                    return self.getPage(self.totalPagesCount);
                 }
 
 
