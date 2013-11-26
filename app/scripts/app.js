@@ -26,29 +26,17 @@ angular.module('angularMomPaginatorApp', [
     })
     .controller('PaginatorCtrl', ['$scope', 'momPaginator', 'gitHubService', function($scope, momPaginator, gitHubService){
 
-        var icon = {
-            'true': 'glyphicon glyphicon-arrow-down',
-            'false': 'glyphicon glyphicon-arrow-up',
-            'none' : 'glyphicon glyphicon-resize-vertical'
-        };
+        $scope.model = {};
 
-        $scope.model = {
-            getIcon: function(sortColumn){
-                if(typeof $scope.model.paginator.sortColumn === "undefined"){
-                    return this.icon("none");
-                }
-                return (sortColumn === $scope.model.paginator.sortColumn) ? icon[$scope.model.paginator.sortAscending] : icon['none'];
-            }
-        };
-
-        $scope.model.paginator = momPaginator(gitHubService, 5);
+        $scope.model.paginator = momPaginator(gitHubService, 5, 1, {sortIconUp: 'glyphicon glyphicon-arrow-up',
+            sortIconDown: 'glyphicon glyphicon-arrow-down', sortIconNone: 'glyphicon glyphicon-resize-vertical'});
 
         $scope.model.paginator.promise
             .then(function(){
-                console.log("total page count = " + $scope.model.paginator.totalPagesCount);
                 return $scope.model.paginator.getPage();
-
             });
+
+
 
     }]);
 

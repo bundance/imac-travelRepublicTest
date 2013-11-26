@@ -1,6 +1,6 @@
 angular.module('momUI.momPaginator', [])
     .factory('momPaginator', ['$q', function($q) {
-        return function(restSvc, itemsPerPage, initialPage) {
+        return function(restSvc, itemsPerPage, initialPage, sortIcons) {
             var paginator = {
                 currentPageItems: [],
                 currentPageNum: initialPage || 1,
@@ -9,6 +9,11 @@ angular.module('momUI.momPaginator', [])
                 promise: $q,
                 sortColumn: "",
                 sortAscending: null,
+                sortIcons: {
+                    'true': (typeof sortIcons === "undefined") ? null : sortIcons.sortIconUp,
+                    'false': (typeof sortIcons === "undefined") ? null : sortIcons.sortIconDown,
+                    'none': (typeof sortIcons === "undefined") ? null : sortIcons.sortIconNone
+                },
                 _initialise: function(){
                     var self = this;
 
@@ -155,10 +160,17 @@ angular.module('momUI.momPaginator', [])
                     self.sortAscending = (self.sortColumn === sortColumn) ? !self.sortAscending : false;
                     self.sortColumn = sortColumn;
 
-                    console.log("sortASC = " + self.sortAscending.toString())
-;                    return self.getPage(1, self.sortColumn, self.sortAscending);
-                }
+                    return self.getPage(1, self.sortColumn, self.sortAscending);
+                },
+                getSortIcon: function(columnName){
+                    var self = this;
 
+                    if(typeof self.sortColumn === "undefined"){
+                        return this.icon("none");
+                    }
+                    return (columnName === self.sortColumn) ? self.sortIcons[self.sortAscending] : self.sortIcons['none'];
+
+                }
             };
 
             // initialise
