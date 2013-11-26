@@ -26,42 +26,29 @@ angular.module('angularMomPaginatorApp', [
     })
     .controller('PaginatorCtrl', ['$scope', 'momPaginator', 'gitHubService', function($scope, momPaginator, gitHubService){
 
-        this.icon = {
+        var icon = {
             'true': 'glyphicon glyphicon-arrow-down',
             'false': 'glyphicon glyphicon-arrow-up',
             'none' : 'glyphicon glyphicon-resize-vertical'
         };
 
-        $scope.model = {};
+        $scope.model = {
+            getIcon: function(sortColumn){
+                if(typeof $scope.model.paginator.sortColumn === "undefined"){
+                    return this.icon("none");
+                }
+                return (sortColumn === $scope.model.paginator.sortColumn) ? icon[$scope.model.paginator.sortAscending] : icon['none'];
+            }
+        };
 
         $scope.model.paginator = momPaginator(gitHubService, 5);
 
-        $scope.model.paginator.promise.then(function(){
-            console.log("total page count = " + $scope.model.paginator.totalPagesCount);
-            $scope.model.paginator.getPage();
+        $scope.model.paginator.promise
+            .then(function(){
+                console.log("total page count = " + $scope.model.paginator.totalPagesCount);
+                return $scope.model.paginator.getPage();
 
-        });
-
-
-
-/*
-        $scope.model = {
-            getIcon: function(sortColumn){
-                if(typeof $scope.model.paginator === "undefined"){
-                    return;
-                }
-                var retVal = (sortColumn === $scope.model.paginator.sortColumn) ? icon[$scope.model.paginator.sortAscending] : this.icon['none']
-                console.log("sortColumn = " + sortColumn + " , pag.sortCol = " + $scope.model.paginator.sortColumn);
-                if($scope.model.paginator.sortAscending !== null){
-                    console.log(", sortAsc = " + $scope.model.paginator.sortAscending.toString()) ;
-                }
-                console.log (", icon returned = " + retVal);
-                return retVal;
-            }
-
-        };
-
-*/
+            });
 
     }]);
 

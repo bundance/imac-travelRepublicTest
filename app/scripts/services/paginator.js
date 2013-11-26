@@ -86,14 +86,14 @@ angular.module('momUI.momPaginator', [])
                 },
                 /**
                  * @name: getTotalPagesCount()
-                 * @returns {integer}
+                 * @returns {Number}
                  * @description Calculates and returns the total number of pages that can be traversed by the Paginator.
                  */
                 getTotalPagesCount: function(){
                     var self = this;
 
                     if(self.totalItemsCount < 0){
-                        self.getTotalItemsCount();
+                        return 0;
                     }
                     self.totalPagesCount = parseInt(self.totalItemsCount / self.itemsPerPage);
 
