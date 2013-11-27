@@ -1,11 +1,13 @@
 angular.module('momUI.momPaginator', [])
     .factory('momPaginator', ['$q', function($q) {
         return function(restSvc, itemsPerPage, initialPage, sortIcons) {
+
             var paginator = {
                 currentPageItems: [],
                 currentPageNum: initialPage || 1,
                 itemsPerPage: itemsPerPage ? itemsPerPage : 10 ,
                 totalItemsCount: -1,
+                totalpagesCount: 0,
                 promise: $q,
                 sortColumn: "",
                 sortAscending: null,
@@ -17,7 +19,7 @@ angular.module('momUI.momPaginator', [])
                 _initialise: function(){
                     var self = this;
 
-                    self.promise = self.getTotalItemsCount()
+                    this.promise = this.getTotalItemsCount()
                         .then(function(){
                             self.getTotalPagesCount();
                         });
@@ -40,13 +42,13 @@ angular.module('momUI.momPaginator', [])
                     var self = this;
 
                     if(typeof pageNum === "undefined"){
-                        pageNum = self.currentPageNum;
+                        pageNum = this.currentPageNum;
                     }
-                    self.sortColumn = (typeof sortColumn === "undefined") ? self.sortColumn : sortColumn;
-                    self.sortAscending = (sortAscending === null) ? self.sortAscending : sortAscending;
+                    this.sortColumn = (typeof sortColumn === "undefined") ? this.sortColumn : sortColumn;
+                    this.sortAscending = (sortAscending === null) ? this.sortAscending : sortAscending;
 
-                    if(self.pageExists(pageNum)){
-                        self.promise = restSvc.getData(self.itemsPerPage, pageNum, self.sortColumn, self.sortAscending)
+                    if(this.pageExists(pageNum)){
+                        this.promise = restSvc.getData(this.itemsPerPage, pageNum, this.sortColumn, this.sortAscending)
                             .then(
                                 //success
                                 function(items){
@@ -63,7 +65,7 @@ angular.module('momUI.momPaginator', [])
                                     return responseVal;
                                 });
 
-                        return self.promise;
+                        return this.promise;
                     }
                     else{
                         console.log("No more pages");
@@ -80,13 +82,13 @@ angular.module('momUI.momPaginator', [])
                 getTotalItemsCount: function(){
                     var self = this;
 
-                    self.promise = restSvc.getTotalItemsCount()
+                    this.promise = restSvc.getTotalItemsCount()
                         .then(
                         function(count){
                             self.totalItemsCount = count;
                             return count;
                         });
-                    return self.promise;
+                    return this.promise;
 
                 },
                 /**
@@ -95,18 +97,17 @@ angular.module('momUI.momPaginator', [])
                  * @description Calculates and returns the total number of pages that can be traversed by the Paginator.
                  */
                 getTotalPagesCount: function(){
-                    var self = this;
 
-                    if(self.totalItemsCount < 0){
+                    if(this.totalItemsCount < 0){
                         return 0;
                     }
-                    self.totalPagesCount = parseInt(self.totalItemsCount / self.itemsPerPage);
+                    this.totalPagesCount = parseInt(this.totalItemsCount / this.itemsPerPage);
 
-                    if(self.totalItemsCount % self.itemsPerPage > 0){
-                        self.totalPagesCount++;
+                    if(this.totalItemsCount % this.itemsPerPage > 0){
+                        this.totalPagesCount++;
                     }
-                    console.log("total pages count = " + self.totalPagesCount)
-                    return self.totalPagesCount;
+                    console.log("total pages count = " + this.totalPagesCount)
+                    return this.totalPagesCount;
                 },
                 /**
                  * @name pageExists
@@ -117,8 +118,8 @@ angular.module('momUI.momPaginator', [])
                  * as part of this paginator object's initialisation.
                  */
                 pageExists: function(pageNum){
-                    var self = this;
-                    return ((self.totalItemsCount < 0 || pageNum <= self.totalPagesCount) && pageNum > 0);
+                    //var self = this;
+                    return ((this.totalItemsCount < 0 || pageNum <= this.totalPagesCount) && pageNum > 0);
                 },
                 /***
                  * @name next
@@ -130,8 +131,8 @@ angular.module('momUI.momPaginator', [])
                  * For pages beyond the last page, an empty array is returned.
                  */
                 next: function(){
-                    var self = this;
-                    return self.getPage(self.currentPageNum + 1, self.sortColumn, self.sortAscending);
+                    //var self = this;
+                    return this.getPage(this.currentPageNum + 1, this.sortColumn, this.sortAscending);
                 },
                 /***
                  * @name next
@@ -143,33 +144,33 @@ angular.module('momUI.momPaginator', [])
                  * For pages before the first page (i.e. pages before page 1), an empty array is returned.
                  */
                 prev: function(){
-                    var self = this;
-                    return self.getPage(self.currentPageNum - 1, self.sortColumn, self.sortAscending);
+                    //var self = this;
+                    return this.getPage(this.currentPageNum - 1, this.sortColumn, this.sortAscending);
                 },
                 first: function(){
-                    var self = this;
+                    //var self = this;
                     console.log("first called");
-                    return self.getPage(1, self.sortColumn, self.sortAscending);
+                    return this.getPage(1, this.sortColumn, this.sortAscending);
                 },
                 last: function(){
-                    var self = this;
-                    return self.getPage(self.totalPagesCount, self.sortColumn, self.sortAscending);
+                    //var self = this;
+                    return this.getPage(this.totalPagesCount, this.sortColumn, this.sortAscending);
                 },
                 toggleSort: function(sortColumn){
-                    var self = this;
+                    //var self = this;
 
-                    self.sortAscending = (self.sortColumn === sortColumn) ? !self.sortAscending : false;
-                    self.sortColumn = sortColumn;
+                    this.sortAscending = (this.sortColumn === sortColumn) ? !this.sortAscending : false;
+                    this.sortColumn = sortColumn;
 
-                    return self.getPage(1, self.sortColumn, self.sortAscending);
+                    return this.getPage(1, this.sortColumn, this.sortAscending);
                 },
                 getSortIcon: function(columnName){
-                    var self = this;
+                    //var self = this;
 
-                    if(typeof self.sortColumn === "undefined"){
+                    if(typeof this.sortColumn === "undefined"){
                         return this.icon("none");
                     }
-                    return (columnName === self.sortColumn) ? self.sortIcons[self.sortAscending] : self.sortIcons['none'];
+                    return (columnName === this.sortColumn) ? this.sortIcons[this.sortAscending] : this.sortIcons['none'];
 
                 }
             };
