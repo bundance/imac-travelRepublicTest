@@ -4,9 +4,8 @@ angular.module('angularMomPaginatorApp', [
         'ngResource',
         'ngSanitize',
         'ngRoute',
-        'rest.gitHubAPI',
+        'rest.gitHubAPI',   // change this to whatever ReST service you're using
         'momUI.momPaginator',
-        'myMocks.mockPaginator',
         'momUI'])
     .config(function ($routeProvider) {
          $routeProvider
