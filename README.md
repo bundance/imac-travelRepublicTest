@@ -16,11 +16,10 @@ to your user when your page is waiting for a response, and can easily be integra
 
 This last point is important. Many AngularJS paginators or datatables will try to provide the HTML for you as a template
 in a directive. The problem with this approach, however, is that [browsers will not permit AngularJS to transclude tables](https://github.com/angular/angular.js/issues/1459)
-
 (in English - you can't use AngularJS directives to generate tables).
 
 Other paginators and datatables attempt to get round this by using nested DIVs, but in my opinion, this is as bad as
-using tables for layout purposes, as it breaks the semantics of the HTML. If you're rendering a table, use the <table>
+using tables for layout purposes, as it breaks the semantics of the HTML. If you're rendering a table, use the `<table>`
 element!
 
 So the momPaginator is implemented as a service, not a directive, which has the benefit of letting you put its
