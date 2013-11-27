@@ -1,8 +1,10 @@
 #momPaginator - AngularJS Paginator service#
-============================================
 
 The momPaginator is an AngularJS service that pulls in data from a ReST API, paginates it, and provides functions
 for navigating through the pages, sorting them and ordering them however you wish.
+
+##TL;DR##
+Just show me [an example](https://github.com/bundance/angular-mom-paginator#example)!
 
 ##Overview##
 The momPaginator is a service that uses an external ReST service that you provide to pull in data from a ReST API. Once
@@ -114,10 +116,10 @@ Returns the previous page in the dataset as a promise, which, upon completion, f
  data retrieved, and returns it.
  * If no more pages, returns an empty array
 
-*`first()`
+* `first()`
 Helper function that returns `getPage(1)`
 
-*`last()`
+* `last()`
 Helper function that returns `getPage( getTotalPagesCount() )`
 
 * `toggleSort(columnName)`
@@ -226,6 +228,27 @@ angular.module('angularMomPaginatorApp', [
 </div>
 ```
 
+##Complete Example##
+To see a complete example implementation, clone the repo and navigate to:
+
+ `http://localhost/angular-mom-paginator/app/#/`
+
+###Files###
+
+* The standard momPaginator home page is implemented in `app/views/main.html` and uses the `PaginatorCtrl`
+ controller (defined in `angular-mom-paginator/app/scripts/app.js`)
+* The version with the spinner is implemented in `app/views/main-spinner.html` and uses the `PaginatorSpinnerCtrl`
+ controller (defined in `angular-mom-paginator/app/scripts/app.js`)
+* The Paginator service is defined in 'angular-mom-paginator/app/scripts/services/paginator.js`
+* The ReST Service is defined in `angular-mom-paginator/app/scripts/shared/restAPIs.js`
+
+###Tests###
+You'll need the Karma test runner to run the tests, which can be found in `angular-mom-paginator/test/spec`. Tests for
+  the controllers can be found in `angular-mom-paginator/test/spec/controllers/main.js`, while the much more
+  detailed tests for the ReST API communication can be found in
+  `angular-mom-paginator/test/spec/shared/restAPIspec.js`
+
+ Mocks of the Paginator service and gitHub results can be found in `angular-mom-paginator/test/mock`
 
 
 
