@@ -35,10 +35,9 @@ service as a dependency with your module, and you're nearly all set to use it.
 The last remaining thing to do is to provide a ReST service that communicates with your ReST server, and which exposes
 the following functions:
 
-```
-- getData(itemsPerPage, pageNum, sortColumn, sortAscending)
-- getTotalItemsCount()
-```
+* `getData(itemsPerPage, pageNum, sortColumn, sortAscending)`
+* `getTotalItemsCount()`
+
 
 ###Creating an instance of momPaginator###
 You create an instance of momPaginator as follows:
@@ -60,7 +59,8 @@ Upon creation, the momPaginator will immediately call its `getPage()` method to 
 
 ```
 $scope.model.paginator = momPaginator(gitHubService, 5, 1, {sortIconUp: 'glyphicon glyphicon-arrow-up',
-               sortIconDown: 'glyphicon glyphicon-arrow-down', sortIconNone: 'glyphicon glyphicon-resize-vertical'});
+               sortIconDown: 'glyphicon glyphicon-arrow-down',
+               sortIconNone: 'glyphicon glyphicon-resize-vertical'});
            $scope.model.paginator.promise
                .then(function(){
                    $scope.model.paginator.getPage()
@@ -202,7 +202,7 @@ angular.module('angularMomPaginatorApp', [
             });
 ```
 
-###Using the momPaginator in your HTML table###
+###Using the momPaginator to fill your HTML table with a page of data###
 
 ```
 <table>
@@ -213,6 +213,17 @@ angular.module('angularMomPaginatorApp', [
         <td>{{item.property3}}</td>
     </tr>
 </table>
+```
+
+###Adding pagination buttons to your HTML###
+
+```
+<div class="m-pagination-btns">
+    <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.first()"><< First</button>
+    <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.prev()">< Prev</button>
+    <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.next()">Next ></button>
+    <button class="btn btn-mini btn-primary sdr-pagination-next-btn" ng-click="model.paginator.last()">Last >></button>
+</div>
 ```
 
 
