@@ -1,4 +1,5 @@
 #momPaginator - AngularJS Paginator service#
+============================================
 
 The momPaginator is an AngularJS service that pulls in data from a ReST API, paginates it, and provides functions
 for navigating through the pages, sorting them and ordering them however you wish.
@@ -46,13 +47,13 @@ You create an instance of momPaginator as follows:
 
 ####Parameters####
 
-ReSTService - the ReST service used to communicate with your ReST API. The momPaginator service uses this to retrieve data.
-itemsPerPage - how many items of data a page should comprise (default is 10)
-initialPageNum - the page number you wish the pagination to start at (default is 1)
-sortIcons -an object comprising the following icon properties:
-sortIconUp: name of the value you choose for the icon that represents sort ASCending in your application
-sortIconDown: name of the value you choose for the icon that represents sort DESCending in your application
-sortIconNone: name of the value you choose for the icon that represents no sorting applied
+* `ReSTService` - the ReST service used to communicate with your ReST API. The momPaginator service uses this to retrieve data.
+* `itemsPerPage` - how many items of data a page should comprise (default is 10)
+* `initialPageNum` - the page number you wish the pagination to start at (default is 1)
+* `sortIcons` - an object comprising the following icon properties:
+* `sortIconUp` name of the value you choose for the icon that represents sort ASCending in your application
+* `sortIconDown` name of the value you choose for the icon that represents sort DESCending in your application
+* `sortIconNone` name of the value you choose for the icon that represents no sorting applied
 
 Upon creation, the momPaginator will immediately call its `getPage()` method to retrieve the first page of data, and return.
   You can use momPaginator's `promise` property to access this data once it's loaded, as follows:
@@ -72,23 +73,23 @@ $scope.model.paginator = momPaginator(gitHubService, 5, 1, {sortIconUp: 'glyphic
 ####Properties####
 Once an instance has been created, you have access to the following properties:
 
-```
-currentPageItems - array
-currentPageNum - number
-itemsPerPage - number
-totalItemsCount - number
-totalpagesCount - number
-promise - $q,
-sortColumn - string
-sortAscending - string
-```
+
+* `currentPageItems` - array
+* `currentPageNum` - number
+* `itemsPerPage` - number
+* `totalItemsCount` - number
+* `totalpagesCount` - number
+* `promise` - $q,
+* `sortColumn` - string
+* `sortAscending` - string
+
 
 ####Methods####
 `getPage(pageNum, sortColumn, sortAscending)`
 Retrieves a page of data from the ReST API. Returns immediately with a promise, which, when completed, fills the
  currentPageItems array with the data retrieved, and returns it.
- On error, returns the response
- If no data is received, it returns an empty array.
+* On error, returns the response
+* If no data is received, it returns an empty array.
 
 `getTotalItemsCount()`
 Returns the number of total items contained in the dataset being paginated. Note that this is different from the number
@@ -106,12 +107,12 @@ Returns the number of total items contained in the dataset being paginated. Note
  `next()`
  Returns the next page in the dataset as a promise, which, upon completion, fills the currentPageItems array with the
  data retrieved, and returns it.
- If no more pages, returns an empty array
+* If no more pages, returns an empty array
 
 `prev()`
 Returns the previous page in the dataset as a promise, which, upon completion, fills the currentPageItems array with the
  data retrieved, and returns it.
- If no more pages, returns an empty array
+* If no more pages, returns an empty array
 
 `first()`
 Helper function that returns `getPage(1)`
@@ -127,11 +128,11 @@ on the same column again, and it will be sorted ASCending.
 Helper function designed to provide a value of your choice according to whether the columnName entered has been used
  to sort the data, and the direction in which the data has been sorted.
 
- If columnName has been used to sort in an ASCending direction, this function will return the value entered on
+* If columnName has been used to sort in an ASCending direction, this function will return the value entered on
   momPaginator instance creation in sortIcons.sortIconUp
-If columnName has been used to sort in an DESCending direction, this function will return the value entered on
+* If columnName has been used to sort in an DESCending direction, this function will return the value entered on
   momPaginator instance creation in sortIcons.sortIconDown
-If columnName has NOT been used to sort , this function will return the value entered on  momPaginator instance
+* If columnName has NOT been used to sort , this function will return the value entered on  momPaginator instance
 creation in sortIcons.sortIconNone
 
 
@@ -145,38 +146,40 @@ $http object, $httpJson, or even a jQuery ajax call if you'd prefer).
 The example in this repository includes a ReST service called rest.gitHubAPI, which was created to communicate with the
 GitHub API. If you look at the code in app/shared/restAPI.js, you'll see rest.gitHubAPI defined as two services:
 
-- gitHubREST - a simple wrapper around $resource, defined with the parameters specified by GitHub to access its API.
-- gitHubService - the ReST service required by momPaginator, complete with the getData and getTotalItemsCount functions.
+* `gitHubREST` - a simple wrapper around $resource, defined with the parameters specified by GitHub to access its API.
+* `gitHubService` - the ReST service required by momPaginator, complete with the getData and getTotalItemsCount functions.
 
 ###ReST Service getData() Parameters###
 
-`getData(itemsPerPage, pageNum, sortColumn, sortAscending)`
+#####getData(itemsPerPage, pageNum, sortColumn, sortAscending)#####
 
-Parameters:
-`itemsPerPage` - Number, stating how many items of data you want to display on each page. Defaults to 10.
-`pageNum` - the page number you want to retrieve the items of data for. Different APIs use different methods (and
+*Parameters*
+* `itemsPerPage` - Number, stating how many items of data you want to display on each page. Defaults to 10.
+* `pageNum` - the page number you want to retrieve the items of data for. Different APIs use different methods (and
 parameters) for pagination, which is one of the reasons why the ReST Service exists independently of the implementation
  used to perform the actual API requests. Defaults to 1.
-`sortColumn` - the name of the column you wish you to sort on. No default. If you don't wish to sort, simply don't provide
+* `sortColumn` - the name of the column you wish you to sort on. No default. If you don't wish to sort, simply don't provide
  a `sortColumn` value.
- `sortAscending` - true returns the data sorted by sortColumn in ASCending order. False returns it sorted in DESCending
+ * `sortAscending` - true returns the data sorted by sortColumn in ASCending order. False returns it sorted in DESCending
  order. No default - if you don't need to sort your data, simply don't provide a 'sortAscending' value.
 
- Return values:
- getData must return a promise immediately after making the call to the ReST API. The promise must be chained with a
+*Return values*
+ * `getData()` must return a promise immediately after making the call to the ReST API. The promise must be chained with a
  then() function, which must return an array of items of length `itemsPerPage' or less.
-On error, the response object must be returned.
+* On error, the response object must be returned.
 
 
 ###ReST Service getTotalItemsCount() Parameters###
 
-`getTotalItemsCount`
+#####getTotalItemsCount()#####
 
-Parameters: None
-Return value
-getTotalItemsCount must return a promise immediately after making the call to the ReSTAPI. The promise must be chained
+*Parameters*
+None
+
+*Return values*
+* `getTotalItemsCount()` must return a promise immediately after making the call to the ReSTAPI. The promise must be chained
 with a then() function, which must return the total number of items in the dataset that can be paginated.
-On error, the response object must be returned.
+* On error, the response object must be returned.
 
 ##Example##
 
