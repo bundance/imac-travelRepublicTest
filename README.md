@@ -85,55 +85,55 @@ Once an instance has been created, you have access to the following properties:
 
 
 ####Methods####
-`getPage(pageNum, sortColumn, sortAscending)`
+* `getPage(pageNum, sortColumn, sortAscending)`*
 Retrieves a page of data from the ReST API. Returns immediately with a promise, which, when completed, fills the
  currentPageItems array with the data retrieved, and returns it.
-* On error, returns the response
-* If no data is received, it returns an empty array.
+ * On error, returns the response
+ * If no data is received, it returns an empty array.
 
-`getTotalItemsCount()`
+* `getTotalItemsCount()`
 Returns the number of total items contained in the dataset being paginated. Note that this is different from the number
  of page paginated. The function returns a promise, which, when completed, returns the total number of items contained
  in the dataset.
 
- `getTotalPagesCount()`
+* `getTotalPagesCount()`
  Returns the number of total pages that have been paginated. The value returned here is the same as the value of the
  last page in the momPaginator. Does not return a promise, as it relies on getTotalItemsCount() having already been called
  (which is is upon the momPaginator's initial creation).
 
- `pageExists(pageNum)`
+* `pageExists(pageNum)`
  Returns true if pageNum exists in the dataset, false otherwise.
 
- `next()`
+* `next()`
  Returns the next page in the dataset as a promise, which, upon completion, fills the currentPageItems array with the
  data retrieved, and returns it.
-* If no more pages, returns an empty array
+ * If no more pages, returns an empty array
 
-`prev()`
+* `prev()`
 Returns the previous page in the dataset as a promise, which, upon completion, fills the currentPageItems array with the
  data retrieved, and returns it.
-* If no more pages, returns an empty array
+ * If no more pages, returns an empty array
 
-`first()`
+*`first()`
 Helper function that returns `getPage(1)`
 
-`last()`
+*`last()`
 Helper function that returns `getPage( getTotalPagesCount() )`
 
-`toggleSort(columnName)`
+* `toggleSort(columnName)`
 Sorts the data by columnName. If the data hasn't been sorted before, it defaults to DESCending. Call this function
 on the same column again, and it will be sorted ASCending.
 
-`getSortIcon(columnName)`
+* `getSortIcon(columnName)`
 Helper function designed to provide a value of your choice according to whether the columnName entered has been used
  to sort the data, and the direction in which the data has been sorted.
 
-* If columnName has been used to sort in an ASCending direction, this function will return the value entered on
-  momPaginator instance creation in sortIcons.sortIconUp
-* If columnName has been used to sort in an DESCending direction, this function will return the value entered on
-  momPaginator instance creation in sortIcons.sortIconDown
-* If columnName has NOT been used to sort , this function will return the value entered on  momPaginator instance
-creation in sortIcons.sortIconNone
+ * If columnName has been used to sort in an ASCending direction, this function will return the value entered on
+   momPaginator instance creation in sortIcons.sortIconUp
+ * If columnName has been used to sort in an DESCending direction, this function will return the value entered on
+   momPaginator instance creation in sortIcons.sortIconDown
+ * If columnName has NOT been used to sort , this function will return the value entered on  momPaginator instance
+ creation in sortIcons.sortIconNone
 
 
 ##The ReST Service##
@@ -160,13 +160,13 @@ parameters) for pagination, which is one of the reasons why the ReST Service exi
  used to perform the actual API requests. Defaults to 1.
 * `sortColumn` - the name of the column you wish you to sort on. No default. If you don't wish to sort, simply don't provide
  a `sortColumn` value.
- * `sortAscending` - true returns the data sorted by sortColumn in ASCending order. False returns it sorted in DESCending
+* `sortAscending` - true returns the data sorted by sortColumn in ASCending order. False returns it sorted in DESCending
  order. No default - if you don't need to sort your data, simply don't provide a 'sortAscending' value.
 
 *Return values*
- * `getData()` must return a promise immediately after making the call to the ReST API. The promise must be chained with a
+* `getData()` must return a promise immediately after making the call to the ReST API. The promise must be chained with a
  then() function, which must return an array of items of length `itemsPerPage' or less.
-* On error, the response object must be returned.
+ * On error, the response object must be returned.
 
 
 ###ReST Service getTotalItemsCount() Parameters###
@@ -179,7 +179,7 @@ None
 *Return values*
 * `getTotalItemsCount()` must return a promise immediately after making the call to the ReSTAPI. The promise must be chained
 with a then() function, which must return the total number of items in the dataset that can be paginated.
-* On error, the response object must be returned.
+ * On error, the response object must be returned.
 
 ##Example##
 
