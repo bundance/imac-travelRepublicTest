@@ -67,7 +67,7 @@ $scope.model.paginator = momPaginator(gitHubService, 5, 1, {sortIconUp: 'glyphic
                            $scope.model.pages = getPageNumbers($scope.model.paginator.totalPagesCount);
                        })
                });
-              ```
+```
 
 ####Properties####
 Once an instance has been created, you have access to the following properties:
