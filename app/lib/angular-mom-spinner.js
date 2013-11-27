@@ -39,7 +39,7 @@ var momentumUIApp = angular.module('momUI', []);
  *
  * @usage
  * <mom-spinner
- *      mom-start-icon="startIcon"
+ *      mom-spinner-start-icon="startIcon"
  *      mom-spinner-icon="spinnerIcon"
  *      mom-spinner-fn="asynchronousFunction"
  *      mom-spinner-fn-params="{name1: value1, name2: value2...nameN: valueN}"
@@ -55,7 +55,7 @@ var momentumUIApp = angular.module('momUI', []);
  * @paramDescription
  * On the mom-spinner element add:
  *
- * * `mom-start-icon`: the icon that should appear before the asynchronous function is called. The name should be
+ * * `mom-spinner-start-icon`: the icon that should appear before the asynchronous function is called. The name should be
  *   a Twitter Bootstrap icon name.
  * *  'mom-spinner-icon': the icon to use when the asynchronous function has been called but not yet returned. The name
  *   should be a Twitter Bootstrap icon name.
@@ -72,7 +72,7 @@ var momentumUIApp = angular.module('momUI', []);
  *
  * @example
  <mom-spinner
-        mom-start-icon="'glyphicon glyphicon-ok'"
+        mom-spinner-start-icon="'glyphicon glyphicon-ok'"
         mom-spinner-fn="model.asyncFn"
         mom-spinner-fn-params="{'icon-end':'glyphicon glyphicon-ok-sign', 'cell-name': 'Joe Bloggs'}"
         mom-spinner-tag="'icon-spin icon-refresh'">
@@ -87,7 +87,7 @@ momentumUIApp.directive('momSpinner', function(){
             momSpinnerIcon: '@momSpinnerIcon',
             momSpinnerFn: '&momSpinnerFn',
             momSpinnerFnParams: '&momSpinnerFnParams',
-            momStartIcon: '=',
+            momSpinnerStartIcon: '=',
             momSpinnerTag: '@momSpinnerTag',
             momSpinnerId: '@momSpinnerId'
         },
@@ -184,8 +184,8 @@ momentumUIApp.directive('momSpinner', function(){
         },
         link: function(scope, element, attrs){
             // Initialise the icon and set the spinner icon
-            scope.theIcon = scope.momStartIcon;
-            scope.momSpinnerIcon = (typeof scope.momSpinnerIcon === 'undefined') ? "icon-spin icon-refresh" : scope.momStartIcon;
+            scope.theIcon = scope.momSpinnerStartIcon;
+            scope.momSpinnerIcon = (typeof scope.momSpinnerIcon === 'undefined') ? "icon-spin icon-refresh" : scope.momSpinnerStartIcon;
         },
         template: "<span class='mom-spinner' ng-click='momSpinnerClicked()'><i class='{{theIcon}}'></i></span>"
 

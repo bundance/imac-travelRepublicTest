@@ -168,7 +168,7 @@ angular.module('momUI.momPaginator', [])
                     //var self = this;
 
                     if(typeof this.sortColumn === "undefined"){
-                        return this.icon("none");
+                        return this.sortIcons['none'];
                     }
                     return (columnName === this.sortColumn) ? this.sortIcons[this.sortAscending] : this.sortIcons['none'];
 

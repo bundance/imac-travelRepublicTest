@@ -114,6 +114,16 @@ angular.module('angularMomPaginatorApp', [
                     })
             });
 
+        $scope.model.toggleSort = function(sortParams){
+            console.log("toggleSort colName param = " + sortParams.columnName);
+
+            return $scope.model.paginator.toggleSort(sortParams.columnName)
+                .then(function(){
+                    var icon = $scope.model.paginator.getSortIcon(sortParams.columnName);
+                    return {icon: $scope.model.paginator.getSortIcon(sortParams.columnName)};
+                })
+        };
+
         $scope.model.first = function(){
             return $scope.model.paginator.first();
         };
@@ -127,6 +137,9 @@ angular.module('angularMomPaginatorApp', [
         $scope.model.prev = function(){
             return $scope.model.paginator.prev();
         };
+        $scope.model.getPage = function(getPageParams){
+            return $scope.model.paginator.getPage(getPageParams.pageNum);
+        }
 
     }]);
 
