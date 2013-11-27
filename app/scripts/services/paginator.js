@@ -106,7 +106,6 @@ angular.module('momUI.momPaginator', [])
                     if(this.totalItemsCount % this.itemsPerPage > 0){
                         this.totalPagesCount++;
                     }
-                    console.log("total pages count = " + this.totalPagesCount)
                     return this.totalPagesCount;
                 },
                 /**
@@ -149,7 +148,6 @@ angular.module('momUI.momPaginator', [])
                 },
                 first: function(){
                     //var self = this;
-                    console.log("first called");
                     return this.getPage(1, this.sortColumn, this.sortAscending);
                 },
                 last: function(){
