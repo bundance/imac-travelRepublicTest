@@ -332,8 +332,6 @@ describe('Service: gitHubAPI', function () {
 
             paginator.next().then(
                 function(items){
-                    console.log("...in next");
-                    console.log(JSON.stringify(items, null, 4));
                     expect(items).toEqual([]);
                 }
             );
@@ -353,7 +351,6 @@ describe('Service: gitHubAPI', function () {
             paginator.promise.then(function(){
                 expect(paginator.pageExists(paginator.currentPageNum + 1)).toBeTruthy();
                 paginator.getPage().then(function(items){
-                    console.log("in gertPage");
                     paginator.totalItemsCount = 100;
                     paginator.totalPagesCount = 100;
 

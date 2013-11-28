@@ -3,8 +3,7 @@
 'use strict';
 
 // Declare app level module
-var momentumUIApp = angular.module('momUI', []);
-
+angular.module('momUI', [])
 
 /**
  * @momSpinner directive
@@ -78,7 +77,7 @@ var momentumUIApp = angular.module('momUI', []);
         mom-spinner-tag="'icon-spin icon-refresh'">
  </mom-spinner>
  */
-momentumUIApp.directive('momSpinner', function(){
+.directive('momSpinner', function(){
     return{
         restrict: "E",
         transclude: false,
