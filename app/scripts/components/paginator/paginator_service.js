@@ -12,24 +12,24 @@
  * @example
  *  <table>
  *  ...
- *      <tr ng-repeat="item in model.paginator.currentPageItems">
+ *      <tr ng-repeat="item in modelpaginator.currentPageItems">
  *          <td>{{item.property1}}</td>
  *          <td>{{item.property2}}</td>
  *          <td>{{item.property3}}</td>
  *      </tr>
  *  </table>
  *
- *  <div class="m-pagination-btns">
- *      <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.first()">
+ *  <div class="pagination-btns">
+ *      <button class="btn btn-mini btn-primary pagination-prev-btn" ng-click="paginator.first()">
  *          << First
  *      </button>
- *      <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.prev()">
+ *      <button class="btn btn-mini btn-primary pagination-prev-btn" ng-click="paginator.prev()">
  *          < Prev
  *      </button>
- *      <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.next()">
+ *      <button class="btn btn-mini btn-primary pagination-prev-btn" ng-click="paginator.next()">
  *          Next >
  *      </button>
- *      <button class="btn btn-mini btn-primary sdr-pagination-next-btn" ng-click="model.paginator.last()">
+ *      <button class="btn btn-mini btn-primary pagination-next-btn" ng-click="paginator.last()">
  *          Last >>
  *      </button>
  *  </div>
@@ -53,21 +53,24 @@ angular.module('momUI.momPaginator', [])
                 sortAscending = null,
                 sortIcons = _getSortIconLookupTable(optsClone.sortIcons);
 
-            var service = {
 
-                getPage: getPage,
-                getTotalItemsCount: getTotalItemsCount,
+            /**
+             * Public functions
+             */
+            var service = {
+                initialise: initialise,
+                getSortIcon: getSortIcon,
                 getCurrentPageItems: getCurrentPageItems,
+                getPage: getPage,
+                getPageNumbers: getPageNumbers,
+                getTotalItemsCount: getTotalItemsCount,
                 getTotalPagesCount: getTotalPagesCount,
-                calculateTotalPagesCount: calculateTotalPagesCount,
                 pageExists: pageExists,
                 next: next,
                 prev: prev,
                 first: first,
                 last: last,
-                toggleSort: toggleSort,
-                getSortIcon: getSortIcon,
-                initialise: initialise
+                toggleSort: toggleSort
             };
 
 
@@ -77,28 +80,22 @@ angular.module('momUI.momPaginator', [])
 
 
             /**
-             * @name _initialise()
+             * @name initialise()
              * @private
              * @description - initialises the paginator service's properties by calling getTotalItemsCount()
-             * and calculateTotalPagesCount()
+             * and _calculateTotalPagesCount().
+             *
+             * Call this function first before doing anything else
              */
             function initialise(){
 
                 return service.getTotalItemsCount()
                     .then(function(){
-                        service.calculateTotalPagesCount();
+                        _calculateTotalPagesCount();
                     });
             }
 
 
-            function _getSortIconLookupTable(sortIcons){
-
-                return {
-                    'true': sortIcons.sortIconUp,
-                    'false': sortIcons.sortIconDown,
-                    'none': sortIcons.sortIconNone
-                };
-            }
 
             /**
              * @name getPage()
@@ -117,29 +114,15 @@ angular.module('momUI.momPaginator', [])
              */
             function getPage(pageNum, sortColumn, sortAscending){
 
-                if(typeof pageNum === "undefined"){
-                    pageNum = currentPageNum;
-                }
-                service.sortColumn = (typeof sortColumn === "undefined") ? service.sortColumn : sortColumn;
-                service.sortAscending = (sortAscending === null) ? service.sortAscending : sortAscending;
+                pageNum = pageNum || currentPageNum;
+
+                service.sortColumn = sortColumn || service.sortColumn;
+                service.sortAscending = sortAscending || service.sortAscending;
 
                 if(service.pageExists(pageNum)){
                     return restSvc.getData(itemsPerPage, pageNum, sortColumn, sortAscending)
-                        .then(
-                            //success
-                            function(items){
-                                currentPageItems = items;
-                                currentPageNum = pageNum;
-                                currentPageItems.length = (items.length < itemsPerPage)
-                                    ? items.length : itemsPerPage;
-
-                                return currentPageItems;
-                            },
-                            //failure
-                            function(responseVal){
-
-                                return $q.reject(responseVal);
-                            });
+                        .then(_getPageSuccessHandler(pageNum))
+                        .catch($q.reject)
                 }
                 else{
                     console.log("No more pages");
@@ -149,54 +132,96 @@ angular.module('momUI.momPaginator', [])
             }
 
 
+            /**
+             * @name _getPageSuccessHandler
+             * @param pageNum
+             * @returns {Function}
+             * @private
+             * @description Set the page items and other properties when getPage() returns successfully
+             */
+            function _getPageSuccessHandler(pageNum){
+                return function(items){
+                    currentPageItems = items;
+                    currentPageNum = pageNum;
+                    currentPageItems.length = _calculatePageItemsLength(items, itemsPerPage);
+
+                    return currentPageItems;
+                };
+            }
+
+
+
 
             /**
              * @name: getTotalItemsCount()
              * @returns {Promise|*}
-             * @description When returned promise resolves, promise.then(count) returns the total number of items,
-             * or zero on error
+             * @description Returns the total number of items retrieved, or zero on error
              */
             function getTotalItemsCount(){
 
                 return restSvc.getTotalItemsCount()
-                    .then(function(count){
-                            totalItemsCount = count;
-                            return count;
-                        });
-
+                    .then(_getTotalItemsCountSuccessHandler)
+                    .catch(function(){
+                        return 0;
+                    })
             }
 
+            /**
+             * @name _getTotalItemsCountSuccessHandler
+             * @param count
+             * @returns {*}
+             * @private
+             * @description
+             * Success handler for getTotalItemsCount, which simply set the totalItemsCount property
+             */
+            function _getTotalItemsCountSuccessHandler(count){
+                    totalItemsCount = count;
+                    return count;
+            }
 
+            /**
+             * @name getTotalPagesCount
+             * @returns {number}
+             * @description Returns the total number of pages being paginated
+             */
             function getTotalPagesCount(){
 
-                return (totalPagesCount >= 0) ? totalPagesCount : calculateTotalPagesCount();
+                return (totalPagesCount >= 0) ? totalPagesCount : _calculateTotalPagesCount();
             }
 
 
-
+            /**
+             * @name getCurrentPageItems
+             * @returns {Array}
+             * @description Returns the array of pageItems retrieved from the server. Note this is a single page's worth of data,
+             * so if you've set itemsPerPage to 10, for example, the array will be 10 items in length.
+             */
             function getCurrentPageItems(){
                 return currentPageItems;
             }
 
 
             /**
-             * @name: calculateTotalPagesCount()
-             * @returns {Number}
-             * @description Calculates and returns the total number of pages that can be traversed by the Paginator.
+             * @name getPageNumbers
+             * @param lastPage
+             * @returns {Array}
+             * @description
+             * Returns an array of all the page numbers in the paginator, from 1 to totalPagesCount
              */
-            function calculateTotalPagesCount(){
+            function getPageNumbers(lastPage){
 
-                if(totalItemsCount < 0){
-                    return 0;
+                var arr = [];
+                var currentPage = 1;
+
+                lastPage = lastPage || service.getTotalPagesCount();
+
+                while(currentPage <= lastPage){
+                    arr.push(currentPage++);
                 }
-                totalPagesCount = parseInt(totalItemsCount / (itemsPerPage || DEFAULT_ITEMS_PER_PAGE));
-
-                return (totalItemsCount % itemsPerPage > 0) ? totalPagesCount++ : totalPagesCount;
+                return arr;
             }
 
 
-
-            
             /**
              * @name pageExists
              * @returns {boolean}
@@ -222,7 +247,7 @@ angular.module('momUI.momPaginator', [])
              * For pages beyond the last page, an empty array is returned.
              */
             function next(){
-                return service.getPage(currentPageNum + 1, sortColumn, sortAscending);
+                return _goTo(currentPageNum + 1);
             }
             
             
@@ -237,7 +262,7 @@ angular.module('momUI.momPaginator', [])
              * For pages before the first page (i.e. pages before page 1), an empty array is returned.
              */
             function prev(){
-                return service.getPage(currentPageNum - 1, sortColumn, sortAscending);
+                return _goTo(currentPageNum - 1);
             }
             
             
@@ -249,7 +274,7 @@ angular.module('momUI.momPaginator', [])
              * Helper function that returns the first page of data as an array (once getData's promise resolves)
              */
             function first(){
-                return service.getPage(1, sortColumn, sortAscending);
+                return _goTo(1);
             }
             
             
@@ -262,11 +287,10 @@ angular.module('momUI.momPaginator', [])
              * Helper function that returns the last page of data as an array (once getData's promise resolves).
              */
             function last(){
-                return service.getPage(totalPagesCount, sortColumn, sortAscending);
+                return _goTo(totalPagesCount);
             }
             
-            
-            
+
             
             /***
              * @name: toggleSort
@@ -297,12 +321,81 @@ angular.module('momUI.momPaginator', [])
              */
             function getSortIcon(columnName){
 
-                if(typeof sortColumn === "undefined"){
+                if(!sortColumn){
                     return sortIcons['none'];
                 }
                 return (columnName === sortColumn) ? sortIcons[sortAscending] : sortIcons['none'];
 
             }
+
+
+
+            /////////////////////////
+            // Helper Functions
+
+
+            /**
+             *
+             * @name: _getSortIconLookupTable
+             * @param sortIcons
+             * @returns {{true: (sortIconUp|*|sortIconUp|sortIconUp), false: (sortIconDown|*|sortIconDown|sortIconDown), none: (sortIconNone|*|sortIconNone|sortIconNone)}}
+             * @private
+             *
+             * Pass in the sortIcons from the opts argument and this will return a correctly formatted lookup table
+             */
+            function _getSortIconLookupTable(sortIcons){
+
+                return {
+                    'true': sortIcons.sortIconUp,
+                    'false': sortIcons.sortIconDown,
+                    'none': sortIcons.sortIconNone
+                };
+            }
+
+
+            /**
+             * @name _goTo
+             * @param pageNum
+             * @returns {*}
+             * @private
+             * @description Higher order function that acts as a partially applied wrapper function around getPage
+             */
+            function _goTo(pageNum){
+                return service.getPage(pageNum, sortColumn, sortAscending);
+            }
+
+
+
+            /**
+             * @name: _calculateTotalPagesCount()
+             * @returns {Number}
+             * @description Calculates and returns the total number of pages that can be traversed by the Paginator.
+             */
+            function _calculateTotalPagesCount(){
+
+                if(totalItemsCount < 0){
+                    return 0;
+                }
+                totalPagesCount = parseInt(totalItemsCount / (itemsPerPage || DEFAULT_ITEMS_PER_PAGE));
+
+                return (totalItemsCount % itemsPerPage > 0) ? totalPagesCount++ : totalPagesCount;
+            }
+
+
+            /**
+             * @_calculatePageItemsLength
+             * @param items
+             * @param itemsPerPage
+             * @returns {length|*|length|length|length|length}
+             * @private
+             * @description Calculates what the page item length should be according the number of items per page
+             */
+            function _calculatePageItemsLength(items, itemsPerPage){
+                return (items.length < itemsPerPage) ? items.length : itemsPerPage;
+            }
+
+
+
         };
 
 

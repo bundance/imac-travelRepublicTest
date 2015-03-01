@@ -25,9 +25,9 @@
             <h4>Sort By:</h4>
 
             <span>
-                <button class="btn btn-primary mom-toggle" ng-click="model.paginator.toggleSort('followers')">Followers <i ng-class="model.paginator.getSortIcon('followers')"></i></button>
-                <button class="btn btn-primary mom-toggle" ng-click="model.paginator.toggleSort('joined')">Joined <i ng-class="model.paginator.getSortIcon('joined')"></i> </button>
-                <button class="btn btn-primary mom-toggle" ng-click="model.paginator.toggleSort('repositories')">Repositories <i ng-class="model.paginator.getSortIcon('repositories')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="paginator.toggleSort('followers')">Followers <i ng-class="paginator.getSortIcon('followers')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="paginator.toggleSort('joined')">Joined <i ng-class="paginator.getSortIcon('joined')"></i> </button>
+                <button class="btn btn-primary mom-toggle" ng-click="paginator.toggleSort('repositories')">Repositories <i ng-class="paginator.getSortIcon('repositories')"></i></button>
             </span>
         </div>
 
@@ -40,7 +40,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="user in model.paginator.getCurrentPageItems()">
+            <tr ng-repeat="user in paginator.getCurrentPageItems()">
                 <td>{{user.login}}</td>
                 <td><img src="{{user.avatar_url}}" /></td>
                 <td><a href="{{user.html_url}}">{{user.html_url}}</a></td>
@@ -52,10 +52,10 @@
         <!--Buttons -->
 
         <div class="m-pagination-btns">
-            <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.first()"><< First</button>
-            <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.prev()">< Prev</button>
-            <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.next()">Next ></button>
-            <button class="btn btn-mini btn-primary sdr-pagination-next-btn" ng-click="model.paginator.last()">Last >></button>
+            <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="paginator.first()"><< First</button>
+            <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="paginator.prev()">< Prev</button>
+            <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="paginator.next()">Next ></button>
+            <button class="btn btn-mini btn-primary sdr-pagination-next-btn" ng-click="paginator.last()">Last >></button>
         </div>
         <div class="m-pagination-pages">
             <label class="inline-select-text">Jump to page: </label><select class="inline-select" ng-init="page=model.pages[0]" ng-model="model.page" ng-options="page for page in model.pages"></select>

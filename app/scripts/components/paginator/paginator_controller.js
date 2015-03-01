@@ -3,20 +3,11 @@
 angular.module('angularMomPaginatorApp')
     .controller('PaginatorCtrl', ['$scope', 'momPaginator', 'gitHubService', function($scope, momPaginator, gitHubService){
 
-        var getPageNumbers = function(lastPage){
-            var arr = [];
-            var currentPage = 1;
-
-            while(currentPage <= lastPage){
-                arr.push(currentPage++);
-            }
-            return arr;
-        };
         $scope.model = {
             page: 1
         };
 
-        $scope.model.paginator = momPaginator({
+        $scope.paginator = momPaginator({
             rstSvc: gitHubService,
             initialPage: 5,
             itemsPerPage: 10,
@@ -27,11 +18,11 @@ angular.module('angularMomPaginatorApp')
             }
         });
 
-        $scope.model.paginator.initialise()
+        $scope.paginator.initialise()
             .then(function(){
-                $scope.model.paginator.getPage()
+                $scope.paginator.getPage()
                     .then(function(){
-                        $scope.model.pages = getPageNumbers($scope.model.paginator.getTotalPagesCount());
+                        $scope.model.pages = $scope.paginator.getPageNumbers();
                     })
             });
 
