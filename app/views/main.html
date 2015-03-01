@@ -40,7 +40,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="user in model.paginator.currentPageItems">
+            <tr ng-repeat="user in model.paginator.getCurrentPageItems()">
                 <td>{{user.login}}</td>
                 <td><img src="{{user.avatar_url}}" /></td>
                 <td><a href="{{user.html_url}}">{{user.html_url}}</a></td>

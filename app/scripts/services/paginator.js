@@ -38,214 +38,272 @@
  */
 angular.module('momUI.momPaginator', [])
     .factory('momPaginator', ['$q', function($q) {
-        return function(restSvc, itemsPerPage, initialPage, sortIcons) {
+        return function(opts) {
 
-            var paginator = {
-                currentPageItems: [],
-                currentPageNum: initialPage || 1,
-                itemsPerPage: itemsPerPage ? itemsPerPage : 10 ,
-                totalItemsCount: -1,
-                totalpagesCount: 0,
-                promise: $q,
-                sortColumn: "",
-                sortAscending: null,
-                sortIcons: {
-                    'true': (typeof sortIcons === "undefined") ? null : sortIcons.sortIconUp,
-                    'false': (typeof sortIcons === "undefined") ? null : sortIcons.sortIconDown,
-                    'none': (typeof sortIcons === "undefined") ? null : sortIcons.sortIconNone
-                },
-                /**
-                 * @name _initialise()
-                 * @private
-                 * @description - initialises the paginator service's properties by calling getTotalItemsCount()
-                 * and getTotalPagesCount()
-                 */
-                _initialise: function(){
-                    var self = this;
+            var optsClone = angular.copy(opts) || {};
 
-                    this.promise = this.getTotalItemsCount()
-                        .then(function(){
-                            self.getTotalPagesCount();
-                        });
-                },
-                /**
-                 * @name getPage()
-                 * @params {number, number, boolean}
-                 * @returns {*} - Returns currentPageItems as an array of data on success;
-                 *              - Returns the response object on error
-                 *              - Returns an empty array if no data is received.
-                 * @description
-                 * gets data from the server using the restSvc service. If more data is sent than
-                 *  itemsPerPage, the length of currentPageItems is adjusted accordingly.
-                 *  Parameters:
-                 *      - pageNum (optional) - specify what page number you want (defaults to 1)
-                 *      - sortColumn (optional) - specify a column to sort on
-                 *      - sortAscending (optional) - specify the direction to sort the results in.
-                 *          - true = sortAscending, false = sortDescending (default is false).
-                 */
-                getPage: function(pageNum, sortColumn, sortAscending){
-                    var self = this;
+            var restSvc = optsClone.rstSvc,
+                currentPageItems = [],
+                currentPageNum = optsClone.initialPage || 1,
+                DEFAULT_ITEMS_PER_PAGE = 10,
+                itemsPerPage = optsClone.itemsPerPage || DEFAULT_ITEMS_PER_PAGE,
+                totalItemsCount = -1,
+                totalPagesCount = 0,
+                sortColumn = "",
+                sortAscending = null,
+                sortIcons = _getSortIconLookupTable(optsClone.sortIcons);
 
-                    if(typeof pageNum === "undefined"){
-                        pageNum = this.currentPageNum;
-                    }
-                    this.sortColumn = (typeof sortColumn === "undefined") ? this.sortColumn : sortColumn;
-                    this.sortAscending = (sortAscending === null) ? this.sortAscending : sortAscending;
+            var service = {
 
-                    if(this.pageExists(pageNum)){
-                        this.promise = restSvc.getData(this.itemsPerPage, pageNum, this.sortColumn, this.sortAscending)
-                            .then(
-                                //success
-                                function(items){
-                                    self.currentPageItems = items;
-                                    self.currentPageNum = pageNum;
-                                    self.currentPageItems.length = (items.length < self.itemsPerPage)
-                                        ? items.length : self.itemsPerPage;
-
-                                    return self.currentPageItems;
-                                },
-                                //failure
-                                function(responseVal){
-
-                                    return responseVal;
-                                });
-
-                        return this.promise;
-                    }
-                    else{
-                        console.log("No more pages");
-                        return $q.when([]);
-                    }
-
-                },
-                /**
-                 * @name: getTotalItemsCount()
-                 * @returns {Promise|*}
-                 * @description When returned promise resolves, promise.then(count) returns the total number of items,
-                 * or zero on error
-                 */
-                getTotalItemsCount: function(){
-                    var self = this;
-
-                    this.promise = restSvc.getTotalItemsCount()
-                        .then(
-                        function(count){
-                            self.totalItemsCount = count;
-                            return count;
-                        });
-                    return this.promise;
-
-                },
-                /**
-                 * @name: getTotalPagesCount()
-                 * @returns {Number}
-                 * @description Calculates and returns the total number of pages that can be traversed by the Paginator.
-                 */
-                getTotalPagesCount: function(){
-
-                    if(this.totalItemsCount < 0){
-                        return 0;
-                    }
-                    this.totalPagesCount = parseInt(this.totalItemsCount / this.itemsPerPage);
-
-                    if(this.totalItemsCount % this.itemsPerPage > 0){
-                        this.totalPagesCount++;
-                    }
-                    return this.totalPagesCount;
-                },
-                /**
-                 * @name pageExists
-                 * @returns {boolean}
-                 * @description Returns true if more pages are available from the server, false if not.
-                 * Internally, paginator.getTotalItemsCount() must be called first before this function can be used.
-                 * Externally, code using momPaginator won't need to worry about this, as it's taken care of below
-                 * as part of this paginator object's initialisation.
-                 */
-                pageExists: function(pageNum){
-                    //var self = this;
-                    return ((this.totalItemsCount < 0 || pageNum <= this.totalPagesCount) && pageNum > 0);
-                },
-                /***
-                 * @name next
-                 * @returns {*} Returns a promise, which, when resolved, returns an array containing the items of
-                 * currentPage + 1. Returns an empty array when there are no more pages left
-                 * @description Next() will iterate through the pages of data, retrieving the next itemsPerPage worth of data
-                 * each time it's called.
-                 * The last page may contain less than itemsPerPage of data.
-                 * For pages beyond the last page, an empty array is returned.
-                 */
-                next: function(){
-                    //var self = this;
-                    return this.getPage(this.currentPageNum + 1, this.sortColumn, this.sortAscending);
-                },
-                /***
-                 * @name next
-                 * @returns {*} Returns a promise, which, when resolved, returns an array containing the items of
-                 * currentPage - 1. Returns an empty array when there are no more pages left
-                 * @description The opposite of next(), prev() will iterate through the pages of data, retrieving the
-                 * previous itemsPerPage worth of data each time it's called.
-                 * All pages called using prev() will contain itemsPerPage of data.
-                 * For pages before the first page (i.e. pages before page 1), an empty array is returned.
-                 */
-                prev: function(){
-                    return this.getPage(this.currentPageNum - 1, this.sortColumn, this.sortAscending);
-                },
-                /***
-                 * @name: first
-                 * @returns {*}
-                 * @description
-                 * Helper function that returns the first page of data as an array (once getData's promise resolves)
-                 */
-                first: function(){
-                    return this.getPage(1, this.sortColumn, this.sortAscending);
-                },
-                /***
-                 * @name: first
-                 * @returns {*}
-                 * @description
-                 * Helper function that returns the last page of data as an array (once getData's promise resolves).
-                 */
-                last: function(){
-                    return this.getPage(this.totalPagesCount, this.sortColumn, this.sortAscending);
-                },
-                /***
-                 * @name: toggleSort
-                 * @params sortColum - name of the column on which to sort the dataset
-                 * @returns {*}
-                 * @description
-                 * Enables sorting the dataset on sortColumn. Each call to this function with the same value for
-                 * sortColumn will toggle the direction of sorting (ASCending or DESCending (default))
-                 */
-                toggleSort: function(sortColumn){
-
-                    this.sortAscending = (this.sortColumn === sortColumn) ? !this.sortAscending : false;
-                    this.sortColumn = sortColumn;
-
-                    return this.getPage(1, this.sortColumn, this.sortAscending);
-                },
-                /***
-                 * @name getSortIcon
-                 * @params sortColumn - name of the column to test if the data is being sorted on
-                 * @returns string
-                 * @description
-                 * Helper function that tests if columnName is being used to sort the data, and in which direction.
-                 * Depending on the result, the function will return the value you entered for sortIconUp (for ASC),
-                 * sortIconDown (for DESC) or sortIconNone (if columnName isn't being used to sort).
-                 */
-                getSortIcon: function(columnName){
-                    //var self = this;
-
-                    if(typeof this.sortColumn === "undefined"){
-                        return this.sortIcons['none'];
-                    }
-                    return (columnName === this.sortColumn) ? this.sortIcons[this.sortAscending] : this.sortIcons['none'];
-
-                }
+                getPage: getPage,
+                getTotalItemsCount: getTotalItemsCount,
+                getCurrentPageItems: getCurrentPageItems,
+                getTotalPagesCount: getTotalPagesCount,
+                calculateTotalPagesCount: calculateTotalPagesCount,
+                pageExists: pageExists,
+                next: next,
+                prev: prev,
+                first: first,
+                last: last,
+                toggleSort: toggleSort,
+                getSortIcon: getSortIcon,
+                initialise: initialise
             };
 
-            // initialise
-            paginator._initialise();
 
-            return paginator;
-        }
+            return service;
+
+            ///////////////////////////
+
+
+            /**
+             * @name _initialise()
+             * @private
+             * @description - initialises the paginator service's properties by calling getTotalItemsCount()
+             * and calculateTotalPagesCount()
+             */
+            function initialise(){
+
+                return service.getTotalItemsCount()
+                    .then(function(){
+                        service.calculateTotalPagesCount();
+                    });
+            }
+
+
+            function _getSortIconLookupTable(sortIcons){
+
+                return {
+                    'true': sortIcons.sortIconUp,
+                    'false': sortIcons.sortIconDown,
+                    'none': sortIcons.sortIconNone
+                };
+            }
+
+            /**
+             * @name getPage()
+             * @params {number, number, boolean}
+             * @returns {*} - Returns currentPageItems as an array of data on success;
+             *              - Returns the response object on error
+             *              - Returns an empty array if no data is received.
+             * @description
+             *  gets data from the server using the restSvc service. If more data is sent than
+             *  itemsPerPage, the length of currentPageItems is adjusted accordingly.
+             *  Parameters:
+             *      - pageNum (optional) - specify what page number you want (defaults to 1)
+             *      - sortColumn (optional) - specify a column to sort on
+             *      - sortAscending (optional) - specify the direction to sort the results in.
+             *          - true = sortAscending, false = sortDescending (default is false).
+             */
+            function getPage(pageNum, sortColumn, sortAscending){
+
+                if(typeof pageNum === "undefined"){
+                    pageNum = currentPageNum;
+                }
+                service.sortColumn = (typeof sortColumn === "undefined") ? service.sortColumn : sortColumn;
+                service.sortAscending = (sortAscending === null) ? service.sortAscending : sortAscending;
+
+                if(service.pageExists(pageNum)){
+                    return restSvc.getData(itemsPerPage, pageNum, sortColumn, sortAscending)
+                        .then(
+                            //success
+                            function(items){
+                                currentPageItems = items;
+                                currentPageNum = pageNum;
+                                currentPageItems.length = (items.length < itemsPerPage)
+                                    ? items.length : itemsPerPage;
+
+                                return currentPageItems;
+                            },
+                            //failure
+                            function(responseVal){
+
+                                return $q.reject(responseVal);
+                            });
+                }
+                else{
+                    console.log("No more pages");
+                    return $q.when([]);
+                }
+
+            }
+
+
+
+            /**
+             * @name: getTotalItemsCount()
+             * @returns {Promise|*}
+             * @description When returned promise resolves, promise.then(count) returns the total number of items,
+             * or zero on error
+             */
+            function getTotalItemsCount(){
+
+                return restSvc.getTotalItemsCount()
+                    .then(function(count){
+                            totalItemsCount = count;
+                            return count;
+                        });
+
+            }
+
+
+            function getTotalPagesCount(){
+
+                return (totalPagesCount >= 0) ? totalPagesCount : calculateTotalPagesCount();
+            }
+
+
+
+            function getCurrentPageItems(){
+                return currentPageItems;
+            }
+
+
+            /**
+             * @name: calculateTotalPagesCount()
+             * @returns {Number}
+             * @description Calculates and returns the total number of pages that can be traversed by the Paginator.
+             */
+            function calculateTotalPagesCount(){
+
+                if(totalItemsCount < 0){
+                    return 0;
+                }
+                totalPagesCount = parseInt(totalItemsCount / (itemsPerPage || DEFAULT_ITEMS_PER_PAGE));
+
+                return (totalItemsCount % itemsPerPage > 0) ? totalPagesCount++ : totalPagesCount;
+            }
+
+
+
+            
+            /**
+             * @name pageExists
+             * @returns {boolean}
+             * @description Returns true if more pages are available from the server, false if not.
+             * Internally, paginator.getTotalItemsCount() must be called first before this function can be used.
+             * Externally, code using momPaginator won't need to worry about this, as it's taken care of below
+             * as part of this paginator object's initialisation.
+             */
+            function pageExists(pageNum){
+               return ((totalItemsCount < 0 || pageNum <= totalPagesCount) && pageNum > 0);
+            }
+            
+            
+            
+            
+            /***
+             * @name next
+             * @returns {*} Returns a promise, which, when resolved, returns an array containing the items of
+             * currentPage + 1. Returns an empty array when there are no more pages left
+             * @description Next() will iterate through the pages of data, retrieving the next itemsPerPage worth of data
+             * each time it's called.
+             * The last page may contain less than itemsPerPage of data.
+             * For pages beyond the last page, an empty array is returned.
+             */
+            function next(){
+                return service.getPage(currentPageNum + 1, sortColumn, sortAscending);
+            }
+            
+            
+            
+            /***
+             * @name next
+             * @returns {*} Returns a promise, which, when resolved, returns an array containing the items of
+             * currentPage - 1. Returns an empty array when there are no more pages left
+             * @description The opposite of next(), prev() will iterate through the pages of data, retrieving the
+             * previous itemsPerPage worth of data each time it's called.
+             * All pages called using prev() will contain itemsPerPage of data.
+             * For pages before the first page (i.e. pages before page 1), an empty array is returned.
+             */
+            function prev(){
+                return service.getPage(currentPageNum - 1, sortColumn, sortAscending);
+            }
+            
+            
+            
+            /***
+             * @name: first
+             * @returns {*}
+             * @description
+             * Helper function that returns the first page of data as an array (once getData's promise resolves)
+             */
+            function first(){
+                return service.getPage(1, sortColumn, sortAscending);
+            }
+            
+            
+            
+            
+            /***
+             * @name: first
+             * @returns {*}
+             * @description
+             * Helper function that returns the last page of data as an array (once getData's promise resolves).
+             */
+            function last(){
+                return service.getPage(totalPagesCount, sortColumn, sortAscending);
+            }
+            
+            
+            
+            
+            /***
+             * @name: toggleSort
+             * @params sortColum - name of the column on which to sort the dataset
+             * @returns {*}
+             * @description
+             * Enables sorting the dataset on sortColumn. Each call to this function with the same value for
+             * sortColumn will toggle the direction of sorting (ASCending or DESCending (default))
+             */
+            function toggleSort(newSortColumn){
+
+                sortAscending = (sortColumn === newSortColumn) ? !sortAscending : false;
+                sortColumn = newSortColumn;
+
+                return service.getPage(1, sortColumn, sortAscending);
+            }
+            
+            
+            
+            /***
+             * @name getSortIcon
+             * @params sortColumn - name of the column to test if the data is being sorted on
+             * @returns string
+             * @description
+             * Helper function that tests if columnName is being used to sort the data, and in which direction.
+             * Depending on the result, the function will return the value you entered for sortIconUp (for ASC),
+             * sortIconDown (for DESC) or sortIconNone (if columnName isn't being used to sort).
+             */
+            function getSortIcon(columnName){
+
+                if(typeof sortColumn === "undefined"){
+                    return sortIcons['none'];
+                }
+                return (columnName === sortColumn) ? sortIcons[sortAscending] : sortIcons['none'];
+
+            }
+        };
+
+
     }]);
