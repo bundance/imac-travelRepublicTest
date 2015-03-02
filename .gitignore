@@ -1,0 +1,15 @@
+.idea/.name
+.idea/angular-mom-paginator.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/
+.idea/
+.idea/workspace.xml
+.tmp/
+app/bower_components/
+dist/
+dist/**
+node_modules/
+node_modules/**
+.idea/**
