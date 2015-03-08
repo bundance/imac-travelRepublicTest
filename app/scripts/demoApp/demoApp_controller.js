@@ -10,7 +10,7 @@ angular.module('angularMomPaginatorApp')
         };
 
         $scope.paginator = momPaginator({
-            rstSvc: gitHubData,
+            restSvc: gitHubData,
             initialPage: 5,
             itemsPerPage: 10,
             sortIcons: {

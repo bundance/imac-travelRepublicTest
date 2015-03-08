@@ -16,14 +16,17 @@ module.exports = function(config) {
         'app/bower_components/angular-resource/angular-resource.js',
         'app/bower_components/angular-sanitize/angular-sanitize.js',
         'app/bower_components/angular-route/angular-route.js',
+        'app/lib/*.js',
         'app/scripts/app.js',
         //'app/scripts/components/paginator/paginator_module.js',
         'app/scripts/components/paginator/paginator_service.js',
         'app/scripts/components/gitHubAPI/gitHubAPI_module.js',
         'app/scripts/components/gitHubAPI/*.js',
+        'app/scripts/demoApp/*.js',
         'test/mock/mockGitHubData.js',
         'test/mock/*.js',
-        'test/spec/shared/*.spec.js'
+        'test/spec/shared/*.spec.js',
+        'test/spec/controllers/*.spec.js'
     ],
 
     // list of files / patterns to exclude
