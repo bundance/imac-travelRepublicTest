@@ -1,0 +1,686 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'update', 'grunt-karma' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose request where is /grunt-karma
+5 verbose request registry https://registry.npmjs.org/
+6 verbose request id bfd7041e41600232
+7 verbose url raw /grunt-karma
+8 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-karma' ]
+9 verbose url resolved https://registry.npmjs.org/grunt-karma
+10 verbose request where is https://registry.npmjs.org/grunt-karma
+11 info trying registry request attempt 1 at 12:52:33
+12 verbose etag "DW2RPRGKN9YN133WSHR3EDLV1"
+13 http GET https://registry.npmjs.org/grunt-karma
+14 http 304 https://registry.npmjs.org/grunt-karma
+15 silly registry.get cb [ 304,
+15 silly registry.get   { date: 'Sat, 07 Mar 2015 12:52:39 GMT',
+15 silly registry.get     server: 'Apache',
+15 silly registry.get     via: '1.1 varnish',
+15 silly registry.get     'last-modified': 'Sat, 07 Mar 2015 12:52:39 GMT',
+15 silly registry.get     'cache-control': 'max-age=60',
+15 silly registry.get     etag: '"DW2RPRGKN9YN133WSHR3EDLV1"',
+15 silly registry.get     age: '29',
+15 silly registry.get     'x-served-by': 'cache-lhr6330-LHR',
+15 silly registry.get     'x-cache': 'HIT',
+15 silly registry.get     'x-cache-hits': '1',
+15 silly registry.get     'x-timer': 'S1425732759.367987,VS0,VE1',
+15 silly registry.get     vary: 'Accept',
+15 silly registry.get     'content-length': '0',
+15 silly registry.get     'keep-alive': 'timeout=10, max=50',
+15 silly registry.get     connection: 'Keep-Alive' } ]
+16 verbose etag https://registry.npmjs.org/grunt-karma from cache
+17 info outdated updating [ [ '/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator',
+17 info outdated     'grunt-karma',
+17 info outdated     '0.6.2',
+17 info outdated     '0.6.2',
+17 info outdated     '0.10.1',
+17 info outdated     '~0.6.2' ] ]
+18 verbose install where,what [ '/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator',
+18 verbose install   [ 'grunt-karma@0.6.2' ] ]
+19 verbose readDependencies using package.json deps
+20 verbose cache add [ 'grunt-karma@0.6.2', null ]
+21 verbose cache add name=undefined spec="grunt-karma@0.6.2" args=["grunt-karma@0.6.2",null]
+22 verbose parsed url { protocol: null,
+22 verbose parsed url   slashes: null,
+22 verbose parsed url   auth: null,
+22 verbose parsed url   host: null,
+22 verbose parsed url   port: null,
+22 verbose parsed url   hostname: null,
+22 verbose parsed url   hash: null,
+22 verbose parsed url   search: null,
+22 verbose parsed url   query: null,
+22 verbose parsed url   pathname: 'grunt-karma@0.6.2',
+22 verbose parsed url   path: 'grunt-karma@0.6.2',
+22 verbose parsed url   href: 'grunt-karma@0.6.2' }
+23 verbose cache add name="grunt-karma" spec="0.6.2" args=["grunt-karma","0.6.2"]
+24 verbose parsed url { protocol: null,
+24 verbose parsed url   slashes: null,
+24 verbose parsed url   auth: null,
+24 verbose parsed url   host: null,
+24 verbose parsed url   port: null,
+24 verbose parsed url   hostname: null,
+24 verbose parsed url   hash: null,
+24 verbose parsed url   search: null,
+24 verbose parsed url   query: null,
+24 verbose parsed url   pathname: '0.6.2',
+24 verbose parsed url   path: '0.6.2',
+24 verbose parsed url   href: '0.6.2' }
+25 verbose addNamed [ 'grunt-karma', '0.6.2' ]
+26 verbose addNamed [ '0.6.2', '0.6.2' ]
+27 silly lockFile 5237908c-grunt-karma-0-6-2 grunt-karma@0.6.2
+28 verbose lock grunt-karma@0.6.2 /Users/mikeevans/.npm/5237908c-grunt-karma-0-6-2.lock
+29 verbose registry.get https://registry.npmjs.org/grunt-karma not expired, no request
+30 silly lockFile 5237908c-grunt-karma-0-6-2 grunt-karma@0.6.2
+31 silly lockFile 5237908c-grunt-karma-0-6-2 grunt-karma@0.6.2
+32 silly resolved [ { name: 'grunt-karma',
+32 silly resolved     version: '0.6.2',
+32 silly resolved     description: 'grunt plugin for karma test runner',
+32 silly resolved     main: 'tasks/grunt-karma.js',
+32 silly resolved     repository:
+32 silly resolved      { type: 'git',
+32 silly resolved        url: 'https://github.com/karma-runner/grunt-karma.git' },
+32 silly resolved     keywords: [ 'gruntplugin', 'karma', 'grunt', 'test', 'unit', 'runner', 'TDD' ],
+32 silly resolved     scripts: { test: 'grunt test' },
+32 silly resolved     author: { name: 'Dave Geddes' },
+32 silly resolved     license: 'MIT',
+32 silly resolved     dependencies: { optimist: '~0.6.0' },
+32 silly resolved     devDependencies:
+32 silly resolved      { grunt: '~0.4.1',
+32 silly resolved        'expect.js': '~0.2.0',
+32 silly resolved        'grunt-release': '~0.5.1',
+32 silly resolved        'grunt-contrib-watch': '~0.2.0',
+32 silly resolved        'grunt-conventional-changelog': '~0.0.12',
+32 silly resolved        'karma-mocha': '~0.1.0' },
+32 silly resolved     peerDependencies: { grunt: '0.4.x', karma: '~0.10.0' },
+32 silly resolved     bugs: { url: 'https://github.com/karma-runner/grunt-karma/issues' },
+32 silly resolved     _id: 'grunt-karma@0.6.2',
+32 silly resolved     dist:
+32 silly resolved      { shasum: '429b5729f85d10fdd198a2cfb28ba0f63e7a2e9b',
+32 silly resolved        tarball: 'http://registry.npmjs.org/grunt-karma/-/grunt-karma-0.6.2.tgz' },
+32 silly resolved     _from: 'grunt-karma@0.6.2',
+32 silly resolved     _npmVersion: '1.3.5',
+32 silly resolved     _npmUser: { name: 'geddski', email: 'heygedski@gmail.com' },
+32 silly resolved     maintainers: [ [Object], [Object] ],
+32 silly resolved     directories: {},
+32 silly resolved     _shasum: '429b5729f85d10fdd198a2cfb28ba0f63e7a2e9b',
+32 silly resolved     _resolved: 'https://registry.npmjs.org/grunt-karma/-/grunt-karma-0.6.2.tgz',
+32 silly resolved     readme: 'ERROR: No README data found!',
+32 silly resolved     homepage: 'https://github.com/karma-runner/grunt-karma' } ]
+33 info install grunt-karma@0.6.2 into /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator
+34 info installOne grunt-karma@0.6.2
+35 verbose node_modules/grunt-karma unbuild
+36 info preuninstall grunt-karma@0.6.2
+37 info uninstall grunt-karma@0.6.2
+38 verbose true,/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules,/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules unbuild grunt-karma@0.6.2
+39 info postuninstall grunt-karma@0.6.2
+40 verbose tar unpack /Users/mikeevans/.npm/grunt-karma/0.6.2/package.tgz
+41 silly lockFile 4530cca7-ginator-node-modules-grunt-karma tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma
+42 verbose lock tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma /Users/mikeevans/.npm/4530cca7-ginator-node-modules-grunt-karma.lock
+43 silly lockFile 4b7b4240-pm-grunt-karma-0-6-2-package-tgz tar:///Users/mikeevans/.npm/grunt-karma/0.6.2/package.tgz
+44 verbose lock tar:///Users/mikeevans/.npm/grunt-karma/0.6.2/package.tgz /Users/mikeevans/.npm/4b7b4240-pm-grunt-karma-0-6-2-package-tgz.lock
+45 silly gunzTarPerm modes [ '755', '644' ]
+46 silly gunzTarPerm extractEntry package.json
+47 silly gunzTarPerm extractEntry .npmignore
+48 silly gunzTarPerm extractEntry README.md
+49 silly gunzTarPerm extractEntry LICENSE
+50 silly gunzTarPerm extractEntry Gruntfile.js
+51 silly gunzTarPerm extractEntry .idea/.name
+52 silly gunzTarPerm extractEntry .idea/dictionaries/dave.xml
+53 silly gunzTarPerm extractEntry .idea/encodings.xml
+54 silly gunzTarPerm extractEntry .idea/grunt-karma.iml
+55 silly gunzTarPerm extractEntry .idea/inspectionProfiles/Project_Default.xml
+56 silly gunzTarPerm extractEntry .idea/inspectionProfiles/profiles_settings.xml
+57 silly gunzTarPerm extractEntry .idea/misc.xml
+58 silly gunzTarPerm extractEntry .idea/modules.xml
+59 silly gunzTarPerm extractEntry .idea/scopes/scope_settings.xml
+60 silly gunzTarPerm extractEntry .idea/vcs.xml
+61 silly gunzTarPerm extractEntry .idea/workspace.xml
+62 silly gunzTarPerm extractEntry TODO.md
+63 silly gunzTarPerm extractEntry lib/background.js
+64 silly gunzTarPerm extractEntry CHANGELOG.md
+65 silly gunzTarPerm extractEntry tasks/grunt-karma.js
+66 silly gunzTarPerm extractEntry test/grunt-karma-test.js
+67 silly lockFile 4530cca7-ginator-node-modules-grunt-karma tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma
+68 silly lockFile 4530cca7-ginator-node-modules-grunt-karma tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma
+69 silly lockFile 4b7b4240-pm-grunt-karma-0-6-2-package-tgz tar:///Users/mikeevans/.npm/grunt-karma/0.6.2/package.tgz
+70 silly lockFile 4b7b4240-pm-grunt-karma-0-6-2-package-tgz tar:///Users/mikeevans/.npm/grunt-karma/0.6.2/package.tgz
+71 info preinstall grunt-karma@0.6.2
+72 verbose readDependencies using package.json deps
+73 verbose readDependencies using package.json deps
+74 verbose cache add [ 'optimist@~0.6.0', null ]
+75 verbose cache add name=undefined spec="optimist@~0.6.0" args=["optimist@~0.6.0",null]
+76 verbose parsed url { protocol: null,
+76 verbose parsed url   slashes: null,
+76 verbose parsed url   auth: null,
+76 verbose parsed url   host: null,
+76 verbose parsed url   port: null,
+76 verbose parsed url   hostname: null,
+76 verbose parsed url   hash: null,
+76 verbose parsed url   search: null,
+76 verbose parsed url   query: null,
+76 verbose parsed url   pathname: 'optimist@~0.6.0',
+76 verbose parsed url   path: 'optimist@~0.6.0',
+76 verbose parsed url   href: 'optimist@~0.6.0' }
+77 verbose cache add name="optimist" spec="~0.6.0" args=["optimist","~0.6.0"]
+78 verbose parsed url { protocol: null,
+78 verbose parsed url   slashes: null,
+78 verbose parsed url   auth: null,
+78 verbose parsed url   host: null,
+78 verbose parsed url   port: null,
+78 verbose parsed url   hostname: null,
+78 verbose parsed url   hash: null,
+78 verbose parsed url   search: null,
+78 verbose parsed url   query: null,
+78 verbose parsed url   pathname: '~0.6.0',
+78 verbose parsed url   path: '~0.6.0',
+78 verbose parsed url   href: '~0.6.0' }
+79 verbose addNamed [ 'optimist', '~0.6.0' ]
+80 verbose addNamed [ null, '>=0.6.0-0 <0.7.0-0' ]
+81 silly lockFile 07193858-optimist-0-6-0 optimist@~0.6.0
+82 verbose lock optimist@~0.6.0 /Users/mikeevans/.npm/07193858-optimist-0-6-0.lock
+83 silly addNameRange { name: 'optimist', range: '>=0.6.0-0 <0.7.0-0', hasData: false }
+84 verbose request where is /optimist
+85 verbose request registry https://registry.npmjs.org/
+86 verbose url raw /optimist
+87 verbose url resolving [ 'https://registry.npmjs.org/', './optimist' ]
+88 verbose url resolved https://registry.npmjs.org/optimist
+89 verbose request where is https://registry.npmjs.org/optimist
+90 info trying registry request attempt 1 at 12:52:40
+91 verbose etag "3V5Q1FVXCIHNB0OVFO0QGGQ7U"
+92 http GET https://registry.npmjs.org/optimist
+93 http 304 https://registry.npmjs.org/optimist
+94 silly registry.get cb [ 304,
+94 silly registry.get   { date: 'Sat, 07 Mar 2015 12:52:39 GMT',
+94 silly registry.get     server: 'Apache',
+94 silly registry.get     via: '1.1 varnish',
+94 silly registry.get     'last-modified': 'Sat, 07 Mar 2015 12:52:39 GMT',
+94 silly registry.get     'cache-control': 'max-age=60',
+94 silly registry.get     etag: '"3V5Q1FVXCIHNB0OVFO0QGGQ7U"',
+94 silly registry.get     age: '56',
+94 silly registry.get     'x-served-by': 'cache-lhr6326-LHR',
+94 silly registry.get     'x-cache': 'HIT',
+94 silly registry.get     'x-cache-hits': '1',
+94 silly registry.get     'x-timer': 'S1425732759.705353,VS0,VE1',
+94 silly registry.get     vary: 'Accept',
+94 silly registry.get     'content-length': '0',
+94 silly registry.get     'keep-alive': 'timeout=10, max=50',
+94 silly registry.get     connection: 'Keep-Alive' } ]
+95 verbose etag https://registry.npmjs.org/optimist from cache
+96 silly addNameRange number 2 { name: 'optimist', range: '>=0.6.0-0 <0.7.0-0', hasData: true }
+97 silly addNameRange versions [ 'optimist',
+97 silly addNameRange   [ '0.0.1',
+97 silly addNameRange     '0.0.2',
+97 silly addNameRange     '0.0.4',
+97 silly addNameRange     '0.0.5',
+97 silly addNameRange     '0.0.6',
+97 silly addNameRange     '0.0.7',
+97 silly addNameRange     '0.1.0',
+97 silly addNameRange     '0.1.1',
+97 silly addNameRange     '0.1.2',
+97 silly addNameRange     '0.1.3',
+97 silly addNameRange     '0.1.4',
+97 silly addNameRange     '0.1.5',
+97 silly addNameRange     '0.1.6',
+97 silly addNameRange     '0.1.7',
+97 silly addNameRange     '0.1.8',
+97 silly addNameRange     '0.1.9',
+97 silly addNameRange     '0.0.3',
+97 silly addNameRange     '0.2.0',
+97 silly addNameRange     '0.2.1',
+97 silly addNameRange     '0.2.2',
+97 silly addNameRange     '0.2.3',
+97 silly addNameRange     '0.2.4',
+97 silly addNameRange     '0.2.5',
+97 silly addNameRange     '0.2.6',
+97 silly addNameRange     '0.2.7',
+97 silly addNameRange     '0.2.8',
+97 silly addNameRange     '0.3.0',
+97 silly addNameRange     '0.3.1',
+97 silly addNameRange     '0.3.3',
+97 silly addNameRange     '0.3.4',
+97 silly addNameRange     '0.3.5',
+97 silly addNameRange     '0.3.6',
+97 silly addNameRange     '0.3.7',
+97 silly addNameRange     '0.4.0',
+97 silly addNameRange     '0.5.0',
+97 silly addNameRange     '0.5.1',
+97 silly addNameRange     '0.5.2',
+97 silly addNameRange     '0.6.0',
+97 silly addNameRange     '0.6.1' ] ]
+98 verbose addNamed [ 'optimist', '0.6.1' ]
+99 verbose addNamed [ '0.6.1', '0.6.1' ]
+100 silly lockFile 0fc74eb8-optimist-0-6-1 optimist@0.6.1
+101 verbose lock optimist@0.6.1 /Users/mikeevans/.npm/0fc74eb8-optimist-0-6-1.lock
+102 silly lockFile 0fc74eb8-optimist-0-6-1 optimist@0.6.1
+103 silly lockFile 0fc74eb8-optimist-0-6-1 optimist@0.6.1
+104 silly lockFile 07193858-optimist-0-6-0 optimist@~0.6.0
+105 silly lockFile 07193858-optimist-0-6-0 optimist@~0.6.0
+106 silly resolved [ { name: 'optimist',
+106 silly resolved     version: '0.6.1',
+106 silly resolved     description: 'Light-weight option parsing with an argv hash. No optstrings attached.',
+106 silly resolved     main: './index.js',
+106 silly resolved     dependencies: { wordwrap: '~0.0.2', minimist: '~0.0.1' },
+106 silly resolved     devDependencies: { hashish: '~0.0.4', tap: '~0.4.0' },
+106 silly resolved     scripts: { test: 'tap ./test/*.js' },
+106 silly resolved     repository:
+106 silly resolved      { type: 'git',
+106 silly resolved        url: 'http://github.com/substack/node-optimist.git' },
+106 silly resolved     keywords:
+106 silly resolved      [ 'argument',
+106 silly resolved        'args',
+106 silly resolved        'option',
+106 silly resolved        'parser',
+106 silly resolved        'parsing',
+106 silly resolved        'cli',
+106 silly resolved        'command' ],
+106 silly resolved     author:
+106 silly resolved      { name: 'James Halliday',
+106 silly resolved        email: 'mail@substack.net',
+106 silly resolved        url: 'http://substack.net' },
+106 silly resolved     license: 'MIT/X11',
+106 silly resolved     engine: { node: '>=0.4' },
+106 silly resolved     bugs: { url: 'https://github.com/substack/node-optimist/issues' },
+106 silly resolved     homepage: 'https://github.com/substack/node-optimist',
+106 silly resolved     _id: 'optimist@0.6.1',
+106 silly resolved     dist:
+106 silly resolved      { shasum: 'da3ea74686fa21a19a111c326e90eb15a0196686',
+106 silly resolved        tarball: 'http://registry.npmjs.org/optimist/-/optimist-0.6.1.tgz' },
+106 silly resolved     _from: 'optimist@~0.6.0',
+106 silly resolved     _npmVersion: '1.3.21',
+106 silly resolved     _npmUser: { name: 'substack', email: 'mail@substack.net' },
+106 silly resolved     maintainers: [ [Object] ],
+106 silly resolved     directories: {},
+106 silly resolved     _shasum: 'da3ea74686fa21a19a111c326e90eb15a0196686',
+106 silly resolved     _resolved: 'https://registry.npmjs.org/optimist/-/optimist-0.6.1.tgz',
+106 silly resolved     readme: 'ERROR: No README data found!' } ]
+107 info install optimist@0.6.1 into /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma
+108 info installOne optimist@0.6.1
+109 verbose node_modules/grunt-karma/node_modules/optimist unbuild
+110 verbose tar unpack /Users/mikeevans/.npm/optimist/0.6.1/package.tgz
+111 silly lockFile 2d2d1fa1-runt-karma-node-modules-optimist tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist
+112 verbose lock tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist /Users/mikeevans/.npm/2d2d1fa1-runt-karma-node-modules-optimist.lock
+113 silly lockFile f80e8a7b-s-npm-optimist-0-6-1-package-tgz tar:///Users/mikeevans/.npm/optimist/0.6.1/package.tgz
+114 verbose lock tar:///Users/mikeevans/.npm/optimist/0.6.1/package.tgz /Users/mikeevans/.npm/f80e8a7b-s-npm-optimist-0-6-1-package-tgz.lock
+115 silly gunzTarPerm modes [ '755', '644' ]
+116 silly gunzTarPerm extractEntry package.json
+117 silly gunzTarPerm extractEntry LICENSE
+118 silly gunzTarPerm extractEntry index.js
+119 silly gunzTarPerm extractEntry .travis.yml
+120 silly gunzTarPerm extractEntry example/bool.js
+121 silly gunzTarPerm extractEntry example/default_singles.js
+122 silly gunzTarPerm extractEntry example/divide.js
+123 silly gunzTarPerm extractEntry example/line_count.js
+124 silly gunzTarPerm extractEntry example/default_hash.js
+125 silly gunzTarPerm extractEntry example/line_count_wrap.js
+126 silly gunzTarPerm extractEntry example/nonopt.js
+127 silly gunzTarPerm extractEntry example/reflect.js
+128 silly gunzTarPerm extractEntry example/short.js
+129 silly gunzTarPerm extractEntry example/string.js
+130 silly gunzTarPerm extractEntry example/boolean_single.js
+131 silly gunzTarPerm extractEntry example/usage-options.js
+132 silly gunzTarPerm extractEntry example/boolean_double.js
+133 silly gunzTarPerm extractEntry example/xup.js
+134 silly gunzTarPerm extractEntry example/line_count_options.js
+135 silly gunzTarPerm extractEntry readme.markdown
+136 silly gunzTarPerm extractEntry test/_.js
+137 silly gunzTarPerm extractEntry test/dash.js
+138 silly gunzTarPerm extractEntry test/parse.js
+139 silly gunzTarPerm extractEntry test/parse_modified.js
+140 silly gunzTarPerm extractEntry test/short.js
+141 silly gunzTarPerm extractEntry test/usage.js
+142 silly gunzTarPerm extractEntry test/whitespace.js
+143 silly gunzTarPerm extractEntry test/_/argv.js
+144 silly gunzTarPerm extractEntry test/_/bin.js
+145 silly lockFile 2d2d1fa1-runt-karma-node-modules-optimist tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist
+146 silly lockFile 2d2d1fa1-runt-karma-node-modules-optimist tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist
+147 silly lockFile f80e8a7b-s-npm-optimist-0-6-1-package-tgz tar:///Users/mikeevans/.npm/optimist/0.6.1/package.tgz
+148 silly lockFile f80e8a7b-s-npm-optimist-0-6-1-package-tgz tar:///Users/mikeevans/.npm/optimist/0.6.1/package.tgz
+149 info preinstall optimist@0.6.1
+150 verbose readDependencies using package.json deps
+151 verbose readDependencies using package.json deps
+152 verbose cache add [ 'wordwrap@~0.0.2', null ]
+153 verbose cache add name=undefined spec="wordwrap@~0.0.2" args=["wordwrap@~0.0.2",null]
+154 verbose parsed url { protocol: null,
+154 verbose parsed url   slashes: null,
+154 verbose parsed url   auth: null,
+154 verbose parsed url   host: null,
+154 verbose parsed url   port: null,
+154 verbose parsed url   hostname: null,
+154 verbose parsed url   hash: null,
+154 verbose parsed url   search: null,
+154 verbose parsed url   query: null,
+154 verbose parsed url   pathname: 'wordwrap@~0.0.2',
+154 verbose parsed url   path: 'wordwrap@~0.0.2',
+154 verbose parsed url   href: 'wordwrap@~0.0.2' }
+155 verbose cache add [ 'minimist@~0.0.1', null ]
+156 verbose cache add name=undefined spec="minimist@~0.0.1" args=["minimist@~0.0.1",null]
+157 verbose parsed url { protocol: null,
+157 verbose parsed url   slashes: null,
+157 verbose parsed url   auth: null,
+157 verbose parsed url   host: null,
+157 verbose parsed url   port: null,
+157 verbose parsed url   hostname: null,
+157 verbose parsed url   hash: null,
+157 verbose parsed url   search: null,
+157 verbose parsed url   query: null,
+157 verbose parsed url   pathname: 'minimist@~0.0.1',
+157 verbose parsed url   path: 'minimist@~0.0.1',
+157 verbose parsed url   href: 'minimist@~0.0.1' }
+158 verbose cache add name="wordwrap" spec="~0.0.2" args=["wordwrap","~0.0.2"]
+159 verbose parsed url { protocol: null,
+159 verbose parsed url   slashes: null,
+159 verbose parsed url   auth: null,
+159 verbose parsed url   host: null,
+159 verbose parsed url   port: null,
+159 verbose parsed url   hostname: null,
+159 verbose parsed url   hash: null,
+159 verbose parsed url   search: null,
+159 verbose parsed url   query: null,
+159 verbose parsed url   pathname: '~0.0.2',
+159 verbose parsed url   path: '~0.0.2',
+159 verbose parsed url   href: '~0.0.2' }
+160 verbose addNamed [ 'wordwrap', '~0.0.2' ]
+161 verbose addNamed [ null, '>=0.0.2-0 <0.1.0-0' ]
+162 silly lockFile 8bd42136-wordwrap-0-0-2 wordwrap@~0.0.2
+163 verbose lock wordwrap@~0.0.2 /Users/mikeevans/.npm/8bd42136-wordwrap-0-0-2.lock
+164 verbose cache add name="minimist" spec="~0.0.1" args=["minimist","~0.0.1"]
+165 verbose parsed url { protocol: null,
+165 verbose parsed url   slashes: null,
+165 verbose parsed url   auth: null,
+165 verbose parsed url   host: null,
+165 verbose parsed url   port: null,
+165 verbose parsed url   hostname: null,
+165 verbose parsed url   hash: null,
+165 verbose parsed url   search: null,
+165 verbose parsed url   query: null,
+165 verbose parsed url   pathname: '~0.0.1',
+165 verbose parsed url   path: '~0.0.1',
+165 verbose parsed url   href: '~0.0.1' }
+166 verbose addNamed [ 'minimist', '~0.0.1' ]
+167 verbose addNamed [ null, '>=0.0.1-0 <0.1.0-0' ]
+168 silly lockFile 7a855a96-minimist-0-0-1 minimist@~0.0.1
+169 verbose lock minimist@~0.0.1 /Users/mikeevans/.npm/7a855a96-minimist-0-0-1.lock
+170 silly addNameRange { name: 'wordwrap', range: '>=0.0.2-0 <0.1.0-0', hasData: false }
+171 silly addNameRange { name: 'minimist', range: '>=0.0.1-0 <0.1.0-0', hasData: false }
+172 verbose request where is /wordwrap
+173 verbose request registry https://registry.npmjs.org/
+174 verbose url raw /wordwrap
+175 verbose url resolving [ 'https://registry.npmjs.org/', './wordwrap' ]
+176 verbose url resolved https://registry.npmjs.org/wordwrap
+177 verbose request where is https://registry.npmjs.org/wordwrap
+178 info trying registry request attempt 1 at 12:52:40
+179 verbose etag "ALYDR9120G3MFMF3HT2W8TQOT"
+180 http GET https://registry.npmjs.org/wordwrap
+181 verbose request where is /minimist
+182 verbose request registry https://registry.npmjs.org/
+183 verbose url raw /minimist
+184 verbose url resolving [ 'https://registry.npmjs.org/', './minimist' ]
+185 verbose url resolved https://registry.npmjs.org/minimist
+186 verbose request where is https://registry.npmjs.org/minimist
+187 info trying registry request attempt 1 at 12:52:40
+188 verbose etag "AIJSW6KK3QO8KDIIUG69R7WEJ"
+189 http GET https://registry.npmjs.org/minimist
+190 http 304 https://registry.npmjs.org/minimist
+191 silly registry.get cb [ 304,
+191 silly registry.get   { date: 'Sat, 07 Mar 2015 12:52:39 GMT',
+191 silly registry.get     server: 'Apache',
+191 silly registry.get     via: '1.1 varnish',
+191 silly registry.get     'last-modified': 'Sat, 07 Mar 2015 12:52:10 GMT',
+191 silly registry.get     'cache-control': 'max-age=60',
+191 silly registry.get     etag: '"AIJSW6KK3QO8KDIIUG69R7WEJ"',
+191 silly registry.get     age: '29',
+191 silly registry.get     'x-served-by': 'cache-lhr6331-LHR',
+191 silly registry.get     'x-cache': 'HIT',
+191 silly registry.get     'x-cache-hits': '6',
+191 silly registry.get     'x-timer': 'S1425732759.915619,VS0,VE0',
+191 silly registry.get     vary: 'Accept',
+191 silly registry.get     'content-length': '0',
+191 silly registry.get     'keep-alive': 'timeout=10, max=50',
+191 silly registry.get     connection: 'Keep-Alive' } ]
+192 verbose etag https://registry.npmjs.org/minimist from cache
+193 http 304 https://registry.npmjs.org/wordwrap
+194 silly registry.get cb [ 304,
+194 silly registry.get   { date: 'Sat, 07 Mar 2015 12:52:39 GMT',
+194 silly registry.get     server: 'Apache',
+194 silly registry.get     via: '1.1 varnish',
+194 silly registry.get     'last-modified': 'Sat, 07 Mar 2015 12:52:39 GMT',
+194 silly registry.get     'cache-control': 'max-age=60',
+194 silly registry.get     etag: '"ALYDR9120G3MFMF3HT2W8TQOT"',
+194 silly registry.get     age: '33',
+194 silly registry.get     'x-served-by': 'cache-lhr6322-LHR',
+194 silly registry.get     'x-cache': 'HIT',
+194 silly registry.get     'x-cache-hits': '1',
+194 silly registry.get     'x-timer': 'S1425732759.922554,VS0,VE0',
+194 silly registry.get     vary: 'Accept',
+194 silly registry.get     'content-length': '0',
+194 silly registry.get     'keep-alive': 'timeout=10, max=50',
+194 silly registry.get     connection: 'Keep-Alive' } ]
+195 verbose etag https://registry.npmjs.org/wordwrap from cache
+196 silly addNameRange number 2 { name: 'minimist', range: '>=0.0.1-0 <0.1.0-0', hasData: true }
+197 silly addNameRange versions [ 'minimist',
+197 silly addNameRange   [ '0.0.0',
+197 silly addNameRange     '0.0.1',
+197 silly addNameRange     '0.0.2',
+197 silly addNameRange     '0.0.3',
+197 silly addNameRange     '0.0.4',
+197 silly addNameRange     '0.0.5',
+197 silly addNameRange     '0.0.6',
+197 silly addNameRange     '0.0.7',
+197 silly addNameRange     '0.0.8',
+197 silly addNameRange     '0.0.9',
+197 silly addNameRange     '0.0.10',
+197 silly addNameRange     '0.1.0',
+197 silly addNameRange     '0.2.0',
+197 silly addNameRange     '1.0.0',
+197 silly addNameRange     '1.1.0' ] ]
+198 verbose addNamed [ 'minimist', '0.0.10' ]
+199 verbose addNamed [ '0.0.10', '0.0.10' ]
+200 silly lockFile 92f0553b-minimist-0-0-10 minimist@0.0.10
+201 verbose lock minimist@0.0.10 /Users/mikeevans/.npm/92f0553b-minimist-0-0-10.lock
+202 silly lockFile 92f0553b-minimist-0-0-10 minimist@0.0.10
+203 silly lockFile 92f0553b-minimist-0-0-10 minimist@0.0.10
+204 silly lockFile 7a855a96-minimist-0-0-1 minimist@~0.0.1
+205 silly lockFile 7a855a96-minimist-0-0-1 minimist@~0.0.1
+206 silly addNameRange number 2 { name: 'wordwrap', range: '>=0.0.2-0 <0.1.0-0', hasData: true }
+207 silly addNameRange versions [ 'wordwrap', [ '0.0.1', '0.0.2' ] ]
+208 verbose addNamed [ 'wordwrap', '0.0.2' ]
+209 verbose addNamed [ '0.0.2', '0.0.2' ]
+210 silly lockFile 24a694c8-wordwrap-0-0-2 wordwrap@0.0.2
+211 verbose lock wordwrap@0.0.2 /Users/mikeevans/.npm/24a694c8-wordwrap-0-0-2.lock
+212 silly lockFile 24a694c8-wordwrap-0-0-2 wordwrap@0.0.2
+213 silly lockFile 24a694c8-wordwrap-0-0-2 wordwrap@0.0.2
+214 silly lockFile 8bd42136-wordwrap-0-0-2 wordwrap@~0.0.2
+215 silly lockFile 8bd42136-wordwrap-0-0-2 wordwrap@~0.0.2
+216 silly resolved [ { name: 'minimist',
+216 silly resolved     version: '0.0.10',
+216 silly resolved     description: 'parse argument options',
+216 silly resolved     main: 'index.js',
+216 silly resolved     devDependencies: { tape: '~1.0.4', tap: '~0.4.0' },
+216 silly resolved     scripts: { test: 'tap test/*.js' },
+216 silly resolved     testling: { files: 'test/*.js', browsers: [Object] },
+216 silly resolved     repository: { type: 'git', url: 'git://github.com/substack/minimist.git' },
+216 silly resolved     homepage: 'https://github.com/substack/minimist',
+216 silly resolved     keywords: [ 'argv', 'getopt', 'parser', 'optimist' ],
+216 silly resolved     author:
+216 silly resolved      { name: 'James Halliday',
+216 silly resolved        email: 'mail@substack.net',
+216 silly resolved        url: 'http://substack.net' },
+216 silly resolved     license: 'MIT',
+216 silly resolved     bugs: { url: 'https://github.com/substack/minimist/issues' },
+216 silly resolved     _id: 'minimist@0.0.10',
+216 silly resolved     dist:
+216 silly resolved      { shasum: 'de3f98543dbf96082be48ad1a0c7cda836301dcf',
+216 silly resolved        tarball: 'http://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz' },
+216 silly resolved     _from: 'minimist@~0.0.1',
+216 silly resolved     _npmVersion: '1.4.3',
+216 silly resolved     _npmUser: { name: 'substack', email: 'mail@substack.net' },
+216 silly resolved     maintainers: [ [Object] ],
+216 silly resolved     directories: {},
+216 silly resolved     _shasum: 'de3f98543dbf96082be48ad1a0c7cda836301dcf',
+216 silly resolved     _resolved: 'https://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz',
+216 silly resolved     readme: 'ERROR: No README data found!' },
+216 silly resolved   { name: 'wordwrap',
+216 silly resolved     description: 'Wrap those words. Show them at what columns to start and stop.',
+216 silly resolved     version: '0.0.2',
+216 silly resolved     repository:
+216 silly resolved      { type: 'git',
+216 silly resolved        url: 'git://github.com/substack/node-wordwrap.git' },
+216 silly resolved     main: './index.js',
+216 silly resolved     keywords: [ 'word', 'wrap', 'rule', 'format', 'column' ],
+216 silly resolved     directories: { lib: '.', example: 'example', test: 'test' },
+216 silly resolved     scripts: { test: 'expresso' },
+216 silly resolved     devDependencies: { expresso: '=0.7.x' },
+216 silly resolved     engines: { node: '>=0.4.0' },
+216 silly resolved     license: 'MIT/X11',
+216 silly resolved     author:
+216 silly resolved      { name: 'James Halliday',
+216 silly resolved        email: 'mail@substack.net',
+216 silly resolved        url: 'http://substack.net' },
+216 silly resolved     _id: 'wordwrap@0.0.2',
+216 silly resolved     dependencies: {},
+216 silly resolved     _engineSupported: true,
+216 silly resolved     _npmVersion: '1.0.10',
+216 silly resolved     _nodeVersion: 'v0.5.0-pre',
+216 silly resolved     _defaultsLoaded: true,
+216 silly resolved     dist:
+216 silly resolved      { shasum: 'b79669bb42ecb409f83d583cad52ca17eaa1643f',
+216 silly resolved        tarball: 'http://registry.npmjs.org/wordwrap/-/wordwrap-0.0.2.tgz' },
+216 silly resolved     maintainers: [ [Object] ],
+216 silly resolved     _shasum: 'b79669bb42ecb409f83d583cad52ca17eaa1643f',
+216 silly resolved     _from: 'wordwrap@~0.0.2',
+216 silly resolved     _resolved: 'https://registry.npmjs.org/wordwrap/-/wordwrap-0.0.2.tgz',
+216 silly resolved     bugs: { url: 'https://github.com/substack/node-wordwrap/issues' },
+216 silly resolved     readme: 'ERROR: No README data found!',
+216 silly resolved     homepage: 'https://github.com/substack/node-wordwrap' } ]
+217 info install minimist@0.0.10 into /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist
+218 info install wordwrap@0.0.2 into /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist
+219 info installOne minimist@0.0.10
+220 info installOne wordwrap@0.0.2
+221 verbose node_modules/grunt-karma/node_modules/optimist/node_modules/minimist unbuild
+222 verbose node_modules/grunt-karma/node_modules/optimist/node_modules/wordwrap unbuild
+223 verbose tar unpack /Users/mikeevans/.npm/minimist/0.0.10/package.tgz
+224 silly lockFile 9e094e48-s-optimist-node-modules-minimist tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/minimist
+225 verbose lock tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/minimist /Users/mikeevans/.npm/9e094e48-s-optimist-node-modules-minimist.lock
+226 silly lockFile ddd60dad--npm-minimist-0-0-10-package-tgz tar:///Users/mikeevans/.npm/minimist/0.0.10/package.tgz
+227 verbose lock tar:///Users/mikeevans/.npm/minimist/0.0.10/package.tgz /Users/mikeevans/.npm/ddd60dad--npm-minimist-0-0-10-package-tgz.lock
+228 verbose tar unpack /Users/mikeevans/.npm/wordwrap/0.0.2/package.tgz
+229 silly lockFile 7033c6e2-s-optimist-node-modules-wordwrap tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/wordwrap
+230 verbose lock tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/wordwrap /Users/mikeevans/.npm/7033c6e2-s-optimist-node-modules-wordwrap.lock
+231 silly lockFile 06dbbde7-s-npm-wordwrap-0-0-2-package-tgz tar:///Users/mikeevans/.npm/wordwrap/0.0.2/package.tgz
+232 verbose lock tar:///Users/mikeevans/.npm/wordwrap/0.0.2/package.tgz /Users/mikeevans/.npm/06dbbde7-s-npm-wordwrap-0-0-2-package-tgz.lock
+233 silly gunzTarPerm modes [ '755', '644' ]
+234 silly gunzTarPerm modes [ '755', '644' ]
+235 silly gunzTarPerm extractEntry package.json
+236 silly gunzTarPerm extractEntry index.js
+237 silly gunzTarPerm extractEntry LICENSE
+238 silly gunzTarPerm extractEntry index.js
+239 silly gunzTarPerm extractEntry .npmignore
+240 silly gunzTarPerm extractEntry package.json
+241 silly gunzTarPerm extractEntry .travis.yml
+242 silly gunzTarPerm extractEntry example/parse.js
+243 silly gunzTarPerm extractEntry README.markdown
+244 silly gunzTarPerm extractEntry example/center.js
+245 silly gunzTarPerm extractEntry readme.markdown
+246 silly gunzTarPerm extractEntry test/bool.js
+247 silly gunzTarPerm extractEntry example/meat.js
+248 silly gunzTarPerm extractEntry test/wrap.js
+249 silly gunzTarPerm extractEntry test/break.js
+250 silly gunzTarPerm extractEntry test/idleness.txt
+251 silly gunzTarPerm extractEntry test/dash.js
+252 silly gunzTarPerm extractEntry test/default_bool.js
+253 silly gunzTarPerm extractEntry test/dotted.js
+254 silly gunzTarPerm extractEntry test/long.js
+255 silly gunzTarPerm extractEntry test/num.js
+256 silly gunzTarPerm extractEntry test/parse.js
+257 silly gunzTarPerm extractEntry test/parse_modified.js
+258 silly gunzTarPerm extractEntry test/short.js
+259 silly gunzTarPerm extractEntry test/whitespace.js
+260 silly lockFile 7033c6e2-s-optimist-node-modules-wordwrap tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/wordwrap
+261 silly lockFile 7033c6e2-s-optimist-node-modules-wordwrap tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/wordwrap
+262 silly lockFile 06dbbde7-s-npm-wordwrap-0-0-2-package-tgz tar:///Users/mikeevans/.npm/wordwrap/0.0.2/package.tgz
+263 silly lockFile 06dbbde7-s-npm-wordwrap-0-0-2-package-tgz tar:///Users/mikeevans/.npm/wordwrap/0.0.2/package.tgz
+264 info preinstall wordwrap@0.0.2
+265 verbose readDependencies using package.json deps
+266 verbose readDependencies using package.json deps
+267 silly resolved []
+268 verbose about to build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/wordwrap
+269 info build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/wordwrap
+270 verbose linkStuff [ false,
+270 verbose linkStuff   false,
+270 verbose linkStuff   false,
+270 verbose linkStuff   '/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules' ]
+271 info linkStuff wordwrap@0.0.2
+272 verbose linkBins wordwrap@0.0.2
+273 verbose linkMans wordwrap@0.0.2
+274 verbose rebuildBundles wordwrap@0.0.2
+275 info install wordwrap@0.0.2
+276 info postinstall wordwrap@0.0.2
+277 silly lockFile 9e094e48-s-optimist-node-modules-minimist tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/minimist
+278 silly lockFile 9e094e48-s-optimist-node-modules-minimist tar:///Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/minimist
+279 silly lockFile ddd60dad--npm-minimist-0-0-10-package-tgz tar:///Users/mikeevans/.npm/minimist/0.0.10/package.tgz
+280 silly lockFile ddd60dad--npm-minimist-0-0-10-package-tgz tar:///Users/mikeevans/.npm/minimist/0.0.10/package.tgz
+281 info preinstall minimist@0.0.10
+282 verbose readDependencies using package.json deps
+283 verbose readDependencies using package.json deps
+284 silly resolved []
+285 verbose about to build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/minimist
+286 info build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules/minimist
+287 verbose linkStuff [ false,
+287 verbose linkStuff   false,
+287 verbose linkStuff   false,
+287 verbose linkStuff   '/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist/node_modules' ]
+288 info linkStuff minimist@0.0.10
+289 verbose linkBins minimist@0.0.10
+290 verbose linkMans minimist@0.0.10
+291 verbose rebuildBundles minimist@0.0.10
+292 info install minimist@0.0.10
+293 info postinstall minimist@0.0.10
+294 verbose about to build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist
+295 info build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules/optimist
+296 verbose linkStuff [ false,
+296 verbose linkStuff   false,
+296 verbose linkStuff   false,
+296 verbose linkStuff   '/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma/node_modules' ]
+297 info linkStuff optimist@0.6.1
+298 verbose linkBins optimist@0.6.1
+299 verbose linkMans optimist@0.6.1
+300 verbose rebuildBundles optimist@0.6.1
+301 verbose rebuildBundles [ 'minimist', 'wordwrap' ]
+302 info install optimist@0.6.1
+303 info postinstall optimist@0.6.1
+304 verbose about to build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma
+305 info build /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules/grunt-karma
+306 verbose linkStuff [ false,
+306 verbose linkStuff   false,
+306 verbose linkStuff   false,
+306 verbose linkStuff   '/Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator/node_modules' ]
+307 info linkStuff grunt-karma@0.6.2
+308 verbose linkBins grunt-karma@0.6.2
+309 verbose linkMans grunt-karma@0.6.2
+310 verbose rebuildBundles grunt-karma@0.6.2
+311 verbose rebuildBundles [ 'optimist' ]
+312 info install grunt-karma@0.6.2
+313 info postinstall grunt-karma@0.6.2
+314 verbose readDependencies using package.json deps
+315 verbose already installed skipping karma@~0.10.0 /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator
+316 silly resolved []
+317 error peerinvalid The package karma does not satisfy its siblings' peerDependencies requirements!
+317 error peerinvalid Peer karma-chrome-launcher@0.1.7 wants karma@>=0.9.3
+317 error peerinvalid Peer karma-firefox-launcher@0.1.4 wants karma@>=0.9
+317 error peerinvalid Peer karma-html2js-preprocessor@0.1.0 wants karma@>=0.9
+317 error peerinvalid Peer karma-jasmine@0.1.5 wants karma@>=0.9
+317 error peerinvalid Peer karma-ng-html2js-preprocessor@0.1.2 wants karma@>=0.9
+317 error peerinvalid Peer karma-ng-scenario@0.1.0 wants karma@>=0.9
+317 error peerinvalid Peer karma-requirejs@0.1.0 wants karma@>=0.9
+317 error peerinvalid Peer karma-script-launcher@0.1.0 wants karma@>=0.9
+317 error peerinvalid Peer grunt-karma@0.6.2 wants karma@~0.10.0
+317 error peerinvalid Peer karma-coffee-preprocessor@0.1.3 wants karma@>=0.9
+317 error peerinvalid Peer karma-phantomjs-launcher@0.1.4 wants karma@>=0.9
+318 error System Darwin 13.4.0
+319 error command "node" "/usr/local/bin/npm" "update" "grunt-karma"
+320 error cwd /Users/mikeevans/Google Drive/dev/htdocs/angular-mom-paginator
+321 error node -v v0.10.32
+322 error npm -v 1.4.28
+323 error code EPEERINVALID
+324 verbose exit [ 1, true ]

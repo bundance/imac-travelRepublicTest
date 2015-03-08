@@ -1,9 +1,8 @@
 'use strict';
 
-angular.module('mockedGitHubTotalCountJson', [])
+angular.module('mockGitHubData')
     .value('gitHubTotalCountJson', {
         fakeData:
-
         {
     "total_count": 576097,
     "items": [

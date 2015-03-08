@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mockedGitHubJSON', [])
-    .value('gitHubJSON', {
+angular.module('mockGitHubData')
+    .value('gitHubJSON_100Records', {
         fakeData:
         [
             {

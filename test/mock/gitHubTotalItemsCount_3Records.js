@@ -1,4 +1,6 @@
-angular.module('mockedGitHubTotalCountJson_3Records', [])
+'use strict';
+
+angular.module('mockGitHubData')
     .value('gitHubTotalCountJson_3Records', {
         fakeData:
 

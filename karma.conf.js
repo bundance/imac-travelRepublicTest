@@ -11,16 +11,19 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/bower_components/angular-resource/angular-resource.js',
-      'app/bower_components/angular-sanitize/angular-sanitize.js',
-      'app/bower_components/angular-route/angular-route.js',
-      'app/scripts/*.js',
-      'app/lib/*.js',
-      'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+        'app/bower_components/angular/angular.js',
+        'app/bower_components/angular-mocks/angular-mocks.js',
+        'app/bower_components/angular-resource/angular-resource.js',
+        'app/bower_components/angular-sanitize/angular-sanitize.js',
+        'app/bower_components/angular-route/angular-route.js',
+        'app/scripts/app.js',
+        //'app/scripts/components/paginator/paginator_module.js',
+        'app/scripts/components/paginator/paginator_service.js',
+        'app/scripts/components/gitHubAPI/gitHubAPI_module.js',
+        'app/scripts/components/gitHubAPI/*.js',
+        'test/mock/mockGitHubData.js',
+        'test/mock/*.js',
+        'test/spec/shared/paginator.spec.js'
     ],
 
     // list of files / patterns to exclude
@@ -31,7 +34,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes

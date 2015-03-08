@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('angularMomPaginatorApp')
-    .controller('PaginatorCtrl', ['$scope', 'momPaginator', 'gitHubData', function($scope, momPaginator, gitHubData){
+    .controller('DemoAppCtrl', ['$scope', 'momPaginator', 'gitHubData', function($scope, momPaginator,  gitHubData){
 
+        // Set $scope's properties
         $scope.model = {
             page: 1,
             pages: []
@@ -19,24 +20,27 @@ angular.module('angularMomPaginatorApp')
             }
         });
 
-        $scope.paginator.initialise()
-            .then(_getPage);
 
-
-        $scope.$watch('model.page', function(newPageNum){
+        // Set watches
+        $scope.$watch('model.page', function (newPageNum) {
             _getPage(newPageNum);
         });
+
+
+        // Initialise the paginator
+        $scope.paginator.initialise()
+            .then(_getPage);
 
 
         //////////////////
 
         /*  Helper functions  */
 
-        function _getPage(pageNum){
+        function _getPage(pageNum) {
             return $scope.paginator.getPage(pageNum)
-                .then(function(){
+                .then(function () {
                     $scope.model.pages = $scope.paginator.getPageNumbers();
                 })
-            }
+        }
 
     }]);

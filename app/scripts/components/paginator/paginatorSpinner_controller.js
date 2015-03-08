@@ -2,7 +2,7 @@
 
 angular.module('angularMomPaginatorApp')
 
-    .controller('PaginatorSpinnerCtrl', ['$scope', 'momPaginator', 'gitHubService', function($scope, momPaginator, gitHubService){
+    .controller('PaginatorSpinnerCtrl', ['$scope', 'momPaginator', 'gitHubData', function($scope, momPaginator, gitHubData){
 
     var getPageNumbers = function(lastPage){
         var arr = [];
@@ -32,7 +32,7 @@ angular.module('angularMomPaginatorApp')
         }
     };
 
-    $scope.model.paginator = momPaginator(gitHubService, 5, 1, {sortIconUp: 'glyphicon glyphicon-arrow-up',
+    $scope.model.paginator = momPaginator(gitHubData, 5, 1, {sortIconUp: 'glyphicon glyphicon-arrow-up',
         sortIconDown: 'glyphicon glyphicon-arrow-down', sortIconNone: 'glyphicon glyphicon-resize-vertical'});
 
     $scope.model.paginator.promise
