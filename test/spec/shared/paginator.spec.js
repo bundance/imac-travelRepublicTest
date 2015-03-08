@@ -914,7 +914,7 @@ describe('Paginator Service', function() {
         });
     });
 
-        /***
+    /***
      * Test the Paginator.toggleSort() function
      */
     describe("Paginator.toggleSort() function", function() {
@@ -1010,7 +1010,7 @@ describe('Paginator Service', function() {
         });
     });
 
-        afterEach(function() {
+    afterEach(function() {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
     });

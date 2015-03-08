@@ -23,7 +23,7 @@ module.exports = function(config) {
         'app/scripts/components/gitHubAPI/*.js',
         'test/mock/mockGitHubData.js',
         'test/mock/*.js',
-        'test/spec/shared/paginator.spec.js'
+        'test/spec/shared/*.spec.js'
     ],
 
     // list of files / patterns to exclude
