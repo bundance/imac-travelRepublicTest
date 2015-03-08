@@ -34,8 +34,8 @@
  *
  *
  */
-angular.module('momUI.momPaginator', [])
-        .factory('momPaginator', ['$q', function($q){
+angular.module('momUI.momPaginator')
+    .factory('momPaginator', ['$q', function($q){
 
         return function (opts) {
 

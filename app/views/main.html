@@ -25,9 +25,9 @@
             <h4>Sort By:</h4>
 
             <span>
-                <button class="btn btn-primary mom-toggle" ng-click="paginator.toggleSort('followers')">Followers <i ng-class="paginator.getSortIcon('followers')"></i></button>
-                <button class="btn btn-primary mom-toggle" ng-click="paginator.toggleSort('joined')">Joined <i ng-class="paginator.getSortIcon('joined')"></i> </button>
-                <button class="btn btn-primary mom-toggle" ng-click="paginator.toggleSort('repositories')">Repositories <i ng-class="paginator.getSortIcon('repositories')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="toggleSort({'columnName': 'followers'})">Followers <i ng-class="paginator.getSortIcon('followers')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="toggleSort({'columnName': 'joined'})">Joined <i ng-class="paginator.getSortIcon('joined')"></i> </button>
+                <button class="btn btn-primary mom-toggle" ng-click="toggleSort({'columnName': 'repositories'})">Repositories <i ng-class="paginator.getSortIcon('repositories')"></i></button>
             </span>
         </div>
 

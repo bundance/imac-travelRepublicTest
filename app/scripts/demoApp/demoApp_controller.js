@@ -31,6 +31,15 @@ angular.module('angularMomPaginatorApp')
         $scope.paginator.initialise()
             .then(_getPage);
 
+        // Enable sorting
+        $scope.toggleSort = function(sortParams){
+            return $scope.paginator.toggleSort(sortParams.columnName)
+                .then(function(){
+                    var icon = $scope.paginator.getSortIcon(sortParams.columnName);
+                    return {icon: $scope.paginator.getSortIcon(sortParams.columnName)};
+                })
+        };
+
 
         //////////////////
 

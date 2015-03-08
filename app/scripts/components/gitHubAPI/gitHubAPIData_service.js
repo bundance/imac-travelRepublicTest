@@ -1,5 +1,5 @@
 angular.module('rest.gitHubAPI')
-    .factory('gitHubData', ['gitHubREST', '$q', function(gitHubREST, $q){
+    .factory('gitHubData', ['gitHubREST', function(gitHubREST){
 
         var DEFAULT_ITEMS_PER_PAGE = 10;
 

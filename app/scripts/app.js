@@ -15,7 +15,7 @@ angular.module('angularMomPaginatorApp', [
          })
          .when('/spinner', {
              templateUrl: 'views/main-spinner.html',
-             controller: 'PaginatorSpinnerCtrl'
+             controller: 'DemoAppCtrl'
          })
          .otherwise({
              redirectTo: '/'
