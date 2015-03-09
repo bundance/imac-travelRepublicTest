@@ -239,11 +239,11 @@ To see a complete example implementation, clone the repo and navigate to:
 * The version with the spinner is implemented in `app/views/main-spinner.html` and uses the `PaginatorSpinnerCtrl`
  controller (defined in `angular-mom-paginator/app/scripts/app.js`)
 * The Paginator service is defined in 'angular-mom-paginator/app/scripts/services/paginator.js`
-* The ReST Service is defined in `angular-mom-paginator/app/scripts/shared/gitHubAPI_REST_service.js`
+* The ReST Service is defined in `angular-mom-paginator/app/scripts/shared/gitHubAPI-REST.service.js`
 
 ###Tests###
 You'll need the Karma test runner to run the tests, which can be found in `angular-mom-paginator/test/spec`. Tests for
-  the controllers can be found in `angular-mom-paginator/test/spec/controllers/demoApp_controller.spec.js`, while the much more
+  the controllers can be found in `angular-mom-paginator/test/spec/controllers/demoApp.controller.spec.js`, while the much more
   detailed tests for the ReST API communication can be found in
   `angular-mom-paginator/test/spec/shared/restAPIspec.js`
 

@@ -11,11 +11,14 @@ angular.module('angularMomPaginatorApp', [
          $routeProvider
          .when('/', {
              templateUrl: 'views/main.html',
-             controller: 'DemoAppCtrl'
+             controllerAs: 'demo',
+             controller: 'DemoAppController'
          })
          .when('/spinner', {
              templateUrl: 'views/main-spinner.html',
-             controller: 'DemoAppCtrl'
+             controllerAs: 'demo',
+             controller: 'DemoAppController'
+
          })
          .otherwise({
              redirectTo: '/'

@@ -34,8 +34,16 @@
  *
  *
  */
-angular.module('momUI.momPaginator')
-    .factory('momPaginator', ['$q', function($q){
+(function() {
+    'use strict';
+
+    angular
+        .module('momUI.momPaginator')
+        .factory('momPaginator', momPaginator);
+
+    momPaginator.$inject = ['$q'];
+
+    function momPaginator($q) {
 
         return function (opts) {
 
@@ -388,5 +396,6 @@ angular.module('momUI.momPaginator')
                 return (items.length < itemsPerPage) ? items.length : itemsPerPage;
             }
         };
+    }
 
-    }]);
+})();

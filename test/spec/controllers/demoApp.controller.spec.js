@@ -1,8 +1,8 @@
 'use strict';
 
-describe('Controller: DemoAppCtrl', function () {
+describe('Controller: DemoAppController', function () {
 
-    var DemoAppCtrl,
+    var DemoAppController,
         paginator,
         scope,
         $controller,
@@ -60,24 +60,24 @@ describe('Controller: DemoAppCtrl', function () {
 
     it('Should define paginator on the scope', function () {
 
-        DemoAppCtrl = $controller('DemoAppCtrl', {
+        DemoAppController = $controller('DemoAppController', {
             $scope: scope,
             momPaginator: momPaginator,
             gitHubData: gitHubData
         });
 
-        expect(scope.paginator).toBeDefined();
+        expect(DemoAppController.paginator).toBeDefined();
     });
 
     it("Should define model on the scope", function(){
 
-        DemoAppCtrl = $controller('DemoAppCtrl', {
+        DemoAppController = $controller('DemoAppController', {
             $scope: scope,
             momPaginator: momPaginator,
             gitHubData: gitHubData
         });
 
-        expect(scope.model).toBeJsonEqual({
+        expect(DemoAppController.model).toBeJsonEqual({
             page: 1,
             pages: []
         });
@@ -100,7 +100,7 @@ describe('Controller: DemoAppCtrl', function () {
         // Check that getTotalItemsCount() was called
         spyOn(gitHubData ,'getTotalItemsCount').andCallThrough();
 
-        DemoAppCtrl = $controller('DemoAppCtrl', {
+        DemoAppController = $controller('DemoAppController', {
             $scope: scope,
             momPaginator: momPaginator,
             gitHubData: gitHubData

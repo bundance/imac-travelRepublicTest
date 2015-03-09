@@ -11,17 +11,34 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        /*
         'app/bower_components/angular/angular.js',
         'app/bower_components/angular-mocks/angular-mocks.js',
         'app/bower_components/angular-resource/angular-resource.js',
         'app/bower_components/angular-sanitize/angular-sanitize.js',
         'app/bower_components/angular-route/angular-route.js',
         'app/lib/*.js',
-        'app/scripts/app.js',
-        'app/scripts/components/paginator/paginator_module.js',
+        'app/scripts/demoApp/app.js',
+        'app/scripts/components/paginator/paginator.module.js',
         'app/scripts/components/paginator/*.js',
-        'app/scripts/components/gitHubAPI/gitHubAPI_module.js',
+        'app/scripts/components/gitHubAPI/gitHubAPI.module.js',
         'app/scripts/components/gitHubAPI/*.js',
+        'app/scripts/demoApp/*.js',
+        'test/mock/mockGitHubData.js',
+        'test/mock/*.js',
+        'test/spec/shared/*.spec.js',
+        'test/spec/controllers/*.spec.js'
+        */
+
+        'app/bower_components/angular/angular.js',
+        'app/bower_components/angular-mocks/angular-mocks.js',
+        'app/bower_components/angular-resource/angular-resource.js',
+        'app/bower_components/angular-sanitize/angular-sanitize.js',
+        'app/bower_components/angular-route/angular-route.js',
+        'app/lib/*.js',
+        'app/scripts/demoApp/app.js',
+        'app/scripts/components/**/*.module.js',
+        'app/scripts/components/**/*.js',
         'app/scripts/demoApp/*.js',
         'test/mock/mockGitHubData.js',
         'test/mock/*.js',

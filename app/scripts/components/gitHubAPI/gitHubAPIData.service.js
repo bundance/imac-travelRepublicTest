@@ -1,5 +1,13 @@
-angular.module('rest.gitHubAPI')
-    .factory('gitHubData', ['gitHubREST', function(gitHubREST){
+(function() {
+    'use strict';
+
+    angular
+        .module('rest.gitHubAPI')
+        .factory('gitHubData', gitHubData);
+
+    gitHubData.$inject = ['gitHubREST'];
+
+    function gitHubData(gitHubREST){
 
         var DEFAULT_ITEMS_PER_PAGE = 10;
 
@@ -64,5 +72,6 @@ angular.module('rest.gitHubAPI')
         function _handleError() {
             return 0;
         }
-    }]);
+    }
 
+})();
