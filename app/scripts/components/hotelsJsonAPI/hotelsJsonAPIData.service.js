@@ -20,25 +20,22 @@
 
         ///////////////////
 
-        function getData(itemsPerPage, pageNum, sortColumn, sortAscending) {
+        function getData(itemsPerPage, pageNum, sortColumn, sortAscending, filters) {
 
-            // Setup QueryString params for itemsPerPage and pageNum
-            var params = _formatParams(itemsPerPage, pageNum, sortColumn, sortAscending);
+            var params = _formatParams(itemsPerPage, pageNum, sortColumn, sortAscending, filters);
 
             return hotelsJsonREST.getData(params)
                 .then(function (items) {
-                    console.log("Items = ");
-                    console.dir(items);
                     return items;
                 })
                 .catch(function(err){
-                    console.log("Blobby BOOOM!");
+                    console.log("Error retrieving data");
                     console.dir(err);
                 });
 
             /////// helper Functions ///////
 
-            function _formatParams(itemsPerPage, pageNum, sortColumn, sortAscending) {
+            function _formatParams(itemsPerPage, pageNum, sortColumn, sortAscending, filters) {
                 return (_.every(arguments, function(arg){
                     return typeof arg === 'undefined';
                 }))
@@ -47,7 +44,8 @@
                             per_page: itemsPerPage || DEFAULT_ITEMS_PER_PAGE,
                             page: pageNum || 1,
                             sort: sortColumn,
-                            order: (sortAscending === true) ? 'asc' : 'desc'
+                            order: (sortAscending === true) ? 'asc' : 'desc',
+                            filters: filters
                       };
             }
         }

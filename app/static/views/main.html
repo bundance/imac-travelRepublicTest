@@ -37,7 +37,8 @@
             <h4>Filter By:</h4>
             <div class="form-group">
                 <label for="filterByName">Name</label>
-                <input type="text" class="form-control" id="filterByName" placeholder="Name" ng-model="travelRepublic.filterBy['Name']">
+                <input type="text" class="form-control" id="filterByName" placeholder="Name" ng-model="travelRepublic.model.filters['Name']">
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.setFilter('Name', travelRepublic.model.filters['Name'])">Apply</button>
             </div>
             <div class="form-group">
                 <h5>Price</h5>
@@ -47,7 +48,7 @@
                         max="travelRepublic.priceRange.max"
                         value="travelRepublic.priceRange.value"
                         range="travelRepublic.priceRange.range"></slider>
-                {{travelRepublic.priceRange.sliderValue}}
+                {{travelRepublic.priceRange.sliderValue[0]}}, {{travelRepublic.priceRange.sliderValue[1]}}
             </div>
         </div>
 
@@ -65,7 +66,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="hotel in travelRepublic.paginator.getCurrentPageItems() | filter:travelRepublic.searchFilter">
+            <tr ng-repeat="hotel in travelRepublic.paginator.getCurrentPageItems()">
                 <td>{{hotel.Name}}</td>
                 <td><img ng-src="{{hotel.ImageUrl}}" /></td>
                 <td>{{hotel.Location}}</td>

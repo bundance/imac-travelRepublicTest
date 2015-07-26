@@ -14,7 +14,9 @@
         // Initialise controller's model
         vm.model = {
             page: 1,
-            pages: []
+            pages: [],
+            sortParams: {},
+            filters: {}
         };
 
         // Setup the Paginator
@@ -23,7 +25,6 @@
         vm.toggleSort = toggleSort;
         // Enable filtering
         vm.setFilter = setFilter;
-        vm.searchFilter = searchFilter;
         vm.filterBy = {};
 
         activate();
@@ -59,29 +60,16 @@
         }
 
         function toggleSort(sortParams) {
-            return vm.paginator.toggleSort(sortParams.columnName)
+
+            return vm.paginator.toggleSort(sortParams.columnName, vm.model.filters)
                 .then(function () {
                     return {icon: vm.paginator.getSortIcon(sortParams.columnName)};
                 })
         }
 
         function setFilter(columnName, value){
-            vm.filterBy[columnName] = value;
-        }
-
-
-        function searchFilter(hotel){
-            return _withinPriceRange(hotel.MinCost) && _checkFilters(hotel);
-
-            function _withinPriceRange(price){
-                return (price >= vm.priceRange.sliderValue[0] && price <= vm.priceRange.sliderValue[1]);
-            }
-
-            function _checkFilters(hotel){
-                return _.every(_.map(_.keys(hotel), function(key){
-                        return (vm.filterBy[key]) ? hotel[key] === vm.filterBy[key] : true;
-                    }));
-            }
+            vm.model.filters[columnName] = value;
+            vm.paginator.getPage(1, vm.model.sortColumn, vm.model.sortAscending, vm.model.filters);
         }
 
 
@@ -100,8 +88,30 @@
             range: true,
             ngDisabled: false,
             reversed: false,
-            value: 0
+            value: 0,
+            sliderValue: [this.min, this.max]
         };
+
+
+        $scope.$watch(function(){
+            return vm.priceRange.sliderValue[0];
+        },
+        function(newValue){
+            if(newValue){
+                vm.model.filters.priceMin = vm.priceRange.sliderValue[0];
+                vm.paginator.getPage(1, vm.model.sortColumn, vm.model.sortAscending, vm.model.filters);
+            }
+        });
+
+        $scope.$watch(function(){
+            return vm.priceRange.sliderValue[1];
+        },
+        function(newValue){
+            if(newValue){
+                vm.model.filters.priceMax = vm.priceRange.sliderValue[1];
+                vm.paginator.getPage(1, vm.model.sortColumn, vm.model.sortAscending, vm.model.filters);
+            }
+        });
 
 
         //////////////////

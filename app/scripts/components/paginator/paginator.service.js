@@ -34,6 +34,15 @@
  *
  *
  */
+
+// blobby - toDo:
+// Change Blurb
+//    Add filters()
+// Check responsiveness
+// Check tests
+// Fix 'Jump to Page'
+// Persist filters in paginator
+
 (function() {
     'use strict';
 
@@ -76,7 +85,8 @@
                 prev: prev,
                 first: first,
                 last: last,
-                toggleSort: toggleSort
+                toggleSort: toggleSort,
+                filters: {}
             };
 
 
@@ -120,15 +130,16 @@
              *      - sortAscending (optional) - specify the direction to sort the results in.
              *          - true = sortAscending, false = sortDescending (default is false).
              */
-            function getPage(pageNum, sortColumn, sortAscending) {
+            function getPage(pageNum, sortColumn, sortAscending, filters) {
 
-                pageNum = (typeof pageNum === 'undefined') ? currentPageNum : pageNum;
+                pageNum = (typeof pageNum === 'undefined' || typeof pageNum === 'null') ? currentPageNum : pageNum;
 
                 service.sortColumn = sortColumn || service.sortColumn;
                 service.sortAscending = sortAscending || service.sortAscending;
+                service.filters = filters || service.filters;
 
                 if (service.pageExists(pageNum)) {
-                    return restSvc.getData(itemsPerPage, pageNum, sortColumn, sortAscending)
+                    return restSvc.getData(itemsPerPage, pageNum, sortColumn, sortAscending, filters)
                         .then(_getPageSuccessHandler(pageNum))
                         .catch($q.reject)
                 }
@@ -303,12 +314,12 @@
              * Enables sorting the dataset on sortColumn. Each call to this function with the same value for
              * sortColumn will toggle the direction of sorting (ASCending or DESCending (default))
              */
-            function toggleSort(newSortColumn) {
+            function toggleSort(newSortColumn, filters) {
 
                 sortAscending = (sortColumn === newSortColumn) ? !sortAscending : false;
                 sortColumn = newSortColumn;
 
-                return service.getPage(1, sortColumn, sortAscending);
+                return service.getPage(1, sortColumn, sortAscending, filters);
             }
 
 
@@ -364,7 +375,7 @@
              * @description Higher order function that acts as a partially applied wrapper function around getPage
              */
             function _goTo(pageNum) {
-                return service.getPage(pageNum, sortColumn, sortAscending);
+                return service.getPage(pageNum, sortColumn, sortAscending, service.filters);
             }
 
 
