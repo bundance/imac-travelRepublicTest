@@ -35,13 +35,20 @@
 
         <div class="m-sort-btns">
             <h4>Filter By:</h4>
-
-            <span>
-                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Distance'})">Distance <i ng-class="travelRepublic.paginator.getSortIcon('Distance')"></i></button>
-                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Stars'})">Stars <i ng-class="travelRepublic.paginator.getSortIcon('Stars')"></i></button>
-                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'MinCost'})">Cost <i ng-class="travelRepublic.paginator.getSortIcon('MinCost')"></i></button>
-                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'UserRating'})">Rating <i ng-class="travelRepublic.paginator.getSortIcon('UserRating')"></i></button>
-            </span>
+            <div class="form-group">
+                <label for="filterByName">Name</label>
+                <input type="text" class="form-control" id="filterByName" placeholder="Name" ng-model="travelRepublic.filterBy['Name']">
+            </div>
+            <div class="form-group">
+                <h5>Price</h5>
+                <slider ng-model="travelRepublic.priceRange.sliderValue"
+                        min="travelRepublic.priceRange.min"
+                        step="travelRepublic.priceRange.step"
+                        max="travelRepublic.priceRange.max"
+                        value="travelRepublic.priceRange.value"
+                        range="travelRepublic.priceRange.range"></slider>
+                {{travelRepublic.priceRange.sliderValue}}
+            </div>
         </div>
 
         <table class="table table-striped table-hover table-bordered" >
@@ -58,7 +65,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="hotel in travelRepublic.paginator.getCurrentPageItems()">
+            <tr ng-repeat="hotel in travelRepublic.paginator.getCurrentPageItems() | filter:travelRepublic.searchFilter">
                 <td>{{hotel.Name}}</td>
                 <td><img ng-src="{{hotel.ImageUrl}}" /></td>
                 <td>{{hotel.Location}}</td>

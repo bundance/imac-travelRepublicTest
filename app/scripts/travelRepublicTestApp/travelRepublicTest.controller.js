@@ -21,6 +21,10 @@
         vm.paginator = getPaginator();
         // Enable sorting
         vm.toggleSort = toggleSort;
+        // Enable filtering
+        vm.setFilter = setFilter;
+        vm.searchFilter = searchFilter;
+        vm.filterBy = {};
 
         activate();
 
@@ -60,6 +64,44 @@
                     return {icon: vm.paginator.getSortIcon(sortParams.columnName)};
                 })
         }
+
+        function setFilter(columnName, value){
+            vm.filterBy[columnName] = value;
+        }
+
+
+        function searchFilter(hotel){
+            return _withinPriceRange(hotel.MinCost) && _checkFilters(hotel);
+
+            function _withinPriceRange(price){
+                return (price >= vm.priceRange.sliderValue[0] && price <= vm.priceRange.sliderValue[1]);
+            }
+
+            function _checkFilters(hotel){
+                return _.every(_.map(_.keys(hotel), function(key){
+                        return (vm.filterBy[key]) ? hotel[key] === vm.filterBy[key] : true;
+                    }));
+            }
+        }
+
+
+        vm.priceRange = {
+            min: 0,
+            max: 10000,
+            step: 20,
+            precision: 2,
+            orientation: 'horizontal',
+            handle: 'round', //'square', 'triangle' or 'custom'
+            tooltip: 'show', //'hide','always'
+            tooltipseparator: ':',
+            tooltipsplit: false,
+            enabled: true,
+            naturalarrowkeys: false,
+            range: true,
+            ngDisabled: false,
+            reversed: false,
+            value: 0
+        };
 
 
         //////////////////

@@ -6,7 +6,9 @@ angular.module('travelRepublicTestApp', [
         'ngRoute',
         'rest.hotelsJsonApi',   // change this to whatever ReST service you're using
         'momUI.momPaginator',
-        'momUI'])
+        'momUI',
+        'ui.bootstrap-slider'
+    ])
     .config(function ($routeProvider) {
          $routeProvider
          .when('/', {
