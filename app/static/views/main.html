@@ -25,8 +25,22 @@
             <h4>Sort By:</h4>
 
             <span>
-                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Name'})">Name <i ng-class="travelRepublic.paginator.getSortIcon('Name')"></i></button>
-                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Location'})">Description <i ng-class="travelRepublic.paginator.getSortIcon('Location')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Distance'})">Distance <i ng-class="travelRepublic.paginator.getSortIcon('Distance')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Stars'})">Stars <i ng-class="travelRepublic.paginator.getSortIcon('Stars')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'MinCost'})">Cost <i ng-class="travelRepublic.paginator.getSortIcon('MinCost')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'UserRating'})">Rating <i ng-class="travelRepublic.paginator.getSortIcon('UserRating')"></i></button>
+            </span>
+        </div>
+
+
+        <div class="m-sort-btns">
+            <h4>Filter By:</h4>
+
+            <span>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Distance'})">Distance <i ng-class="travelRepublic.paginator.getSortIcon('Distance')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'Stars'})">Stars <i ng-class="travelRepublic.paginator.getSortIcon('Stars')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'MinCost'})">Cost <i ng-class="travelRepublic.paginator.getSortIcon('MinCost')"></i></button>
+                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.toggleSort({'columnName': 'UserRating'})">Rating <i ng-class="travelRepublic.paginator.getSortIcon('UserRating')"></i></button>
             </span>
         </div>
 
@@ -36,6 +50,11 @@
                 <th class="sdr-th">Hotel Name</th>
                 <th class="sdr-th">Image</th>
                 <th class="sdr-th">Location</th>
+                <th class="sdr-th">Distance</th>
+                <th class="sdr-th">Stars</th>
+                <th class="sdr-th">Cost</th>
+                <th class="sdr-th">User Rating</th>
+
             </tr>
             </thead>
             <tbody>
@@ -43,6 +62,10 @@
                 <td>{{hotel.Name}}</td>
                 <td><img ng-src="{{hotel.ImageUrl}}" /></td>
                 <td>{{hotel.Location}}</td>
+                <td>{{hotel.Distance}}</td>
+                <td>{{hotel.Stars}} Stars</td>
+                <td>£{{hotel.MinCost}} per night</td>
+                <td>{{hotel.UserRating}}/10: {{hotel.UserRatingTitle}}</td>
             </tr>
 
             </tbody>
