@@ -380,7 +380,7 @@
                 }
                 totalPagesCount = parseInt(totalItemsCount / (itemsPerPage || DEFAULT_ITEMS_PER_PAGE));
 
-                return (totalItemsCount % itemsPerPage > 0) ? totalPagesCount++ : totalPagesCount;
+                return (totalItemsCount % itemsPerPage > 0) ? ++totalPagesCount : totalPagesCount;
             }
 
 

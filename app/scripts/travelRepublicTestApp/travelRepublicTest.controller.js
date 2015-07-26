@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('angularMomPaginatorApp')
-        .controller('DemoAppController', DemoAppController);
+        .module('travelRepublicTestApp')
+        .controller('TravelRepublicTestController', TravelRepublicTestController);
 
-    DemoAppController.$inject = ['$scope', 'momPaginator', 'gitHubData'];
+    TravelRepublicTestController.$inject = ['$scope', 'momPaginator', 'hotelsJsonData'];
 
-    function DemoAppController($scope, momPaginator, gitHubData) {
+    function TravelRepublicTestController($scope, momPaginator, hotelsJsonData) {
 
         var vm = this;
 
@@ -43,7 +43,7 @@
 
         function getPaginator() {
             return momPaginator({
-                restSvc: gitHubData,
+                restSvc: hotelsJsonData,
                 initialPage: 1,
                 itemsPerPage: 10,
                 sortIcons: {

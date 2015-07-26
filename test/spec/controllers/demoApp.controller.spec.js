@@ -41,7 +41,7 @@ describe('Controller: DemoAppController', function () {
 
 
     // load the controller's module
-    beforeEach(module('angularMomPaginatorApp'));
+    beforeEach(module('travelRepublicTestApp'));
     beforeEach(module('momUI.momPaginator'));
     beforeEach(module('rest.gitHubAPI'));
     beforeEach(module('mockGitHubData'));
