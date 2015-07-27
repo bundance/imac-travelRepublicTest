@@ -1,253 +1,65 @@
-#momPaginator - AngularJS Paginator service#
+#TravelRepublic Hotels Search#
 
-The momPaginator is an AngularJS service that pulls in data from a ReST API, paginates it, and provides functions
-for navigating through the pages, sorting them and ordering them however you wish.
+The TravelRepublic Hotels Search is an exercise that's designed to search through a list of hotel data, formatted
+in an JSON file called hotels.json.
 
-##TL;DR##
-Just show me [an example](https://github.com/bundance/angular-mom-paginator#example)!
 
 ##Overview##
-The momPaginator is a service that uses an external ReST service that you provide to pull in data from a ReST API. Once
-the data has been retrieved, it's used to populate the momPaginator.currentPageItems[] array, which can then be used
-easily in an HTML table via a simple ng-repeat on the table's <tr> element.
+The code is written using:
+* AngularJs
+* Twitter Bootstrap
+* underscore.js
 
-The momPaginator has been designed to support promises throughout its ReST calling functions, letting you indicate
-to your user when your page is waiting for a response, and can easily be integrated into any of your existing HTML.
+###Components###
 
-This last point is important. Many AngularJS paginators or datatables will try to provide the HTML for you as a template
-in a directive. The problem with this approach, however, is that [browsers will not permit AngularJS to transclude tables](https://github.com/angular/angular.js/issues/1459)
-(in English - you can't use AngularJS directives to generate tables).
+The core components include:
 
-Other paginators and datatables attempt to get round this by using nested DIVs, but in my opinion, this is as bad as
-using tables for layout purposes, as it breaks the semantics of the HTML. If you're rendering a table, use the `<table>`
-element!
+*main.html - main template, representing the app's view, which contains HTML that renders the formated data
+*travelRepublicTestController - controller for the app, acting as the glue between the View and the main business logic
+*components/paginator - a separate service, written by myself, that provides functions to control a datatable. The
+paginator service is used here to enable the user to iterate through the hotels that have been returned
+*components/hotelsJsonAPI* - a set of services that implement the sorting and filtering functionality.
 
-So the momPaginator is implemented as a service, not a directive, which has the benefit of letting you put its
-functionality wherever you want it to be.
+####Main.html template ####
+The main.html template provides the user interface onto the app, enabling the user to sort the data that's returned,
+and filter it as appropriate. Filtered data can also be sorted, enabling the user to really drill down into the data
+to find just the hotel they need.
 
-It provides all the features you need, most of which can be used declaratively from the HTML itself.
+####TravelRepublicTestController ####
+The controller provides functions that wire the user's interactions up to the logic contained within the paginator and
+hotelJsonAPI* services, both of which provide the functionality required to sort, filter and present the data according
+to the user's actions.
 
-##How to use the momPaginator##
+####Paginator service ####
+The paginator is a service that I've previously developed, originally called angular-mom-paginator and available here (https://github.com/bundance/angular-mom-paginator).
+The paginator enables data to be iterated through, sorted and paginated, without specifying what HTML the developer
+must write to implement its features. Accordingly, the paginator provides complete flexibility for displaying data, whilst
+providing a powerful set of functions for its easy manipulation.
 
-###Setup###
-The momPaginator service is defined in app/scripts/services/paginator.js. Include this in your file, register the
-service as a dependency with your module, and you're nearly all set to use it.
+The paginator has been extended here to provide filtering as well as its existing sorting functionality.
 
-The last remaining thing to do is to provide a ReST service that communicates with your ReST server, and which exposes
-the following functions:
+####HotelsJsonAPI* services ####
+The set of hotelsJsonAPI* services would normally provide functions that interact with a REST API, as that's what the
+paginator was originally intended to interface with. However, the paginator reall doesn't care where it gets its data from -
+that's why the hotelsJsonAPI services exist as separate services. Indeed, if you look at the original angular-mom-paginator
+repo, you'll see a demo app that interfaces with the GitHub API over REST.
 
-* `getData(itemsPerPage, pageNum, sortColumn, sortAscending)`
-* `getTotalItemsCount()`
+For this test, though, rather than create a server-based REST-API complete with data access and manipulation, the API has
+been replicated as a set of functions in hotelsJsonAPI-REST that read in the hotels.json data from a file, and sort and
+filter it as required. This functionality would normally be provided by a server-based backend, but it provided here in the
+ client for ease of development.
 
+Note: clearly this architecture isn't optimally performant. However, it should be good enough for this exercise, and so
+should be seen as a Minimum Viable Product, rather than a complete production-ready solution.
 
-###Creating an instance of momPaginator###
-You create an instance of momPaginator as follows:
-
-```var paginator = momPaginator(ReSTService, itemsPerPage, initialPageNum, sortIcons);```
-
-####Parameters####
-
-* `ReSTService` - the ReST service used to communicate with your ReST API. The momPaginator service uses this to retrieve data.
-* `itemsPerPage` - how many items of data a page should comprise (default is 10)
-* `initialPageNum` - the page number you wish the pagination to start at (default is 1)
-* `sortIcons` - an object comprising the following icon properties:
-* `sortIconUp` name of the value you choose for the icon that represents sort ASCending in your application
-* `sortIconDown` name of the value you choose for the icon that represents sort DESCending in your application
-* `sortIconNone` name of the value you choose for the icon that represents no sorting applied
-
-Upon creation, the momPaginator will immediately call its `getPage()` method to retrieve the first page of data, and return.
-  You can use momPaginator's `promise` property to access this data once it's loaded, as follows:
-
-```
-$scope.model.paginator = momPaginator(gitHubData, 5, 1, {sortIconUp: 'glyphicon glyphicon-arrow-up',
-               sortIconDown: 'glyphicon glyphicon-arrow-down',
-               sortIconNone: 'glyphicon glyphicon-resize-vertical'});
-           $scope.model.paginator.promise
-               .then(function(){
-                   $scope.model.paginator.getPage()
-                       .then(function(){
-                           $scope.model.pages = getPageNumbers($scope.model.paginator.totalPagesCount);
-                       })
-               });
-```
-
-####Properties####
-Once an instance has been created, you have access to the following properties:
-
-
-* `currentPageItems` - array
-* `currentPageNum` - number
-* `itemsPerPage` - number
-* `totalItemsCount` - number
-* `totalpagesCount` - number
-* `promise` - $q,
-* `sortColumn` - string
-* `sortAscending` - string
-
-
-####Methods####
-* `getPage(pageNum, sortColumn, sortAscending)`*
-Retrieves a page of data from the ReST API. Returns immediately with a promise, which, when completed, fills the
- currentPageItems array with the data retrieved, and returns it.
- * On error, returns the response
- * If no data is received, it returns an empty array.
-
-* `getTotalItemsCount()`
-Returns the number of total items contained in the dataset being paginated. Note that this is different from the number
- of page paginated. The function returns a promise, which, when completed, returns the total number of items contained
- in the dataset.
-
-* `getTotalPagesCount()`
- Returns the number of total pages that have been paginated. The value returned here is the same as the value of the
- last page in the momPaginator. Does not return a promise, as it relies on getTotalItemsCount() having already been called
- (which is is upon the momPaginator's initial creation).
-
-* `pageExists(pageNum)`
- Returns true if pageNum exists in the dataset, false otherwise.
-
-* `next()`
- Returns the next page in the dataset as a promise, which, upon completion, fills the currentPageItems array with the
- data retrieved, and returns it.
- * If no more pages, returns an empty array
-
-* `prev()`
-Returns the previous page in the dataset as a promise, which, upon completion, fills the currentPageItems array with the
- data retrieved, and returns it.
- * If no more pages, returns an empty array
-
-* `first()`
-Helper function that returns `getPage(1)`
-
-* `last()`
-Helper function that returns `getPage( getTotalPagesCount() )`
-
-* `toggleSort(columnName)`
-Sorts the data by columnName. If the data hasn't been sorted before, it defaults to DESCending. Call this function
-on the same column again, and it will be sorted ASCending.
-
-* `getSortIcon(columnName)`
-Helper function designed to provide a value of your choice according to whether the columnName entered has been used
- to sort the data, and the direction in which the data has been sorted.
-
- * If columnName has been used to sort in an ASCending direction, this function will return the value entered on
-   momPaginator instance creation in sortIcons.sortIconUp
- * If columnName has been used to sort in an DESCending direction, this function will return the value entered on
-   momPaginator instance creation in sortIcons.sortIconDown
- * If columnName has NOT been used to sort , this function will return the value entered on  momPaginator instance
- creation in sortIcons.sortIconNone
-
-
-##The ReST Service##
-This service must then be injected into the momPaginator upon first use (usually in your controller).
-
-How your ReST service implements these functions will depend on the requirements of the ReST API you're using. The most
-common approach is to implement a $resource tailored to your API, but you're free to use whatever you wish (e.g. an
-$http object, $httpJson, or even a jQuery ajax call if you'd prefer).
-
-The example in this repository includes a ReST service called rest.gitHubAPI, which was created to communicate with the
-GitHub API. If you look at the code in app/shared/restAPI.js, you'll see rest.gitHubAPI defined as two services:
-
-* `gitHubREST` - a simple wrapper around $resource, defined with the parameters specified by GitHub to access its API.
-* `gitHubData` - the ReST service required by momPaginator, complete with the getData and getTotalItemsCount functions.
-
-###ReST Service getData() Parameters###
-
-#####getData(itemsPerPage, pageNum, sortColumn, sortAscending)#####
-
-*Parameters*
-* `itemsPerPage` - Number, stating how many items of data you want to display on each page. Defaults to 10.
-* `pageNum` - the page number you want to retrieve the items of data for. Different APIs use different methods (and
-parameters) for pagination, which is one of the reasons why the ReST Service exists independently of the implementation
- used to perform the actual API requests. Defaults to 1.
-* `sortColumn` - the name of the column you wish you to sort on. No default. If you don't wish to sort, simply don't provide
- a `sortColumn` value.
-* `sortAscending` - true returns the data sorted by sortColumn in ASCending order. False returns it sorted in DESCending
- order. No default - if you don't need to sort your data, simply don't provide a 'sortAscending' value.
-
-*Return values*
-* `getData()` must return a promise immediately after making the call to the ReST API. The promise must be chained with a
- then() function, which must return an array of items of length `itemsPerPage' or less.
- * On error, the response object must be returned.
-
-
-###ReST Service getTotalItemsCount() Parameters###
-
-#####getTotalItemsCount()#####
-
-*Parameters*
-None
-
-*Return values*
-* `getTotalItemsCount()` must return a promise immediately after making the call to the ReSTAPI. The promise must be chained
-with a then() function, which must return the total number of items in the dataset that can be paginated.
- * On error, the response object must be returned.
-
-##Example##
-
-###Using the momPaginator in a controller###
-
-```
-angular.module('angularMomPaginatorApp', [
-        'ngResource',
-        'rest.ReSTService',   // change this to whatever ReST service you're using
-        'momUI.momPaginator'])
- .controller('PaginatorCtrl', ['$scope', 'momPaginator', 'gitHubData', function($scope, momPaginator, gitHubData){
-        $scope.model.paginator = momPaginator(gitHubData, 5, 1, {sortIconUp: 'glyphicon glyphicon-arrow-up',
-            sortIconDown: 'glyphicon glyphicon-arrow-down', sortIconNone: 'glyphicon glyphicon-resize-vertical'});
-        $scope.model.paginator.promise
-            .then(function(){
-                $scope.model.paginator.getPage()
-                    .then(function(){
-                        $scope.model.pages = getPageNumbers($scope.model.paginator.totalPagesCount);
-                    })
-            });
-```
-
-###Using the momPaginator to fill your HTML table with a page of data###
-
-```
-<table>
-...
-    <tr ng-repeat="item in model.paginator.currentPageItems">
-        <td>{{item.property1}}</td>
-        <td>{{item.property2}}</td>
-        <td>{{item.property3}}</td>
-    </tr>
-</table>
-```
-
-###Adding pagination buttons to your HTML###
-
-```
-<div class="m-pagination-btns">
-    <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.first()"><< First</button>
-    <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.prev()">< Prev</button>
-    <button class="btn btn-mini btn-primary sdr-pagination-prev-btn" ng-click="model.paginator.next()">Next ></button>
-    <button class="btn btn-mini btn-primary sdr-pagination-next-btn" ng-click="model.paginator.last()">Last >></button>
-</div>
-```
-
-##Complete Example##
-To see a complete example implementation, clone the repo and navigate to:
-
- `http://localhost/angular-mom-paginator/app/#/`
-
-###Files###
-
-* The standard momPaginator home page is implemented in `app/views/main.html` and uses the `PaginatorCtrl`
- controller (defined in `angular-mom-paginator/app/scripts/app.js`)
-* The version with the spinner is implemented in `app/views/main-spinner.html` and uses the `PaginatorSpinnerCtrl`
- controller (defined in `angular-mom-paginator/app/scripts/app.js`)
-* The Paginator service is defined in 'angular-mom-paginator/app/scripts/services/paginator.js`
-* The ReST Service is defined in `angular-mom-paginator/app/scripts/shared/gitHubAPI-REST.service.js`
 
 ###Tests###
-You'll need the Karma test runner to run the tests, which can be found in `angular-mom-paginator/test/spec`. Tests for
-  the controllers can be found in `angular-mom-paginator/test/spec/controllers/demoApp.controller.spec.js`, while the much more
-  detailed tests for the ReST API communication can be found in
-  `angular-mom-paginator/test/spec/shared/restAPIspec.js`
+I wrote an extensive set of tests for the paginator service, which have been included in this app. However, I've not
+written any additional tests due to time constraints.
 
- Mocks of the Paginator service and gitHub results can be found in `angular-mom-paginator/test/mock`
+You'll need the Karma test runner to run the tests, which can be found in `/test/spec`. More details can be found in the
+ angular-mom-paginator repo here.
+
 
 
 
