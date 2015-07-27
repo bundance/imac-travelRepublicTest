@@ -59,14 +59,14 @@
             }
 
             function _filter(data, filters){
-                console.log("filtering. filtres:");
-                console.dir(filters);
-
                 return (filters)
                     ? _.filter(data, function(hotel){
-                        return _withinPriceRange(hotel.MinCost, filters.priceMin, filters.priceMax) && _checkFilters(hotel, filters);
-                    })
-                    : data;
+                        return _withinPriceRange(hotel.MinCost, filters.priceMin, filters.priceMax)
+                            && _atLeast(hotel.Stars, filters.stars)
+                            && _atLeast(hotel.UserRating, filters.userRating)
+                            && _checkFilters(hotel, filters);
+                        })
+                        : data;
 
                 function _withinPriceRange(price, priceMin, priceMax){
                     priceMin = priceMin || price;
@@ -75,6 +75,14 @@
                     return (price >= priceMin && price <= priceMax);
                 }
 
+                function _atLeast(value, requiredValue){
+                    return (requiredValue)
+                        ? value >= requiredValue
+                        : true;
+                }
+
+                // Matches filters to property names in a hotel object. If a filter name doesn't match a hotel
+                // object property name, it won't be checked here
                 function _checkFilters(hotel, filters){
                     return _.every(_.map(_.keys(hotel), function(key){
                         return (filters[key]) ? hotel[key] === filters[key] : true;
@@ -85,6 +93,7 @@
         }
 
         function _getDataFromSource(){
+
             return $http
                 .get('http://127.0.0.1/app/static/data/hotels.json')
                 .then(function(response){

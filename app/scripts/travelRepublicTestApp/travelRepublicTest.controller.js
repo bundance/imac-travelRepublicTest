@@ -79,8 +79,8 @@
             step: 20,
             precision: 2,
             orientation: 'horizontal',
-            handle: 'round', //'square', 'triangle' or 'custom'
-            tooltip: 'show', //'hide','always'
+            handle: 'round',
+            tooltip: 'show',
             tooltipseparator: ':',
             tooltipsplit: false,
             enabled: true,
