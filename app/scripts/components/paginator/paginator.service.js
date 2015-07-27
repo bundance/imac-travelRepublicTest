@@ -35,14 +35,6 @@
  *
  */
 
-// blobby - toDo:
-// Change Blurb
-//    Add filters()
-// Check responsiveness
-// Check tests
-// Fix 'Jump to Page'
-// Persist filters in paginator
-
 (function() {
     'use strict';
 

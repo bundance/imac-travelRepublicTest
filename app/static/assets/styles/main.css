@@ -94,3 +94,29 @@ body {
 .inline-select-text{
     margin: 0 10px 0 0;
 }
+
+.price{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.center{
+    text-align: center;
+}
+
+.slider{
+    margin-left: 5px;
+}
+
+.slider label{
+    display: block;
+    margin-top: 20px;
+    margin-left: -5px;
+}
+
+.slider--element{
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}

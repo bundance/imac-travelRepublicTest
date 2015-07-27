@@ -1,6 +1,6 @@
 <div class="header">
 	<ul class="nav nav-pills pull-right">
-		<li class="active"><a href="#">Home</a></li>
+		<li class="active"><a href="/app/#/">Home</a></li>
 		<li><a href="#about">About</a></li>
 	</ul>
 	<h3 class="text-muted">TravelRepublic Code Test</h3>
@@ -40,17 +40,21 @@
                         <input type="text" class="form-control" id="filterByUseRating" placeholder="UserRating" ng-model="travelRepublic.model.filters['userRating']">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group slider">
                     <label>Price</label>
+                    <span class="slider--element">£0</span>
                     <slider id="filterByPrice" ng-model="travelRepublic.priceRange.sliderValue"
                             min="travelRepublic.priceRange.min"
                             step="travelRepublic.priceRange.step"
                             max="travelRepublic.priceRange.max"
                             value="travelRepublic.priceRange.value"
-                            range="travelRepublic.priceRange.range"></slider>
-                    {{travelRepublic.priceRange.sliderValue[0]}}, {{travelRepublic.priceRange.sliderValue[1]}}
+                            range="travelRepublic.priceRange.range"
+                            class="slider--element"></slider>
+                    <span class="slider--element">£10,000</span>
                 </div>
-                <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.setFilter('Name', travelRepublic.model.filters['Name'])">Apply Filters</button>
+                <div>
+                    <button class="btn btn-primary mom-toggle" ng-click="travelRepublic.setFilter('Name', travelRepublic.model.filters['Name'])">Apply Filters</button>
+                </div>
             </div>
         </div>
 
@@ -70,12 +74,12 @@
             <tbody>
             <tr ng-repeat="hotel in travelRepublic.paginator.getCurrentPageItems()">
                 <td>{{hotel.Name}}</td>
-                <td><img ng-src="{{hotel.ImageUrl}}" /></td>
+                <td><a ng-href="{{hotel.ImageUrl}}"><img ng-src="{{hotel.ThumbnailUrl}}" /></a></td>
                 <td>{{hotel.Location}}</td>
-                <td>{{hotel.Distance}}</td>
-                <td>{{hotel.Stars}} Stars</td>
-                <td>£{{hotel.MinCost}} per night</td>
-                <td>{{hotel.UserRating}}/10: {{hotel.UserRatingTitle}}</td>
+                <td class="center">{{hotel.Distance | number : 2}} kms</td>
+                <td class="center">{{hotel.Stars}} Stars</td>
+                <td class="center"><div class="price">£{{hotel.MinCost}}</div> per night</td>
+                <td class="center">{{hotel.UserRating}}/10 <br /> {{hotel.UserRatingTitle}}</td>
             </tr>
 
             </tbody>
@@ -92,11 +96,9 @@
         <div class="m-pagination-pages">
             <label class="inline-select-text">Jump to page: </label><select class="inline-select" ng-init="page=travelRepublic.model.pages[0]" ng-model="travelRepublic.model.page" ng-options="page for page in travelRepublic.model.pages"></select>
         </div>
-
-
-</div>
+    </div>
 </div>
 
 <div class="footer">
-	<p>Part of the Angular Momentum library by Mike Evans, Codernetic Ltd</p>
+    <p>Mike Evans, Codernetic Ltd</p>
 </div>

@@ -16,10 +16,10 @@ angular.module('travelRepublicTestApp', [
              controllerAs: 'travelRepublic',
              controller: 'TravelRepublicTestController'
          })
-         .when('/spinner', {
-             templateUrl: 'static/views/main-spinner.html',
-             controllerAs: 'travelRepublic',
-             controller: 'TravelRepublicTestController'
+         .when('/about', {
+             templateUrl: 'static/views/about.html',
+                 controllerAs: 'travelRepublic',
+                 controller: 'TravelRepublicTestController'
 
          })
          .otherwise({
