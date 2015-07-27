@@ -1,3 +1,14 @@
+/**
+ *
+ * The hotelsJsonREST service would normally be an interface to a server-side REST API. However, as this is just
+ * a demo, the usual data sorting and filtering commands have been replicated here on the client-side instead.
+ * This inevitably impacts performance on devices with limited resources, but there's no noticeable performance
+ * impact on any of the devices it's been tested on.
+ *
+ * For an example of how an equivalent service normally interacts with a server-based API, see gitHub-REST.service.js
+ * in scripts/components/gitHubAPI
+ *
+ */
 (function() {
     'use strict';
 
@@ -5,9 +16,9 @@
         .module('rest.hotelsJsonApi')
         .factory('hotelsJsonREST', hotelsJsonREST);
 
-    hotelsJsonREST.$inject = ['$http', '$q'];
+    hotelsJsonREST.$inject = ['$http'];
 
-    function hotelsJsonREST($http, $q) {
+    function hotelsJsonREST($http) {
 
         var allData,
             formattedData,
@@ -32,27 +43,24 @@
 
             function _formatData(data, params){
                 return (params)
-//                        ? _slice(_sort(data, params.sort, params.order), params.page, params.per_page)
                     ? _slice(
                         _sort(
                             _filter(data, params.filters),
-                            params.sort,
-                            params.order
+                                params.sort,
+                                params.order
                         ),
-                        params.page,
-                        params.per_page
+                            params.page,
+                            params.per_page
                     )
                     : data;
 
             }
 
             function _slice(data, pageNum, itemsPerPage){
-                console.log("Slicing");
                 return data.slice((pageNum * itemsPerPage) - itemsPerPage, (pageNum * itemsPerPage));
             }
 
             function _sort(data, sortColumn, sortOrder){
-                console.log("Sorting: col:" + sortColumn + ", order:" + sortOrder);
                 return (sortOrder === 'desc')
                     ? _.sortBy(data, sortColumn).reverse()
                     : _.sortBy(data, sortColumn);
@@ -61,6 +69,8 @@
             function _filter(data, filters){
                 return (filters)
                     ? _.filter(data, function(hotel){
+                        // ToDo: refactor _filter to curry the function so it accepts the filters as an extensible
+                        // list of arguments
                         return _withinPriceRange(hotel.MinCost, filters.priceMin, filters.priceMax)
                             && _atLeast(hotel.Stars, filters.stars)
                             && _atLeast(hotel.UserRating, filters.userRating)
@@ -93,7 +103,6 @@
         }
 
         function _getDataFromSource(){
-
             return $http
                 .get('http://127.0.0.1/app/static/data/hotels.json')
                 .then(function(response){
