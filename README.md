@@ -3,9 +3,20 @@
 The TravelRepublic Hotels Search is an exercise that's designed to search through a list of hotel data, formatted
 in an JSON file called hotels.json.
 
+##Installation##
+From the command line:
+
+* Clone the repo into a local directory: `git clone git@github.com:bundance/imac-travelRepublicTest.git`§
+* cd into the new directory just created 
+* run `bower install`
+* run `npm install`
+* run `sudo grunt connect:server:keepalive`
+* navigate to http://127.0.0.1/app/#/
+* Enjoy!
 
 ##Overview##
 The code is written using:
+
 * AngularJs
 * Twitter Bootstrap
 * underscore.js
@@ -14,11 +25,11 @@ The code is written using:
 
 The core components include:
 
-*main.html - main template, representing the app's view, which contains HTML that renders the formated data
-*travelRepublicTestController - controller for the app, acting as the glue between the View and the main business logic
-*components/paginator - a separate service, written by myself, that provides functions to control a datatable. The
+* **main.html** - main template, representing the app's view, which contains HTML that renders the formated data
+* **travelRepublicTestController** - controller for the app, acting as the glue between the View and the main business logic
+* **components/paginator** - a separate service, written by myself, that provides functions to control a datatable. The
 paginator service is used here to enable the user to iterate through the hotels that have been returned
-*components/hotelsJsonAPI* - a set of services that implement the sorting and filtering functionality.
+* **components/hotelsJsonAPI** * - a set of services that implement the sorting and filtering functionality.
 
 ####Main.html template ####
 The main.html template provides the user interface onto the app, enabling the user to sort the data that's returned,
@@ -49,17 +60,15 @@ been replicated as a set of functions in hotelsJsonAPI-REST that read in the hot
 filter it as required. This functionality would normally be provided by a server-based backend, but it provided here in the
  client for ease of development.
 
-Note: clearly this architecture isn't optimally performant. However, it should be good enough for this exercise, and so
-should be seen as a Minimum Viable Product, rather than a complete production-ready solution.
+_Note: clearly, implementing the data-sorting and filtering services as an Angular service on the client isn't optimally performant; it would have been far better to implement it on a server and request the data via a REST API. However, time constraints precluded a server/database solution, and the current solution presented here should be good enough for this exercise. As such, look at it as a Minimum Viable Product, rather than a complete production-ready solution._
 
 
 ###Tests###
-I wrote an extensive set of tests for the paginator service, which have been included in this app. However, I've not
+An extensive set of unit tests have been written in Jasmine for the paginator service, which have been included in this app. However, I've not
 written any additional tests due to time constraints.
 
 You'll need the Karma test runner to run the tests, which can be found in `/test/spec`. More details can be found in the
  angular-mom-paginator repo here.
-
 
 
 
